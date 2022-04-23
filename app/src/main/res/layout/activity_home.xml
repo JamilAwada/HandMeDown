@@ -1,9 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    android:background="@android:color/white">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/tx_categories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Categories"
+        android:textSize="32sp"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/black"/>
+
+    <RelativeLayout
+        android:id="@+id/toys_card"
+        android:layout_width="150dp"
+        android:layout_height="175dp"
+        android:background="@drawable/category_card_blue"
+        android:layout_below="@id/tx_categories"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="25dp">
+
+        <ImageView
+            android:id="@+id/image_category_bear"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            app:srcCompat="@drawable/teddy_bear"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/tx_toys"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="Toys"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/clothing_card"
+        android:layout_width="150dp"
+        android:layout_height="175dp"
+        android:background="@drawable/category_card_pink"
+        android:layout_below="@id/tx_categories"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="30dp">
+
+        <ImageView
+            android:id="@+id/image_category_onesie"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            app:srcCompat="@drawable/onesie"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/tx_clothing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="Clothing"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/electronics_card"
+        android:layout_width="150dp"
+        android:layout_height="175dp"
+        android:background="@drawable/category_card_red"
+        android:layout_below="@id/toys_card"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="25dp">
+
+        <ImageView
+            android:id="@+id/image_monitor"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            app:srcCompat="@drawable/baby_monitor"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/tx_electronics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="Electronics"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/gear_card"
+        android:layout_width="150dp"
+        android:layout_height="175dp"
+        android:background="@drawable/category_card_green"
+        android:layout_below="@id/clothing_card"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/tx_gear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="Gear"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/white"/>
+
+        <ImageView
+            android:id="@+id/image_stroller"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            app:srcCompat="@drawable/stroller"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/disposables_card"
+        android:layout_width="150dp"
+        android:layout_height="175dp"
+        android:background="@drawable/category_card_navy"
+        android:layout_below="@id/electronics_card"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/tx_disposables"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="Disposables"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/white"/>
+
+        <ImageView
+            android:id="@+id/image_diaper"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/diaper"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/consumables_card"
+        android:layout_width="150dp"
+        android:layout_height="175dp"
+        android:background="@drawable/category_card_orange"
+        android:layout_below="@id/gear_card"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_alignParentRight="true">
+
+        <TextView
+            android:id="@+id/tx_consumables"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="Consumables"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/white"/>
+
+        <ImageView
+            android:id="@+id/image_formula"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/formula"/>
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+</RelativeLayout>
