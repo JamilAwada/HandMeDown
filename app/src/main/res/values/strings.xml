@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">HandMeDown</string>
+    <string name="categories">Categories</string>
+    <string name="electronics">Electronics</string>
+    <string name="gear">Gear</string>
+    <string name="disposables">Disposables</string>
+    <string name="consumables">Consumables</string>
+    <string name="toys">Toys</string>
+    <string name="clothing">Clothing</string>
 </resources>
