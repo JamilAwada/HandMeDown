@@ -1,9 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    android:background="@android:color/white">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/tx_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/profile"
+        android:textSize="32sp"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/black"/>
+
+    <ImageView
+        android:id="@+id/image_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/settings"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"/>
+
+    <ImageView
+        android:id="@+id/image_placeholder"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/profile_pic"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="100dp"/>
+
+    <ImageView
+        android:id="@+id/image_name"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:srcCompat="@drawable/user_2"
+        android:layout_marginTop="140dp"
+        android:layout_marginStart="20dp"/>
+
+    <TextView
+        android:id="@+id/tx_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/image_name"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="140dp"
+        android:text="Susan Smith"
+        android:textSize="18sp"
+        android:fontFamily="@font/poppins_medium"/>
+
+    <ImageView
+        android:id="@+id/image_number"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:srcCompat="@drawable/phone"
+        android:layout_below="@id/image_name"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="32dp"/>
+
+    <TextView
+        android:id="@+id/tx_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_name"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="32dp"
+        android:layout_toEndOf="@id/image_number"
+        android:text="+961 76 792 706"
+        android:textSize="18sp"
+        android:fontFamily="@font/poppins_medium"/>
+
+    <ImageView
+        android:id="@+id/image_address"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:srcCompat="@drawable/address"
+        android:layout_below="@id/image_number"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="20dp"/>
+
+    <TextView
+        android:id="@+id/tx_address"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/image_address"
+        android:layout_below="@id/image_number"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="32dp"
+        android:text="Beirut, Tarik Jdide, Abu Shekir Street, Hanoun Daaboul Bldg"
+        android:textSize="18sp"
+        android:fontFamily="@font/poppins_medium"/>
+
+    <TextView
+        android:id="@+id/tx_account_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_address"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/account_details"
+        android:textSize="24sp"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/black"/>
+
+    <ImageView
+        android:id="@+id/image_username"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:srcCompat="@drawable/quote"
+        android:layout_below="@id/tx_account_details"
+        android:layout_marginTop="17dp"
+        android:layout_marginStart="20dp"/>
+
+    <TextView
+        android:id="@+id/tx_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/image_username"
+        android:layout_below="@id/tx_account_details"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="17dp"
+        android:text="@string/username"
+        android:textSize="20sp"
+        android:fontFamily="@font/poppins_semibold"
+        android:textColor="@color/material_dynamic_neutral_variant40"/>
+
+    <TextView
+        android:id="@+id/tx_username_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/image_username"
+        android:layout_below="@id/tx_username"
+        android:layout_marginStart="10dp"
+        android:text="SuperMom123"
+        android:textSize="18sp"
+        android:fontFamily="@font/poppins_medium"/>
+
+    <ImageView
+        android:id="@+id/image_email"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:srcCompat="@drawable/at_email"
+        android:layout_below="@id/image_username"
+        android:layout_marginTop="52dp"
+        android:layout_marginStart="20dp"/>
+
+    <TextView
+        android:id="@+id/tx_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/image_email"
+        android:layout_below="@id/image_username"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="52dp"
+        android:text="@string/email"
+        android:textSize="20sp"
+        android:fontFamily="@font/poppins_semibold"
+        android:textColor="@color/material_dynamic_neutral_variant40"/>
+
+    <TextView
+        android:id="@+id/tx_email_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/image_email"
+        android:layout_below="@id/tx_email"
+        android:layout_marginStart="10dp"
+        android:text="susansmith@gmail.com"
+        android:textSize="18sp"
+        android:fontFamily="@font/poppins_medium"/>
+
+    <ImageView
+        android:id="@+id/image_password"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:srcCompat="@drawable/key"
+        android:layout_below="@id/image_email"
+        android:layout_marginTop="52dp"
+        android:layout_marginStart="20dp"/>
+
+    <TextView
+        android:id="@+id/tx_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/image_password"
+        android:layout_below="@id/tx_email"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="47dp"
+        android:text="Password"
+        android:textSize="20sp"
+        android:fontFamily="@font/poppins_semibold"
+        android:textColor="@color/material_dynamic_neutral_variant40"/>
+
+    <TextView
+        android:id="@+id/tx_password_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tx_password"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/image_username"
+        android:text="•••••••••"
+        android:textSize="18sp"
+        android:fontFamily="@font/poppins_medium"/>
+
+</RelativeLayout>
