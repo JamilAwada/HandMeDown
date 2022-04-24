@@ -38,12 +38,15 @@ public class MainActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
+        // Default fragment is home
+//        replaceFragment(new HomeActivity());
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(R.layout.activity_listings);
+        setContentView(R.layout.activity_login);
 
         // Initialize recycler view
-        initData();
-        initRecyclerView();
+//        initData();
+//        initRecyclerView();
 
 
         // Takes item id as param to identify the fragment that has been clicked
