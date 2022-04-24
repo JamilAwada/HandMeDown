@@ -63,4 +63,16 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    // Intent to go from log in page to sign up page
+    public void goToSignUp(View view){
+        Intent goToSignUp = new Intent(this, SignUpActivity.class);
+        startActivity(goToSignUp);
+    }
+
+    // Intent to go from log in page to sign up page
+    public void goToLogin(View view){
+        Intent goToLogin = new Intent(this, LoginActivity.class);
+        startActivity(goToLogin);
+    }
+
 }
