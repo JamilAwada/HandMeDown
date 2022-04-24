@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/image_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="60dp"
+        app:srcCompat="@drawable/app_logo"
+        tools:ignore="ImageContrastCheck"/>
+
+    <TextView
+        android:id="@+id/tx_logoname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/image_logo"
+        android:layout_marginTop="50dp"
+        android:text="Hand
+                      Me
+                      Down"
+        android:textSize="24sp"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/baby_blue"
+        tools:ignore="TextContrastCheck"/>
+
+    <TextView
+        android:id="@+id/tx_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:text="Log In"
+        android:textSize="32sp"
+        android:fontFamily="@font/poppins_regular"/>
+
+
+    <RelativeLayout
+        android:id="@+id/username_bar"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="@drawable/search_bg"
+        android:layout_below="@id/tx_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/username_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            app:srcCompat="@drawable/user_2"
+            tools:ignore="ImageContrastCheck"/>
+
+        <EditText
+            android:id="@+id/username_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/username_icon"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/poppins_regular"
+            android:hint="@string/username"
+            android:textColor="@color/material_dynamic_neutral40"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/password_bar"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/username_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/search_bg">
+
+        <ImageView
+            android:id="@+id/password_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            app:srcCompat="@drawable/key"
+            tools:ignore="ImageContrastCheck" />
+
+        <EditText
+            android:id="@+id/password_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/password_icon"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/poppins_regular"
+            android:hint="Password"
+            android:importantForAutofill="no"
+            android:textColor="@color/material_dynamic_neutral40"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tx_forgotpass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password?"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_light"
+        android:layout_below="@id/password_bar"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="60dp"/>
+
+    <RelativeLayout
+        android:id="@+id/btn_login"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/password_bar"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/login_signup_btn_bg">
+
+        <TextView
+            android:id="@+id/tx_btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Log In"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btn_signup"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/tx_noacc"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/login_signup_btn_bg">
+
+        <TextView
+            android:id="@+id/tx_btn_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins_regular"
+            android:onClick="goToSignUp"
+            android:text="Sign Up"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tx_noacc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        android:fontFamily="@font/poppins_light"
+        android:text="Don't have an account?"
+        android:textSize="18sp" />
+
+
+</RelativeLayout>
+
+
