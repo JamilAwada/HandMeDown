@@ -48,23 +48,23 @@
             android:text="Barely used stroller, like new, comes with an extra bag and replaceable wheels"/>
 
         <ImageView
+            android:id="@+id/listing_price_tag"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:id="@+id/listing_price_tag"
-            android:background="@drawable/tag"
+            android:layout_marginStart="120dp"
             android:layout_marginTop="15dp"
             android:layout_toEndOf="@id/listing_title"
-            android:layout_marginStart="150dp"/>
+            android:background="@drawable/tag" />
 
         <TextView
+            android:id="@+id/listing_price"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:id="@+id/listing_price"
-            android:text="$80"
-            android:fontFamily="@font/poppins_light"
-            android:layout_toEndOf="@id/listing_price_tag"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="14dp"/>
+            android:layout_marginTop="14dp"
+            android:layout_toEndOf="@id/listing_price_tag"
+            android:fontFamily="@font/poppins_light"
+            android:text="$80" />
 
         <ImageView
             android:layout_width="20dp"
@@ -74,18 +74,18 @@
             android:layout_marginTop="15dp"
             android:layout_toEndOf="@id/listing_title"
             android:layout_below="@id/listing_price_tag"
-            android:layout_marginStart="150dp"/>
+            android:layout_marginStart="120dp"/>
 
         <TextView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
             android:id="@+id/listing_owner"
-            android:text="Johnny"
-            android:fontFamily="@font/poppins_light"
-            android:layout_toEndOf="@id/listing_owner_icon"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/listing_price"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="14dp"/>
+            android:layout_marginTop="14dp"
+            android:layout_toEndOf="@id/listing_owner_icon"
+            android:fontFamily="@font/poppins_light"
+            android:text="Johnny" />
 
         <ImageView
             android:layout_width="20dp"
@@ -95,7 +95,7 @@
             android:layout_marginTop="15dp"
             android:layout_toEndOf="@id/listing_title"
             android:layout_below="@id/listing_owner_icon"
-            android:layout_marginStart="150dp"/>
+            android:layout_marginStart="120dp"/>
 
         <TextView
             android:layout_width="60dp"
@@ -115,7 +115,7 @@
             android:layout_height="2dp"
             android:layout_below="@id/listing_description"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/seperator_line" />
 
 

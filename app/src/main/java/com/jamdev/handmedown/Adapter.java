@@ -9,11 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
-    private List<ModelClass> itemList;
+    private List<ModelClass> itemList = new ArrayList<>();
 
     public Adapter(List<ModelClass> itemList){
         this.itemList = itemList;
@@ -37,10 +38,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         String date = itemList.get(position).getListing_date();
         int divider = itemList.get(position).getSeperator();
 
-        holder.setData(resource,title,description,price,owner,date, divider);
+        holder.setData(resource,title,description,price,owner,date,divider);
 
     }
-
     @Override
     public int getItemCount() {
         return itemList.size();

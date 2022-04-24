@@ -19,6 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.jamdev.handmedown.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
-    List<ModelClass> itemList;
+    List<ModelClass> itemList = new ArrayList<>();
     Adapter adapter;
 
     @Override
@@ -36,36 +37,33 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_listings);
-
-        // Default fragment is home
-//        replaceFragment(new HomeActivity());
-
-//        binding = ActivityMainBinding.inflate(getLayoutInflater());
-//        setContentView(binding.getRoot());
 
         // Initialize recycler view
         initData();
         initRecyclerView();
 
+
         // Takes item id as param to identify the fragment that has been clicked
-//        binding.bottomNavigation.setOnItemSelectedListener(item -> {
-//            switch (item.getItemId()){
-//                case R.id.nav_home:
-//                    replaceFragment(new HomeActivity());
-//                    break;
-//                case R.id.nav_search:
-//                    replaceFragment(new SearchActivity());
-//                    break;
-//                case R.id.nav_listings:
-//                    replaceFragment(new ListingsActivity());
-//                    break;
-//                case R.id.nav_profile:
-//                    replaceFragment(new ProfileActivity());
-//                    break;
-//            }
-//            return true;
-//        });
+        binding.bottomNavigation.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.nav_home:
+                    replaceFragment(new HomeActivity());
+                    break;
+                case R.id.nav_search:
+                    replaceFragment(new SearchActivity());
+                    break;
+                case R.id.nav_listings:
+                    replaceFragment(new ListingsActivity());
+                    break;
+                case R.id.nav_profile:
+                    replaceFragment(new ProfileActivity());
+                    break;
+            }
+            return true;
+        });
     }
 
 
@@ -92,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
 
     // Add and remove data
     private void initData() {
+        itemList.add(new ModelClass(R.drawable.placeholder2, "Bottle","Gently used bottle with replaceable nib", "$10", "Abdallah", "24/05/2002",R.drawable.seperator_line));
+        itemList.add(new ModelClass(R.drawable.placeholder2, "Bottle","Gently used bottle with replaceable nib", "$10", "Abdallah", "24/05/2002", R.drawable.seperator_line));
         itemList.add(new ModelClass(R.drawable.placeholder2, "Bottle","Gently used bottle with replaceable nib", "$10", "Abdallah", "24/05/2002", R.drawable.seperator_line));
     }
 
