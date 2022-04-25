@@ -13,7 +13,7 @@ $UsernameQuery = $mysqli->query("SELECT username from user where username='$User
 
 // Check if there is an account with the entered username
 if($UsernameQuery->num_rows == 0){
-    $result = "User with entered username does not exist. Try again."; 
+    $result = "com.jamdev.handmedown.User with entered username does not exist. Try again.";
 }
 else{
 // Get the hashed password of the account from the database

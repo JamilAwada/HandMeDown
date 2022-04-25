@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="@string/profile"
+        android:text="Profile"
         android:textSize="32sp"
         android:fontFamily="@font/poppins_medium"
         android:textColor="@color/black"/>
@@ -186,24 +186,13 @@
         android:id="@+id/tx_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/image_password"
         android:layout_below="@id/tx_email"
         android:layout_marginStart="10dp"
         android:layout_marginTop="47dp"
-        android:text="Password"
-        android:textSize="20sp"
+        android:layout_toEndOf="@id/image_password"
         android:fontFamily="@font/poppins_semibold"
-        android:textColor="@color/material_dynamic_neutral_variant40"/>
-
-    <TextView
-        android:id="@+id/tx_password_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tx_password"
-        android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/image_username"
-        android:text="•••••••••"
-        android:textSize="18sp"
-        android:fontFamily="@font/poppins_medium"/>
+        android:text="Password"
+        android:textColor="@color/baby_blue"
+        android:textSize="20sp" />
 
 </RelativeLayout>

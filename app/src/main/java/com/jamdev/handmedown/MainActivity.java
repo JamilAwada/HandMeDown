@@ -25,10 +25,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-    RecyclerView recyclerView;
-    LinearLayoutManager layoutManager;
-    List<ModelClass> itemList = new ArrayList<>();
-    Adapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +36,11 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         // Default fragment is home
-//        replaceFragment(new HomeActivity());
+        replaceFragment(new HomeActivity());
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(R.layout.activity_login);
 
-        // Initialize recycler view
-//        initData();
-//        initRecyclerView();
+        setContentView(binding.getRoot());
 
 
         // Takes item id as param to identify the fragment that has been clicked
@@ -79,35 +73,9 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    // Intent to go from log in page to sign up page
-    public void goToSignUp(View view){
-        Intent goToSignUp = new Intent(this, SignUpActivity.class);
-        startActivity(goToSignUp);
-    }
 
-    // Intent to go from log in page to sign up page
-    public void goToLogin(View view){
-        Intent goToLogin = new Intent(this, LoginActivity.class);
-        startActivity(goToLogin);
-    }
 
-    // Add and remove data
-    private void initData() {
-        itemList.add(new ModelClass(R.drawable.placeholder2, "Bottle","Gently used bottle with replaceable nib", "$10", "Abdallah", "24/05/2002",R.drawable.seperator_line));
-        itemList.add(new ModelClass(R.drawable.placeholder2, "Bottle","Gently used bottle with replaceable nib", "$10", "Abdallah", "24/05/2002", R.drawable.seperator_line));
-        itemList.add(new ModelClass(R.drawable.placeholder2, "Bottle","Gently used bottle with replaceable nib", "$10", "Abdallah", "24/05/2002", R.drawable.seperator_line));
-    }
 
-    // Initialize recyclerView function
-    private void initRecyclerView() {
-        recyclerView = findViewById(R.id.listings_container);
-        layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new Adapter(itemList);
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
-    }
 
 }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="goToLogin"
     tools:context=".Signup">
 
     <TextView
@@ -22,8 +23,7 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="150dp"
-        android:background="@drawable/search_bg"
-        >
+        android:background="@drawable/search_bg">
 
 
         <EditText
@@ -44,11 +44,10 @@
         android:id="@+id/phone_bar"
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:layout_below="@id/fullname_bar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/search_bg"
-        android:layout_below="@id/fullname_bar"
-        >
+        android:background="@drawable/search_bg">
 
 
         <EditText
@@ -69,11 +68,10 @@
         android:id="@+id/address_bar"
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:layout_below="@id/phone_bar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/search_bg"
-        android:layout_below="@id/phone_bar"
-        >
+        android:background="@drawable/search_bg">
 
 
         <EditText
@@ -94,11 +92,10 @@
         android:id="@+id/username_bar"
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:layout_below="@id/address_bar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/search_bg"
-        android:layout_below="@id/address_bar"
-        >
+        android:background="@drawable/search_bg">
 
 
         <EditText
@@ -119,11 +116,10 @@
         android:id="@+id/password_bar"
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:layout_below="@id/username_bar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/search_bg"
-        android:layout_below="@id/username_bar"
-        >
+        android:background="@drawable/search_bg">
 
 
         <EditText
@@ -139,18 +135,16 @@
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
 
-
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/email_bar"
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:layout_below="@id/password_bar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/search_bg"
-        android:layout_below="@id/password_bar"
-        >
+        android:background="@drawable/search_bg">
 
 
         <EditText
@@ -206,8 +200,7 @@
         android:layout_below="@id/tx_haveacc"
         android:layout_centerInParent="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/login_signup_btn_bg"
-        android:onClick="goToLogIn">
+        android:background="@drawable/login_signup_btn_bg">
 
         <TextView
             android:id="@+id/tx_btn_login"
@@ -215,11 +208,11 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/poppins_regular"
+            android:onClick="goToLogin"
             android:text="Log In"
             android:textColor="@color/white"
             android:textSize="20sp" />
     </RelativeLayout>
-
 
 
 </RelativeLayout>

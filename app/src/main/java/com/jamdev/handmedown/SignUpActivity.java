@@ -11,14 +11,17 @@ import android.view.WindowManager;
 public class SignUpActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // These 3 lines hide the title and action bar
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getSupportActionBar().hide();
-        setContentView(R.layout.activity_sign_up);
+    protected void onCreate(Bundle savedInstanceState){
+    super.onCreate(savedInstanceState);
+    // These 3 lines hide the title and action bar
+    requestWindowFeature(Window.FEATURE_NO_TITLE);
+    this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    getSupportActionBar().hide();
+    setContentView(R.layout.activity_signup);
     }
 
-
+    public void goToLogin(View view){
+        Intent i2 = new Intent(this, LoginActivity.class);
+        startActivity(i2);
+    }
 }

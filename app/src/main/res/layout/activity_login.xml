@@ -124,7 +124,8 @@
         android:layout_below="@id/password_bar"
         android:layout_centerInParent="true"
         android:layout_marginTop="70dp"
-        android:background="@drawable/login_signup_btn_bg">
+        android:background="@drawable/login_signup_btn_bg"
+        android:clickable="true">
 
         <TextView
             android:id="@+id/tx_btn_login"
@@ -132,6 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/poppins_regular"
+            android:onClick="login"
             android:text="Log In"
             android:textColor="@color/white"
             android:textSize="20sp" />
@@ -142,9 +144,10 @@
         android:layout_width="175dp"
         android:layout_height="50dp"
         android:layout_below="@id/tx_noacc"
-        android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/login_signup_btn_bg">
+        android:layout_marginTop="15dp"
+        android:background="@drawable/login_signup_btn_bg"
+        android:onClick="goToSignup">
 
         <TextView
             android:id="@+id/tx_btn_signup"
@@ -152,7 +155,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/poppins_regular"
-            android:onClick="goToSignUp"
             android:text="Sign Up"
             android:textColor="@color/white"
             android:textSize="20sp" />
