@@ -67,7 +67,7 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:hint="@string/username"
-            android:textColor="@color/material_dynamic_neutral40"
+            android:textColor="@color/gray"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </RelativeLayout>
@@ -101,7 +101,7 @@
             android:fontFamily="@font/poppins_regular"
             android:hint="Password"
             android:importantForAutofill="no"
-            android:textColor="@color/material_dynamic_neutral40"
+            android:textColor="@color/gray"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </RelativeLayout>
