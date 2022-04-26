@@ -13,7 +13,7 @@ $UsernameQuery = $mysqli->query("SELECT username from user where username='$User
 
 // Check if there is an account with the entered username
 if($UsernameQuery->num_rows == 0){
-    $result = "com.jamdev.handmedown.User with entered username does not exist. Try again.";
+    $result = "User with entered username does not exist. Try again."; 
 }
 else{
 // Get the hashed password of the account from the database
@@ -35,13 +35,10 @@ if($CheckPassword){
     $Address = $FetchDetails['address'];
     $Email = $FetchDetails['email'];
 
-    $SplitName = explode(" ", $FullName);
-    $FullName = $SplitName[0];
-    
     $Result = "Accepted";
 }
 else{
-    $Result  = "Wrong password!";
+    $Result  = "Unable to log in. Check password or verify internet connectivity.";
 }
 
 }

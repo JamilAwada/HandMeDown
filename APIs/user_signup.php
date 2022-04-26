@@ -1,7 +1,7 @@
 <?php 
 include("db_info.php");
 
-// com.jamdev.handmedown.User data that will be collected in order to make a new account
+// User data that will be collected in order to make a new account
 $FullName = $_POST["FullName"];
 $PhoneNumber = $_POST["PhoneNumber"];
 $Address = $_POST["Address"];
@@ -36,7 +36,7 @@ $FullName = ucwords($FullName);
 $RegisterUser = $mysqli->query("INSERT INTO user (name, phone_number, address, email, username, password) VALUES ('$FullName','$PhoneNumber','$Address','$Email','$Username','$HashedPassword')"); 
 
 if($RegisterUser){
-    echo "com.jamdev.handmedown.User registered";
+    echo "User registered";
 }
 
 ?>

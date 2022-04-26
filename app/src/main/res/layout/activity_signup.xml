@@ -35,7 +35,7 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:hint="Full Name"
-            android:textColor="@color/material_dynamic_neutral40"
+            android:textColor="@color/gray"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </RelativeLayout>
@@ -59,7 +59,7 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:hint="Phone Number"
-            android:textColor="@color/material_dynamic_neutral40"
+            android:textColor="@color/gray"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </RelativeLayout>
@@ -83,7 +83,7 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:hint="Address"
-            android:textColor="@color/material_dynamic_neutral40"
+            android:textColor="@color/gray"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </RelativeLayout>
@@ -107,7 +107,7 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:hint="Email"
-            android:textColor="@color/material_dynamic_neutral40"
+            android:textColor="@color/gray"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </RelativeLayout>
@@ -131,7 +131,7 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:hint="@string/username"
-            android:textColor="@color/material_dynamic_neutral40"
+            android:textColor="@color/gray"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
 
@@ -156,7 +156,7 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:hint="Password"
-            android:textColor="@color/material_dynamic_neutral40"
+            android:textColor="@color/gray"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </RelativeLayout>
@@ -167,7 +167,6 @@
         android:layout_height="50dp"
         android:layout_below="@id/password_bar"
         android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="90dp"
         android:background="@drawable/login_signup_btn_bg">
 
@@ -200,7 +199,8 @@
         android:layout_below="@id/tx_haveacc"
         android:layout_centerInParent="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/login_signup_btn_bg">
+        android:background="@drawable/login_signup_btn_bg"
+        android:onClick="goToLogin">
 
         <TextView
             android:id="@+id/tx_btn_login"
@@ -208,7 +208,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/poppins_regular"
-            android:onClick="goToLogin"
             android:text="Log In"
             android:textColor="@color/white"
             android:textSize="20sp" />
