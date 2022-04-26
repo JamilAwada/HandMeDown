@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeActivity">
+
+    <fragment
+        android:id="@+id/homeActivity"
+        android:name="com.jamdev.handmedown.HomeActivity"
+        android:label="HomeActivity" >
+        <action
+            android:id="@+id/action_homeActivity_to_searchActivity"
+            app:destination="@id/searchActivity" />
+        <action
+            android:id="@+id/action_homeActivity_to_listingsActivity"
+            app:destination="@id/listingsActivity" />
+        <action
+            android:id="@+id/action_homeActivity_to_profileActivity"
+            app:destination="@id/profileActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchActivity"
+        android:name="com.jamdev.handmedown.SearchActivity"
+        android:label="SearchActivity" >
+        <action
+            android:id="@+id/action_searchActivity_to_homeActivity"
+            app:destination="@id/homeActivity" />
+        <action
+            android:id="@+id/action_searchActivity_to_profileActivity"
+            app:destination="@id/profileActivity" />
+        <action
+            android:id="@+id/action_searchActivity_to_listingsActivity"
+            app:destination="@id/listingsActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/listingsActivity"
+        android:name="com.jamdev.handmedown.ListingsActivity"
+        android:label="activity_listings"
+        tools:layout="@layout/activity_listings" >
+        <action
+            android:id="@+id/action_listingsActivity_to_homeActivity"
+            app:destination="@id/homeActivity" />
+        <action
+            android:id="@+id/action_listingsActivity_to_searchActivity"
+            app:destination="@id/searchActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileActivity"
+        android:name="com.jamdev.handmedown.ProfileActivity"
+        android:label="ProfileActivity" >
+        <action
+            android:id="@+id/action_profileActivity_to_homeActivity"
+            app:destination="@id/homeActivity" />
+        <action
+            android:id="@+id/action_profileActivity_to_listingsActivity"
+            app:destination="@id/listingsActivity" />
+        <action
+            android:id="@+id/action_profileActivity_to_searchActivity"
+            app:destination="@id/searchActivity" />
+    </fragment>
+</navigation>
