@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
+
+
+
         // Takes item id as param to identify the fragment that has been clicked
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
@@ -56,7 +59,19 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new ListingsActivity());
                     break;
                 case R.id.nav_profile:
-                    replaceFragment(new ProfileActivity());
+                    Intent LoginIntent = getIntent();
+                    User user = (User) LoginIntent.getParcelableExtra("User");
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Name", user.getFullName());
+                    bundle.putString("Phone Number", user.getPhoneNumber());
+                    bundle.putString("Address", user.getAddress());
+                    bundle.putString("Username", user.getUsername());
+                    bundle.putString("Email", user.getEmail());
+
+                    ProfileActivity fragobj = new ProfileActivity();
+                    fragobj.setArguments(bundle);
+                    replaceFragment(fragobj);
                     break;
             }
             return true;

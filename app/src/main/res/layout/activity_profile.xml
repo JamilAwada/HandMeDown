@@ -46,12 +46,12 @@
         android:id="@+id/tx_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/image_name"
         android:layout_marginStart="10dp"
         android:layout_marginTop="140dp"
+        android:layout_toEndOf="@id/image_name"
+        android:fontFamily="@font/poppins_medium"
         android:text="Susan Smith"
-        android:textSize="18sp"
-        android:fontFamily="@font/poppins_medium"/>
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/image_number"
@@ -87,13 +87,13 @@
         android:id="@+id/tx_address"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/image_address"
         android:layout_below="@id/image_number"
         android:layout_marginStart="10dp"
         android:layout_marginTop="32dp"
+        android:layout_toEndOf="@id/image_address"
+        android:fontFamily="@font/poppins_medium"
         android:text="Beirut, Tarik Jdide, Abu Shekir Street, Hanoun Daaboul Bldg"
-        android:textSize="18sp"
-        android:fontFamily="@font/poppins_medium"/>
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tx_account_details"
@@ -166,12 +166,13 @@
         android:id="@+id/tx_email_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/image_email"
         android:layout_below="@id/tx_email"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@id/image_email"
+        android:fontFamily="@font/poppins_medium"
         android:text="susansmith@gmail.com"
-        android:textSize="18sp"
-        android:fontFamily="@font/poppins_medium"/>
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/image_password"
