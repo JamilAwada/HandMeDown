@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="goToLogin"
     tools:context=".Signup">
 
     <TextView
@@ -89,10 +88,34 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/username_bar"
+        android:id="@+id/email_bar"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_below="@id/address_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/search_bg">
+
+
+        <EditText
+            android:id="@+id/email_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/poppins_regular"
+            android:hint="Email"
+            android:textColor="@color/gray"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/username_bar"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/email_bar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="@drawable/search_bg">
@@ -106,9 +129,10 @@
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
-            android:hint="Email"
+            android:hint="@string/username"
             android:textColor="@color/gray"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
 
     </RelativeLayout>
 
@@ -130,31 +154,6 @@
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
-            android:hint="@string/username"
-            android:textColor="@color/gray"
-            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/email_bar"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_below="@id/password_bar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/search_bg">
-
-
-        <EditText
-            android:id="@+id/email_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/transparent"
-            android:fontFamily="@font/poppins_regular"
             android:hint="Password"
             android:textColor="@color/gray"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
@@ -167,8 +166,9 @@
         android:layout_height="50dp"
         android:layout_below="@id/password_bar"
         android:layout_centerInParent="true"
-        android:layout_marginTop="90dp"
-        android:background="@drawable/login_signup_btn_bg">
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_signup_btn_bg"
+        android:onClick="registerUser">
 
         <TextView
             android:id="@+id/tx_btn_signup"
