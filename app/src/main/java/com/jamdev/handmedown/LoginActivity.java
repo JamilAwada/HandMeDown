@@ -122,14 +122,16 @@ public class LoginActivity extends AppCompatActivity {
                 String status = json.getString("status");
 
                 if (status.equalsIgnoreCase("accepted")) {
+                    String id = json.getString("Id");
                     String fullName = json.getString("Name");
                     String phoneNumber = json.getString("PhoneNumber");
                     String address = json.getString("Address");
                     String username = json.getString("Username");
                     String email = json.getString("Email");
+                    String password = json.getString("Password");
                     int profilePicture = R.drawable.profile_pic;
 
-                    User user = new User(fullName, phoneNumber, address, username, email, profilePicture);
+                    User user = new User(fullName, phoneNumber, address, username, email, password, profilePicture, id);
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("User", user);

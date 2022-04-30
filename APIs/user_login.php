@@ -7,6 +7,8 @@ $FullName = "";
 $PhoneNumber = "";
 $Address = "";
 $Email = "";
+$Id = "";
+
 
 // Query to find pre-existing user with entered username
 $UsernameQuery = $mysqli->query("SELECT username from user where username='$Username'");
@@ -27,13 +29,14 @@ $CheckPassword = password_verify($Password,$HashedPassword);
 if($CheckPassword){
 
     // Get user details to display on the "Profile" fragment
-    $DetailsQuery = $mysqli->query("SELECT name, phone_number, address, email from user where username='$Username'");
+    $DetailsQuery = $mysqli->query("SELECT name, phone_number, address, email, id from user where username='$Username'");
     
     $FetchDetails = mysqli_fetch_assoc($DetailsQuery);
     $FullName = $FetchDetails['name'];
     $PhoneNumber = $FetchDetails['phone_number'];
     $Address = $FetchDetails['address'];
     $Email = $FetchDetails['email'];
+    $Id = $FetchDetails['id'];
 
     $Result = "Accepted";
 }
@@ -43,6 +46,6 @@ else{
 
 }
 
-$Response= array("status" =>$Result,"Name"=> $FullName,"PhoneNumber"=>$PhoneNumber,"Address"=>$Address,"Username"=>$Username, "Email"=>$Email, "Password"=>$Password);
+$Response= array("status" =>$Result, "Id" => $Id, "Name"=> $FullName,"PhoneNumber"=>$PhoneNumber,"Address"=>$Address,"Username"=>$Username, "Email"=>$Email, "Password"=>$Password);
 
 echo json_encode($Response);  

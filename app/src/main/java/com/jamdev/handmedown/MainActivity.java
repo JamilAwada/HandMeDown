@@ -43,9 +43,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-
-
-
         // Takes item id as param to identify the fragment that has been clicked
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
@@ -68,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
                     bundle.putString("Address", user.getAddress());
                     bundle.putString("Username", user.getUsername());
                     bundle.putString("Email", user.getEmail());
+                    bundle.putString("Id", user.getId());
+                    bundle.putString("Password", user.getPassword());
 
                     ProfileActivity fragobj = new ProfileActivity();
                     fragobj.setArguments(bundle);

@@ -1,15 +1,14 @@
 <?php 
 include("db_info.php");
 
-// User data that will be collected in order to make a new account
+// User data that will be collected in order to modify user data
+$Id = $_POST["Id"];
 $FullName = $_POST["FullName"];
 $PhoneNumber = $_POST["PhoneNumber"];
 $Address = $_POST["Address"];
 $Email = $_POST["Email"];
 $Username = $_POST["Username"];
 $Password = $_POST["Password"];
-
-$Id = uniqid();
 
 // Check if the email is a valid email
 if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
@@ -21,24 +20,21 @@ $UsernameQuery = $mysqli->query("SELECT username from user where username='$User
 $EmailQuery = $mysqli->query("SELECT username from user where email='$Email'");
 
 // If returned rows is greater than 0 then duplicate exists
-if($UsernameQuery->num_rows > 0){
+if($UsernameQuery->num_rows > 1){
     exit('Username taken. Try another one.');
 }
-if($EmailQuery->num_rows > 0){
-    exit('Email taken. Try logging in with it if it belongs to you.');
+if($EmailQuery->num_rows > 1){
+    exit('Email taken. Try another one.');
 }
 
 // Hash the password 
 $HashedPassword = password_hash($Password, PASSWORD_BCRYPT);
 
-// Register the client to the Database
-$FullName = ucwords($FullName);
+// Query to update user info with the inputted details
+$UpdateUser = $mysqli->query("UPDATE user SET name = '$FullName', phone_number = '$PhoneNumber', address = '$Address', username = '$Username', email = '$Email', password = '$HashedPassword' WHERE id = '$Id'"); 
 
-// Query to register the new user with the inputted details
-$RegisterUser = $mysqli->query("INSERT INTO user (id, name, phone_number, address, email, username, password) VALUES ('$Id','$FullName','$PhoneNumber','$Address','$Email','$Username','$HashedPassword')"); 
-
-if($RegisterUser){
-    echo "User registered";
+if($UpdateUser){
+    echo "User info updated.";
 }
 
 ?>

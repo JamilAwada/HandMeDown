@@ -13,25 +13,30 @@ public class User implements Parcelable {
     private String password;
     private int profilePicture;
 
-    public User(String fullName, String phoneNumber, String address, String username, String email, int profilePicture) {
+
+    private String id;
+
+    public User(String fullName, String phoneNumber, String address, String username, String email, int profilePicture, String id) {
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.username = username;
         this.email = email;
         this.profilePicture = profilePicture;
+        this.id = id;
     }
 
-    public User(String fullName, String phoneNumber, String address, String username, String email, String password) {
+    public User(String fullName, String phoneNumber, String address, String username, String email, String password, String id) {
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.id = id;
     }
 
-    public User(String fullName, String phoneNumber, String address, String username, String email, String password, int profilePicture) {
+    public User(String fullName, String phoneNumber, String address, String username, String email, String password, int profilePicture, String id) {
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.address = address;
@@ -39,6 +44,7 @@ public class User implements Parcelable {
         this.email = email;
         this.password = password;
         this.profilePicture = profilePicture;
+        this.id = id;
     }
 
     protected User(Parcel in) {
@@ -49,6 +55,7 @@ public class User implements Parcelable {
         email = in.readString();
         password = in.readString();
         profilePicture = in.readInt();
+        id = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -62,6 +69,10 @@ public class User implements Parcelable {
             return new User[size];
         }
     };
+
+    public String getId() { return id; }
+
+    public void setId(String id) { this.id = id; }
 
     public String getFullName() {
         return fullName;
@@ -133,5 +144,6 @@ public class User implements Parcelable {
         parcel.writeString(email);
         parcel.writeString(password);
         parcel.writeInt(profilePicture);
+        parcel.writeString(id);
     }
 }
