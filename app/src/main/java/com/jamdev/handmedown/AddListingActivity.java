@@ -1,7 +1,10 @@
 package com.jamdev.handmedown;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -93,6 +96,7 @@ public class AddListingActivity extends AppCompatActivity implements AdapterView
         }
 
 
+
     }
 
     class listingAddAPI extends AsyncTask<String, Void, String> {
@@ -148,8 +152,8 @@ public class AddListingActivity extends AppCompatActivity implements AdapterView
             try {
                 if (s.equalsIgnoreCase("Listing added")) {
                     Toast.makeText(getApplicationContext(),"Listing added", Toast.LENGTH_SHORT).show();
-//                    Intent landing = new Intent(getApplicationContext(), ListingsActivity.class);
-//                    startActivity(landing);
+                    onBackPressed();
+                    onBackPressed();
                 } else {
                     Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                     Log.i("json", JSONObject);
@@ -172,5 +176,8 @@ public class AddListingActivity extends AppCompatActivity implements AdapterView
 
     }
 
+    public void returnToListings(View view){
+
+    }
 
 }

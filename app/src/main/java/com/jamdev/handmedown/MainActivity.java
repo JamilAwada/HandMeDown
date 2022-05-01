@@ -26,9 +26,15 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     User user;
-
     Intent LoginIntent;
 
+    String userName;
+    String userNumber;
+    String userAddress;
+    String userEmail;
+    String userUsername;
+    String userPassword;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +44,20 @@ public class MainActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
 
+
         // Default fragment is home
         replaceFragment(new HomeActivity());
+
+        LoginIntent = getIntent();
+        user = (User) LoginIntent.getParcelableExtra("User");
+
+        userName = user.getFullName();
+        userNumber = user.getPhoneNumber();
+        userAddress = user.getAddress();
+        userEmail = user.getEmail();
+        userUsername = user.getUsername();
+        userPassword = user.getPassword();
+        userID = user.getId();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
@@ -56,17 +74,16 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new SearchActivity());
                     break;
                 case R.id.nav_listings:
-                    LoginIntent = getIntent();
-                    user = (User) LoginIntent.getParcelableExtra("User");
+
 
                     Bundle bundle3 = new Bundle();
-                    bundle3.putString("Name", user.getFullName());
-                    bundle3.putString("Phone Number", user.getPhoneNumber());
-                    bundle3.putString("Address", user.getAddress());
-                    bundle3.putString("Username", user.getUsername());
-                    bundle3.putString("Email", user.getEmail());
-                    bundle3.putString("Id", user.getId());
-                    bundle3.putString("Password", user.getPassword());
+                    bundle3.putString("Name", userName);
+                    bundle3.putString("Phone Number", userNumber);
+                    bundle3.putString("Address", userAddress);
+                    bundle3.putString("Username", userUsername);
+                    bundle3.putString("Email", userEmail);
+                    bundle3.putString("Id", userID);
+                    bundle3.putString("Password", userPassword);
 
                     ListingsActivity fragobj3 = new ListingsActivity();
                     fragobj3.setArguments(bundle3);
@@ -74,17 +91,15 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.nav_profile:
-                    LoginIntent = getIntent();
-                    user = (User) LoginIntent.getParcelableExtra("User");
 
                     Bundle bundle4 = new Bundle();
-                    bundle4.putString("Name", user.getFullName());
-                    bundle4.putString("Phone Number", user.getPhoneNumber());
-                    bundle4.putString("Address", user.getAddress());
-                    bundle4.putString("Username", user.getUsername());
-                    bundle4.putString("Email", user.getEmail());
-                    bundle4.putString("Id", user.getId());
-                    bundle4.putString("Password", user.getPassword());
+                    bundle4.putString("Name", userName);
+                    bundle4.putString("Phone Number", userNumber);
+                    bundle4.putString("Address", userAddress);
+                    bundle4.putString("Username", userUsername);
+                    bundle4.putString("Email", userEmail);
+                    bundle4.putString("Id", userID);
+                    bundle4.putString("Password", userPassword);
 
                     ProfileActivity fragobj4 = new ProfileActivity();
                     fragobj4.setArguments(bundle4);
