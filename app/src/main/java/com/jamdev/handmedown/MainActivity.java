@@ -25,6 +25,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+    User user;
+
+    Intent LoginIntent;
 
 
     @Override
@@ -53,24 +56,39 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new SearchActivity());
                     break;
                 case R.id.nav_listings:
-                    replaceFragment(new ListingsActivity());
+                    LoginIntent = getIntent();
+                    user = (User) LoginIntent.getParcelableExtra("User");
+
+                    Bundle bundle3 = new Bundle();
+                    bundle3.putString("Name", user.getFullName());
+                    bundle3.putString("Phone Number", user.getPhoneNumber());
+                    bundle3.putString("Address", user.getAddress());
+                    bundle3.putString("Username", user.getUsername());
+                    bundle3.putString("Email", user.getEmail());
+                    bundle3.putString("Id", user.getId());
+                    bundle3.putString("Password", user.getPassword());
+
+                    ListingsActivity fragobj3 = new ListingsActivity();
+                    fragobj3.setArguments(bundle3);
+                    replaceFragment(fragobj3);
                     break;
+
                 case R.id.nav_profile:
-                    Intent LoginIntent = getIntent();
-                    User user = (User) LoginIntent.getParcelableExtra("User");
+                    LoginIntent = getIntent();
+                    user = (User) LoginIntent.getParcelableExtra("User");
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString("Name", user.getFullName());
-                    bundle.putString("Phone Number", user.getPhoneNumber());
-                    bundle.putString("Address", user.getAddress());
-                    bundle.putString("Username", user.getUsername());
-                    bundle.putString("Email", user.getEmail());
-                    bundle.putString("Id", user.getId());
-                    bundle.putString("Password", user.getPassword());
+                    Bundle bundle4 = new Bundle();
+                    bundle4.putString("Name", user.getFullName());
+                    bundle4.putString("Phone Number", user.getPhoneNumber());
+                    bundle4.putString("Address", user.getAddress());
+                    bundle4.putString("Username", user.getUsername());
+                    bundle4.putString("Email", user.getEmail());
+                    bundle4.putString("Id", user.getId());
+                    bundle4.putString("Password", user.getPassword());
 
-                    ProfileActivity fragobj = new ProfileActivity();
-                    fragobj.setArguments(bundle);
-                    replaceFragment(fragobj);
+                    ProfileActivity fragobj4 = new ProfileActivity();
+                    fragobj4.setArguments(bundle4);
+                    replaceFragment(fragobj4);
                     break;
             }
             return true;

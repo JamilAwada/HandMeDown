@@ -25,6 +25,8 @@ public class ListingsActivity extends Fragment {
     List<ModelClass> itemList = new ArrayList<>();
     Adapter adapter;
 
+    String userID;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class ListingsActivity extends Fragment {
                 goToAddListing(view);
             }
         });
+
+        userID = getArguments().getString("Id");
 
         return view;
 
@@ -71,6 +75,7 @@ public class ListingsActivity extends Fragment {
 
     public void goToAddListing(View view){
         Intent goToAddListing = new Intent(getContext(), AddListingActivity.class);
+        goToAddListing.putExtra("ID", userID);
         startActivity(goToAddListing);
     }
 

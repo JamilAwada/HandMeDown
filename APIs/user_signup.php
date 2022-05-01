@@ -9,7 +9,7 @@ $Email = $_POST["Email"];
 $Username = $_POST["Username"];
 $Password = $_POST["Password"];
 
-$Id = uniqid();
+$Id = rand(1, 999999);
 
 // Check if the email is a valid email
 if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
@@ -40,5 +40,6 @@ $RegisterUser = $mysqli->query("INSERT INTO user (id, name, phone_number, addres
 if($RegisterUser){
     echo "User registered";
 }
+
 
 ?>
