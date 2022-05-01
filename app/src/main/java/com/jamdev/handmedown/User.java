@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 public class User implements Parcelable {
 
+    private String id;
     private String fullName;
     private String phoneNumber;
     private String address;
@@ -13,8 +14,6 @@ public class User implements Parcelable {
     private String password;
     private int profilePicture;
 
-
-    private String id;
 
     public User(String fullName, String phoneNumber, String address, String username, String email, int profilePicture, String id) {
         this.fullName = fullName;
