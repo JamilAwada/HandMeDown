@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -70,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(i1);
     }
 
+
     class userAuthenticationAPI extends AsyncTask<String, Void, String> {
 
         @Override
@@ -129,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                     String username = json.getString("Username");
                     String email = json.getString("Email");
                     String password = json.getString("Password");
-                    int profilePicture = R.drawable.profile_pic;
+                    int profilePicture = R.drawable.no_picture;
 
                     User user = new User(fullName, phoneNumber, address, username, email, password, profilePicture, id);
 

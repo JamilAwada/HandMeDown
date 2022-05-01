@@ -109,6 +109,17 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="14dp"/>
 
+        <ImageView
+            android:id="@+id/btn_edit_listing"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/edit_listing"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"/>
+
+
+
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:id="@+id/seperator"
             android:layout_width="350dp"

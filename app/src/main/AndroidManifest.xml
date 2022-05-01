@@ -11,6 +11,7 @@
         android:roundIcon="@drawable/app_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.HandMeDown">
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="true"/>
