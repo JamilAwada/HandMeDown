@@ -12,4 +12,12 @@
     <string name="account_details">Account Details</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
+    <string-array name="categories">
+        <item>Toys</item>
+        <item>Clothing</item>
+        <item>Electronics</item>
+        <item>Gear</item>
+        <item>Disposables</item>
+        <item>Consumables</item>
+    </string-array>
 </resources>

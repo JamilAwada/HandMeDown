@@ -1,9 +1,11 @@
 package com.jamdev.handmedown;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +18,8 @@ import java.util.List;
 
 public class ListingsActivity extends Fragment {
 
+    RelativeLayout addListing;
+
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     List<ModelClass> itemList = new ArrayList<>();
@@ -26,7 +30,20 @@ public class ListingsActivity extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Initialize recycler view
         initData();
-        return inflater.inflate(R.layout.activity_listings, container, false);
+
+        View view = inflater.inflate(R.layout.activity_listings, container, false);
+
+        addListing = (RelativeLayout) view.findViewById(R.id.btn_new_listing);
+
+        addListing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToAddListing(view);
+            }
+        });
+
+        return view;
+
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
@@ -50,6 +67,11 @@ public class ListingsActivity extends Fragment {
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
+    }
+
+    public void goToAddListing(View view){
+        Intent goToAddListing = new Intent(getContext(), AddListingActivity.class);
+        startActivity(goToAddListing);
     }
 
 
