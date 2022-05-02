@@ -32,7 +32,7 @@ public class ListingsActivity extends Fragment {
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     List<Listing> itemList = new ArrayList<>();
-    Adapter adapter;
+    AdapterEditable adapter;
     private GetListingsAPI getListingsAPI;
     private String getListing_url = "http://10.0.2.2/HandMeDown/listing_fetch_seller.php?id=";
     String userID;
@@ -136,7 +136,7 @@ public class ListingsActivity extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new Adapter(itemList);
+        adapter = new AdapterEditable(itemList);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 

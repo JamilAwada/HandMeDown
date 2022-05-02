@@ -69,32 +69,11 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:id="@+id/listing_owner_icon"
-            android:background="@drawable/user"
-            android:layout_marginTop="15dp"
-            android:layout_toEndOf="@id/listing_title"
-            android:layout_below="@id/listing_price_tag"
-            android:layout_marginStart="120dp"/>
-
-        <TextView
-            android:id="@+id/listing_owner"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/listing_price"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="14dp"
-            android:layout_toEndOf="@id/listing_owner_icon"
-            android:fontFamily="@font/poppins_light"
-            android:text="Johnny" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
             android:id="@+id/listing_date_icon"
             android:background="@drawable/calendar"
             android:layout_marginTop="15dp"
             android:layout_toEndOf="@id/listing_title"
-            android:layout_below="@id/listing_owner_icon"
+            android:layout_below="@id/listing_price_tag"
             android:layout_marginStart="120dp"/>
 
         <TextView
@@ -105,9 +84,18 @@
             android:fontFamily="@font/poppins_light"
             android:textSize="10sp"
             android:layout_toEndOf="@id/listing_date_icon"
-            android:layout_below="@id/listing_owner"
+            android:layout_below="@id/listing_price"
             android:layout_marginStart="5dp"
             android:layout_marginTop="14dp"/>
+
+        <ImageView
+            android:id="@+id/btn_edit_listing"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/edit_listing"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"/>
 
 
 
