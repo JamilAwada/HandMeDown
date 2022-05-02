@@ -15,16 +15,18 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private List<Listing> itemList = new ArrayList<>();
+    private OnListingListener onListingListener;
 
-    public Adapter(List<Listing> itemList){
+    public Adapter(List<Listing> itemList, OnListingListener onListingListener){
         this.itemList = itemList;
+        this.onListingListener = onListingListener;
     }
 
     @NonNull
     @Override
     public Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listing_design, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, onListingListener);
     }
 
     @Override
@@ -45,7 +47,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return itemList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
 
         private ImageView listing_pic;
         private TextView listing_title;
@@ -53,16 +55,19 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         private TextView listing_price;
         private TextView listing_owner;
         private TextView listing_date;
+        OnListingListener onListingListener;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnListingListener onListingListener) {
             super(itemView);
-
+            this.onListingListener = onListingListener;
             listing_pic = itemView.findViewById(R.id.listing_pic);
             listing_title = itemView.findViewById(R.id.listing_title);
             listing_description = itemView.findViewById(R.id.listing_description);
             listing_price = itemView.findViewById(R.id.listing_price);
             listing_owner = itemView.findViewById(R.id.listing_owner);
             listing_date = itemView.findViewById(R.id.listing_date);
+
+            itemView.setOnClickListener(this);
 
         }
 
@@ -75,5 +80,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             listing_date.setText(date);
 
         }
+
+        @Override
+        public void onClick(View view) {
+            onListingListener.OnListingClick(getBindingAdapterPosition());
+        }
+    }
+
+    public interface OnListingListener{
+        void OnListingClick(int position);
     }
 }

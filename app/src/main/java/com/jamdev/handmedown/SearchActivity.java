@@ -29,7 +29,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends Fragment {
+public class SearchActivity extends Fragment implements Adapter.OnListingListener {
 
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
@@ -72,6 +72,14 @@ public class SearchActivity extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
 
+    }
+
+    @Override
+    public void OnListingClick(int position) {
+        itemList.get(position);
+        Log.i("test", "OnListingClick: ");
+        Intent intent = new Intent(getContext(), ListingExpanded.class);
+        startActivity(intent);
     }
 
     public class GetListingsAPI extends AsyncTask<String, Void, String> {
@@ -143,7 +151,7 @@ public class SearchActivity extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new Adapter(itemList);
+        adapter = new Adapter(itemList, this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
