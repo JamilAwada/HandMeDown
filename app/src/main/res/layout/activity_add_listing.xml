@@ -7,7 +7,7 @@
     tools:context=".AddListingActivity">
 
     <TextView
-        android:id="@+id/tx_new_listing"
+        android:id="@+id/tx_brand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -23,7 +23,7 @@
         android:id="@+id/listing_circle"
         app:cardCornerRadius="90dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/tx_new_listing"
+        android:layout_below="@id/tx_brand"
         android:layout_marginTop="30dp">
 
         <ImageView

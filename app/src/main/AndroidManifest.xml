@@ -12,19 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HandMeDown">
         <activity
-            android:name=".ConsumablesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".DisposablesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".GearActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ElectronicsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ClothingActivity"
+            android:name=".ListingExpanded"
             android:exported="false" />
         <activity
             android:name=".CategoryActivity"

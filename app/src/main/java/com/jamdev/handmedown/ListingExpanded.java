@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class ElectronicsActivity extends AppCompatActivity {
+public class ListingExpanded extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_electronics);
+        setContentView(R.layout.activity_listing_expanded);
     }
 }
