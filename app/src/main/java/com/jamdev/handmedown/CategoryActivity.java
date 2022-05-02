@@ -1,18 +1,12 @@
 package com.jamdev.handmedown;
 
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,48 +19,24 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListingsActivity extends Fragment {
-
-    RelativeLayout addListing;
+public class CategoryActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     List<Listing> itemList = new ArrayList<>();
     Adapter adapter;
     private GetListingsAPI getListingsAPI;
-    private String getListing_url = "http://10.0.2.2/HandMeDown/listing_fetch_seller.php?id=";
-    String userID;
+    private String getListing_url = "http://10.0.2.2/HandMeDown/listing_fetch_category.php?category=";
+    String category = "";
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-
-        View view = inflater.inflate(R.layout.activity_listings, container, false);
-
-        addListing = (RelativeLayout) view.findViewById(R.id.btn_new_listing);
-
-        addListing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToAddListing(view);
-            }
-        });
-
-        userID = getArguments().getString("Id");
-        getListing_url = getListing_url + userID;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_category);
+        category = getIntent().getExtras().getString("Category");
         getListingsAPI = new GetListingsAPI();
-        getListingsAPI.execute(getListing_url);
-
-
-        return view;
-
+        getListingsAPI.execute(getListing_url + category);
     }
-
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
-        initRecyclerView();
-    }
-
     public class GetListingsAPI extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... urls) {
             // URL and HTTP initialization to connect to API 2
@@ -103,7 +73,7 @@ public class ListingsActivity extends Fragment {
         protected void onPostExecute(String values) {
             super.onPostExecute(values);
             try {
-
+                Log.i("message", values);
                 JSONArray listJsonArray = new JSONArray(values);
 
                 for(int i=0;i<listJsonArray.length();i++){
@@ -132,8 +102,8 @@ public class ListingsActivity extends Fragment {
 
     // Initialize recyclerView function
     private void initRecyclerView() {
-        recyclerView = (RecyclerView) getView().findViewById(R.id.listings_container);
-        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView = (RecyclerView) findViewById(R.id.listings_container);
+        layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new Adapter(itemList);
@@ -141,12 +111,5 @@ public class ListingsActivity extends Fragment {
         adapter.notifyDataSetChanged();
 
     }
-
-    public void goToAddListing(View view){
-        Intent goToAddListing = new Intent(getContext(), AddListingActivity.class);
-        goToAddListing.putExtra("ID", userID);
-        startActivity(goToAddListing);
-    }
-
 
 }

@@ -21,17 +21,17 @@
         android:id="@+id/toys_card"
         android:layout_width="150dp"
         android:layout_height="175dp"
-        android:background="@drawable/category_card_blue"
         android:layout_below="@id/tx_categories"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="25dp">
+        android:layout_marginTop="25dp"
+        android:background="@drawable/category_card_blue">
 
         <ImageView
             android:id="@+id/image_category_bear"
             android:layout_width="110dp"
             android:layout_height="110dp"
-            app:srcCompat="@drawable/teddy_bear"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/teddy_bear" />
 
         <TextView
             android:id="@+id/tx_toys"
