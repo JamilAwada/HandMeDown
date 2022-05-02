@@ -14,9 +14,9 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
-    private List<ModelClass> itemList = new ArrayList<>();
+    private List<Listing> itemList = new ArrayList<>();
 
-    public Adapter(List<ModelClass> itemList){
+    public Adapter(List<Listing> itemList){
         this.itemList = itemList;
     }
 
@@ -30,15 +30,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
 
-        int resource = itemList.get(position).getListing_pic();
-        String title = itemList.get(position).getListing_title();
-        String description = itemList.get(position).getListing_description();
-        String price = itemList.get(position).getListing_price();
-        String owner = itemList.get(position).getListing_owner();
-        String date = itemList.get(position).getListing_date();
-        int divider = itemList.get(position).getSeperator();
+        int resource = itemList.get(position).getPicture();
+        String title = itemList.get(position).getTitle();
+        String description = itemList.get(position).getDescription();
+        String price = itemList.get(position).getPrice();
+        String owner = itemList.get(position).getSeller();
+        String date = itemList.get(position).getPosted_on();
 
-        holder.setData(resource,title,description,price,owner,date,divider);
+        holder.setData(resource,title,description,price,owner,date);
 
     }
     @Override
@@ -54,7 +53,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         private TextView listing_price;
         private TextView listing_owner;
         private TextView listing_date;
-        private ImageView seperator;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,18 +63,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             listing_price = itemView.findViewById(R.id.listing_price);
             listing_owner = itemView.findViewById(R.id.listing_owner);
             listing_date = itemView.findViewById(R.id.listing_date);
-            seperator = itemView.findViewById(R.id.seperator);
 
         }
 
-        public void setData(int resource, String title, String description, String price, String owner, String date, int divider) {
+        public void setData(int resource, String title, String description, String price, String owner, String date) {
             listing_pic.setImageResource(resource);
             listing_title.setText(title);
             listing_description.setText(description);
             listing_price.setText(price);
             listing_owner.setText(owner);
             listing_date.setText(date);
-            seperator.setImageResource(divider);
+
         }
     }
 }

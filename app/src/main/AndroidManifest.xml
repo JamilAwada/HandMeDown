@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HandMeDown">
         <activity
+            android:name=".ElectronicsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ClothingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ToysActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddListingActivity"
             android:exported="false" />
 

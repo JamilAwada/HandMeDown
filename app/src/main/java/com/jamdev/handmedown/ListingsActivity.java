@@ -1,6 +1,7 @@
 package com.jamdev.handmedown;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,16 +31,16 @@ public class ListingsActivity extends Fragment {
 
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
-    List<ModelClass> itemList = new ArrayList<>();
+    List<Listing> itemList = new ArrayList<>();
     Adapter adapter;
-
+    private GetListingsAPI getListingsAPI;
+    private String getListing_url = "http://10.0.2.2/HandMeDown/listing_fetch_seller.php?id=";
     String userID;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Initialize recycler view
-        initData();
+
 
         View view = inflater.inflate(R.layout.activity_listings, container, false);
 
@@ -45,6 +54,10 @@ public class ListingsActivity extends Fragment {
         });
 
         userID = getArguments().getString("Id");
+        getListing_url = getListing_url +userID;
+        getListingsAPI = new GetListingsAPI();
+        getListingsAPI.execute(getListing_url);
+
 
         return view;
 
@@ -54,12 +67,68 @@ public class ListingsActivity extends Fragment {
         initRecyclerView();
     }
 
-    // Add and remove data
-    private void initData() {
-        itemList.add(new ModelClass(R.drawable.placeholder2, "Bottle","Gently used bottle with replaceable nib", "$10", "Abdallah", "24/05/2002",R.drawable.seperator_line));
-        itemList.add(new ModelClass(R.drawable.placeholder2, "Bottle","Gently used bottle with replaceable nib", "$10", "Abdallah", "24/05/2002", R.drawable.seperator_line));
-        itemList.add(new ModelClass(R.drawable.placeholder2, "Bottle","Gently used bottle with replaceable nib", "$10", "Abdallah", "24/05/2002", R.drawable.seperator_line));
+    public class GetListingsAPI extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... urls) {
+            // URL and HTTP initialization to connect to API 2
+            URL url;
+            HttpURLConnection http;
+
+            try {
+                // Connect to API 2
+                url = new URL(urls[0]);
+                http = (HttpURLConnection) url.openConnection();
+
+                // Retrieve API 2 content
+                InputStream in = http.getInputStream();
+                InputStreamReader reader = new InputStreamReader(in);
+
+                // Read API 2 content line by line
+                BufferedReader br = new BufferedReader(reader);
+                StringBuilder sb = new StringBuilder();
+
+                String line;
+                while ((line = br.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+
+                br.close();
+                // Return content from API 2
+                return sb.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        protected void onPostExecute(String values) {
+            super.onPostExecute(values);
+            try {
+
+                JSONArray listJsonArray = new JSONArray(values);
+
+                for(int i=0;i<listJsonArray.length();i++){
+                    JSONObject jsonItemObject = listJsonArray.getJSONObject(i);
+                    String id = jsonItemObject.getString("id");
+                    String title = jsonItemObject.getString("title");
+                    String description = jsonItemObject.getString("description");
+                    String price = jsonItemObject.getString("price");
+                    String category = jsonItemObject.getString("category");
+                    String seller = jsonItemObject.getString("seller");
+                    String posted_on = jsonItemObject.get("posted_on").toString();
+                    int pictures = R.drawable.placeholder2;
+
+
+                    Listing listing = new Listing(title,description,price,category,seller,posted_on,pictures);
+                    itemList.add(listing);
+                }
+                initRecyclerView();
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        }
     }
+
 
     // Initialize recyclerView function
     private void initRecyclerView() {

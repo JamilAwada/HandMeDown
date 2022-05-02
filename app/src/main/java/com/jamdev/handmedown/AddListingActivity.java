@@ -177,7 +177,8 @@ public class AddListingActivity extends AppCompatActivity implements AdapterView
     }
 
     public void returnToListings(View view){
-
+        onBackPressed();
+        onBackPressed();
     }
 
 }
