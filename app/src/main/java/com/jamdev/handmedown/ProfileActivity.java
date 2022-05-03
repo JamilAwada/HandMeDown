@@ -79,7 +79,7 @@ public class ProfileActivity extends Fragment {
         tx_email_input.setInputType(InputType.TYPE_NULL);
         tx_password_input = (EditText) view.findViewById(R.id.tx_password_input);
         tx_password_input.setInputType(InputType.TYPE_NULL);
-        btn_save_changes = (RelativeLayout) view.findViewById(R.id.save_changes);
+        btn_save_changes = (RelativeLayout) view.findViewById(R.id.btn_user_save_changes);
         btn_logout = (RelativeLayout) view.findViewById(R.id.btn_logout);
         icon_settings = (ImageView) view.findViewById(R.id.image_settings);
 

@@ -14,11 +14,11 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
-    private List<Listing> itemList = new ArrayList<>();
+    private List<Listing> listings = new ArrayList<>();
     private OnListingListener onListingListener;
 
-    public Adapter(List<Listing> itemList, OnListingListener onListingListener){
-        this.itemList = itemList;
+    public Adapter(List<Listing> listings, OnListingListener onListingListener){
+        this.listings = listings;
         this.onListingListener = onListingListener;
     }
 
@@ -32,52 +32,53 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
 
-        int resource = itemList.get(position).getPicture();
-        String title = itemList.get(position).getTitle();
-        String description = itemList.get(position).getDescription();
-        String price = itemList.get(position).getPrice();
-        String owner = itemList.get(position).getSeller();
-        String date = itemList.get(position).getPosted_on();
+        String listingTitle = listings.get(position).getTitle();
+        String listingDescription = listings.get(position).getDescription();
+        String listingPrice = listings.get(position).getPrice();
+        String listingDate = listings.get(position).getPosted_on();
+        String listingSeller = listings.get(position).getSeller();
+        int listingPicture = listings.get(position).getPicture();
 
-        holder.setData(resource,title,description,price,owner,date);
+        holder.setData(listingPicture,listingTitle,listingDescription,listingPrice,listingSeller,listingDate);
 
     }
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return listings.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
 
-        private ImageView listing_pic;
-        private TextView listing_title;
-        private TextView listing_description;
-        private TextView listing_price;
-        private TextView listing_owner;
-        private TextView listing_date;
+        private TextView listingTitleView;
+        private TextView listingDescriptionView;
+        private TextView listingPriceView;
+        private TextView listingDateView;
+        private TextView listingOwnerView;
+        private ImageView listingPictureView;
+
         OnListingListener onListingListener;
 
         public ViewHolder(@NonNull View itemView, OnListingListener onListingListener) {
             super(itemView);
             this.onListingListener = onListingListener;
-            listing_pic = itemView.findViewById(R.id.listing_pic);
-            listing_title = itemView.findViewById(R.id.listing_title);
-            listing_description = itemView.findViewById(R.id.listing_description);
-            listing_price = itemView.findViewById(R.id.listing_price);
-            listing_owner = itemView.findViewById(R.id.listing_owner);
-            listing_date = itemView.findViewById(R.id.listing_date);
+            listingPictureView = itemView.findViewById(R.id.card_picture);
+            listingTitleView = itemView.findViewById(R.id.listing_title);
+            listingDescriptionView = itemView.findViewById(R.id.card_description);
+            listingPriceView = itemView.findViewById(R.id.card_price_text);
+            listingOwnerView = itemView.findViewById(R.id.card_seller_text);
+            listingDateView = itemView.findViewById(R.id.card_date_text);
 
             itemView.setOnClickListener(this);
 
         }
 
         public void setData(int resource, String title, String description, String price, String owner, String date) {
-            listing_pic.setImageResource(resource);
-            listing_title.setText(title);
-            listing_description.setText(description);
-            listing_price.setText(price);
-            listing_owner.setText(owner);
-            listing_date.setText(date);
+            listingPictureView.setImageResource(resource);
+            listingTitleView.setText(title);
+            listingDescriptionView.setText(description);
+            listingPriceView.setText(price);
+            listingOwnerView.setText(owner);
+            listingDateView.setText(date);
 
         }
 

@@ -182,7 +182,7 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
 
     // Initialize recyclerView function
     private void initRecyclerView() {
-        recyclerView = (RecyclerView) findViewById(R.id.listings_container);
+        recyclerView = (RecyclerView) findViewById(R.id.container_listings);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);

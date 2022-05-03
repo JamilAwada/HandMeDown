@@ -11,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.util.Locale;
-
 public class HomeActivity extends Fragment {
 
     RelativeLayout toys;
@@ -28,12 +26,12 @@ public class HomeActivity extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_home, container, false);
 
-        toys = (RelativeLayout) view.findViewById(R.id.toys_card);
-        clothing = (RelativeLayout) view.findViewById(R.id.clothing_card);
-        electronics = (RelativeLayout) view.findViewById(R.id.electronics_card);
-        gear = (RelativeLayout) view.findViewById(R.id.gear_card);
-        disposables = (RelativeLayout) view.findViewById(R.id.disposables_card);
-        consumables = (RelativeLayout) view.findViewById(R.id.consumables_card);
+        toys = (RelativeLayout) view.findViewById(R.id.card_toys);
+        clothing = (RelativeLayout) view.findViewById(R.id.card_clothing);
+        electronics = (RelativeLayout) view.findViewById(R.id.card_electronics);
+        gear = (RelativeLayout) view.findViewById(R.id.card_gear);
+        disposables = (RelativeLayout) view.findViewById(R.id.card_disposables);
+        consumables = (RelativeLayout) view.findViewById(R.id.card_consumables);
 
         toys.setOnClickListener(new View.OnClickListener() {
             @Override

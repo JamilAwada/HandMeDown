@@ -1,12 +1,7 @@
 package com.jamdev.handmedown;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -63,9 +58,9 @@ public class AddListingActivity extends AppCompatActivity implements AdapterView
         getSupportActionBar().hide();
         setContentView(R.layout.activity_add_listing);
 
-        titleInput = (EditText) findViewById(R.id.title_input);
-        descriptionInput = (EditText) findViewById(R.id.description_input);
-        priceInput = (EditText) findViewById(R.id.price_input);
+        titleInput = (EditText) findViewById(R.id.et_title);
+        descriptionInput = (EditText) findViewById(R.id.et_description);
+        priceInput = (EditText) findViewById(R.id.et_price);
         addListingBtn = (RelativeLayout) findViewById(R.id.btn_add_new);
 
         categoryInput = (Spinner) findViewById(R.id.spinner_categories);

@@ -1,28 +1,16 @@
 package com.jamdev.handmedown;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-import com.jamdev.handmedown.databinding.ActivityMainBinding;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -37,7 +25,6 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -56,8 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
 
-        usernameInput = (EditText) findViewById(R.id.username_input);
-        passwordInput = (EditText) findViewById(R.id.password_input);
+        usernameInput = (EditText) findViewById(R.id.et_username);
+        passwordInput = (EditText) findViewById(R.id.et_password);
 
     }
 

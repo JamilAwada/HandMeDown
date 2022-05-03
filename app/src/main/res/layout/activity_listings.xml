@@ -10,17 +10,17 @@
         android:id="@+id/btn_new_listing"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:background="@drawable/category_card_green"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp">
+        android:layout_marginStart="20dp"
+        android:background="@drawable/category_card_green">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="New Listing"
             android:fontFamily="@font/poppins_regular"
-            android:textColor="@color/white"
-            android:layout_centerInParent="true"/>
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 
@@ -28,9 +28,9 @@
         android:id="@+id/btn_refresh_listings"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:background="@drawable/category_card_blue"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="100dp">
+        android:layout_marginStart="100dp"
+        android:background="@drawable/category_card_blue">
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,11 +43,12 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/container_listings"
         android:layout_below="@id/btn_new_listing"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:id="@+id/listings_container">
+        >
 
     </androidx.recyclerview.widget.RecyclerView>
 

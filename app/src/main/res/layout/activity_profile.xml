@@ -12,8 +12,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="Profile"
-        android:textSize="32sp"
         android:fontFamily="@font/poppins_medium"
+        android:textSize="32sp"
         android:textColor="@color/black"/>
 
     <ImageView
@@ -23,10 +23,10 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
-        app:srcCompat="@drawable/settings" />
+        app:srcCompat="@drawable/settings"/>
 
     <ImageView
-        android:id="@+id/image_placeholder"
+        android:id="@+id/image_profile_picture"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_alignParentEnd="true"
@@ -38,9 +38,9 @@
         android:id="@+id/image_name"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:srcCompat="@drawable/user_2"
         android:layout_marginTop="140dp"
-        android:layout_marginStart="20dp"/>
+        android:layout_marginStart="20dp"
+        app:srcCompat="@drawable/user_2"/>
 
     <EditText
         android:id="@+id/tx_name"
@@ -49,11 +49,11 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="140dp"
         android:layout_toEndOf="@id/image_name"
-        android:background="@null"
         android:inputType="none"
+        android:text="Name"
         android:fontFamily="@font/poppins_medium"
-        android:text="Susan Smith"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:background="@null"/>
 
     <ImageView
         android:id="@+id/image_number"
@@ -72,7 +72,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="32dp"
         android:layout_toEndOf="@id/image_number"
-        android:text="+961 76 792 706"
+        android:text="Phone Number"
         android:textSize="18sp"
         android:fontFamily="@font/poppins_medium"
         android:background="@null"
@@ -82,10 +82,10 @@
         android:id="@+id/image_address"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:srcCompat="@drawable/address"
         android:layout_below="@id/image_number"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="32dp"
-        android:layout_marginStart="20dp"/>
+        app:srcCompat="@drawable/address"/>
 
     <EditText
         android:id="@+id/tx_address"
@@ -95,10 +95,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="32dp"
         android:layout_toEndOf="@id/image_address"
-        android:fontFamily="@font/poppins_medium"
-        android:text="Beirut, Tarik Jdide, Abu Shekir Street, Hanoun Daaboul Bldg"
-        android:textSize="18sp"
         android:background="@null"
+        android:text="Address"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="18sp"
         android:inputType="none"/>
 
     <TextView
@@ -109,18 +109,18 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="50dp"
         android:text="@string/account_details"
-        android:textSize="24sp"
         android:fontFamily="@font/poppins_medium"
+        android:textSize="24sp"
         android:textColor="@color/black"/>
 
     <ImageView
         android:id="@+id/image_username"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:srcCompat="@drawable/quote"
         android:layout_below="@id/tx_account_details"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="17dp"
-        android:layout_marginStart="20dp"/>
+        app:srcCompat="@drawable/quote"/>
 
     <TextView
         android:id="@+id/tx_username"
@@ -142,8 +142,8 @@
         android:layout_below="@id/tx_username"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/image_username"
+        android:text="Username"
         android:fontFamily="@font/poppins_medium"
-        android:text="SuperMom123"
         android:textSize="18sp"
         android:background="@null"
         android:inputType="none"/>
@@ -152,10 +152,10 @@
         android:id="@+id/image_email"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:srcCompat="@drawable/at_email"
         android:layout_below="@id/image_username"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="52dp"
-        android:layout_marginStart="20dp"/>
+        app:srcCompat="@drawable/at_email"/>
 
     <TextView
         android:id="@+id/tx_email"
@@ -178,8 +178,8 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@id/image_email"
+        android:text="Email"
         android:fontFamily="@font/poppins_medium"
-        android:text="susansmith@gmail.com"
         android:textSize="18sp"
         android:background="@null"
         android:inputType="none"/>
@@ -188,10 +188,10 @@
         android:id="@+id/image_password"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:srcCompat="@drawable/key"
         android:layout_below="@id/image_email"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="52dp"
-        android:layout_marginStart="20dp"/>
+        app:srcCompat="@drawable/key"/>
 
     <TextView
         android:id="@+id/tx_password"
@@ -201,11 +201,11 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="47dp"
         android:layout_toEndOf="@id/image_password"
-        android:clickable="true"
-        android:fontFamily="@font/poppins_semibold"
         android:text="Password"
+        android:fontFamily="@font/poppins_semibold"
         android:textColor="@color/baby_blue"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:clickable="true"/>
 
     <EditText
         android:id="@+id/tx_password_input"
@@ -215,29 +215,29 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@id/image_password"
-        android:background="@null"
+        android:text="Password"
         android:fontFamily="@font/poppins_medium"
-        android:inputType="none"
-        android:text="susansmith@gmail.com"
         android:textSize="18sp"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:background="@null"
+        android:inputType="none"/>
 
     <RelativeLayout
-        android:id="@+id/save_changes"
+        android:id="@+id/btn_user_save_changes"
         android:layout_width="100dp"
         android:layout_height="35dp"
         android:layout_below="@id/tx_password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:background="@drawable/save_changes_bg"
         android:clickable="false"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        android:background="@drawable/save_changes_bg">
 
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/check" />
+            android:background="@drawable/check"/>
 
     </RelativeLayout>
 
@@ -247,8 +247,8 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/category_card_red"
-        android:layout_marginBottom="40dp">
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/category_card_red">
 
         <TextView
             android:layout_width="wrap_content"

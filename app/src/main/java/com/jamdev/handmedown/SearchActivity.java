@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,7 +61,7 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
 
         initRecyclerView();
 
-        searchInput = (EditText) view.findViewById(R.id.search_input);
+        searchInput = (EditText) view.findViewById(R.id.et_search);
 
         searchInput.addTextChangedListener(new TextWatcher() {
 
@@ -216,7 +215,7 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
 
     // Initialize recyclerView function
     private void initRecyclerView() {
-        recyclerView = (RecyclerView) getView().findViewById(R.id.listings_container);
+        recyclerView = (RecyclerView) getView().findViewById(R.id.container_listings);
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);

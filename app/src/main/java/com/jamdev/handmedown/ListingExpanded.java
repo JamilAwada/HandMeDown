@@ -4,21 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class ListingExpanded extends AppCompatActivity {
 
@@ -36,12 +25,12 @@ public class ListingExpanded extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing_expanded);
 
-        title = (TextView) findViewById(R.id.title_input);
-        price = (TextView) findViewById(R.id.price_input);
-        description = (TextView) findViewById(R.id.description_input);
-        sellerName = (TextView) findViewById(R.id.seller_name);
-        sellerAddress = (TextView) findViewById(R.id.seller_address);
-        sellerNumber = (TextView) findViewById(R.id.phone_number);
+        title = (TextView) findViewById(R.id.et_title);
+        price = (TextView) findViewById(R.id.et_price);
+        description = (TextView) findViewById(R.id.et_description);
+        sellerName = (TextView) findViewById(R.id.tx_seller_name);
+        sellerAddress = (TextView) findViewById(R.id.tx_seller_address);
+        sellerNumber = (TextView) findViewById(R.id.tx_seller_number);
         date = (TextView) findViewById(R.id.posted_on);
         callButton = (ImageView) findViewById(R.id.btn_call);
 

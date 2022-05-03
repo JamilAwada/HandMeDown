@@ -55,12 +55,12 @@ public class SignUpActivity extends AppCompatActivity {
     getSupportActionBar().hide();
     setContentView(R.layout.activity_signup);
 
-    fullNameInput = (EditText) findViewById(R.id.fullname_input);
-    phoneNumberInput =(EditText) findViewById(R.id.phone_input);
-    addressInput = (EditText) findViewById(R.id.address_input);
-    emailInput = (EditText) findViewById(R.id.email_input);
-    usernameInput = (EditText) findViewById(R.id.username_input);
-    passwordInput = (EditText) findViewById(R.id.password_input);
+    fullNameInput = (EditText) findViewById(R.id.et_name);
+    phoneNumberInput =(EditText) findViewById(R.id.et_number);
+    addressInput = (EditText) findViewById(R.id.et_address);
+    emailInput = (EditText) findViewById(R.id.et_email);
+    usernameInput = (EditText) findViewById(R.id.et_username);
+    passwordInput = (EditText) findViewById(R.id.et_password);
     }
 
     public void registerUser(View view) {

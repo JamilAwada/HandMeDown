@@ -15,9 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -78,12 +75,12 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            listing_pic = itemView.findViewById(R.id.listing_pic);
+            listing_pic = itemView.findViewById(R.id.card_picture);
             listing_title = itemView.findViewById(R.id.listing_title);
-            listing_description = itemView.findViewById(R.id.listing_description);
-            listing_price = itemView.findViewById(R.id.listing_price);
-            listing_date = itemView.findViewById(R.id.listing_date);
-            edit_btn = itemView.findViewById(R.id.btn_edit_listing);
+            listing_description = itemView.findViewById(R.id.card_description);
+            listing_price = itemView.findViewById(R.id.card_price_text);
+            listing_date = itemView.findViewById(R.id.card_date_text);
+            edit_btn = itemView.findViewById(R.id.card_btn_edit);
 
 
             edit_btn.setOnClickListener(new View.OnClickListener() {

@@ -1,6 +1,5 @@
 package com.jamdev.handmedown;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,8 +14,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -61,9 +58,9 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
         getSupportActionBar().hide();
         setContentView(R.layout.activity_edit_listing);
 
-        titleInput = (EditText) findViewById(R.id.title_input);
-        descriptionInput = (EditText) findViewById(R.id.description_input);
-        priceInput = (EditText) findViewById(R.id.price_input);
+        titleInput = (EditText) findViewById(R.id.et_title);
+        descriptionInput = (EditText) findViewById(R.id.et_description);
+        priceInput = (EditText) findViewById(R.id.et_price);
         saveChanges = (RelativeLayout) findViewById(R.id.btn_save_changes);
 
         categoryInput = (Spinner) findViewById(R.id.spinner_categories);

@@ -1,15 +1,12 @@
 package com.jamdev.handmedown;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -154,7 +151,7 @@ public class ListingsActivity extends Fragment  {
 
     // Initialize recyclerView function
     private void initRecyclerView() {
-        recyclerView = (RecyclerView) getView().findViewById(R.id.listings_container);
+        recyclerView = (RecyclerView) getView().findViewById(R.id.container_listings);
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);

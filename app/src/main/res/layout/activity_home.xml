@@ -18,7 +18,7 @@
         android:textColor="@color/black"/>
 
     <RelativeLayout
-        android:id="@+id/toys_card"
+        android:id="@+id/card_toys"
         android:layout_width="150dp"
         android:layout_height="175dp"
         android:layout_below="@id/tx_categories"
@@ -40,15 +40,15 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="5dp"
-            android:fontFamily="@font/poppins_medium"
             android:text="@string/toys"
+            android:fontFamily="@font/poppins_medium"
             android:textColor="@color/white"
             tools:ignore="TextContrastCheck" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/clothing_card"
+        android:id="@+id/card_clothing"
         android:layout_width="150dp"
         android:layout_height="175dp"
         android:background="@drawable/category_card_pink"
@@ -71,19 +71,19 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="5dp"
-            android:fontFamily="@font/poppins_medium"
             android:text="@string/clothing"
+            android:fontFamily="@font/poppins_medium"
             android:textColor="@color/white"
             tools:ignore="TextContrastCheck" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/electronics_card"
+        android:id="@+id/card_electronics"
         android:layout_width="150dp"
         android:layout_height="175dp"
         android:background="@drawable/category_card_red"
-        android:layout_below="@id/toys_card"
+        android:layout_below="@id/card_toys"
         android:layout_marginStart="30dp"
         android:layout_marginTop="25dp">
 
@@ -101,19 +101,19 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="5dp"
-            android:fontFamily="@font/poppins_medium"
             android:text="@string/electronics"
+            android:fontFamily="@font/poppins_medium"
             android:textColor="@color/white"
             tools:ignore="TextContrastCheck" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/gear_card"
+        android:id="@+id/card_gear"
         android:layout_width="150dp"
         android:layout_height="175dp"
         android:background="@drawable/category_card_green"
-        android:layout_below="@id/clothing_card"
+        android:layout_below="@id/card_clothing"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="30dp"
         android:layout_marginTop="25dp">
@@ -125,8 +125,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="5dp"
-            android:fontFamily="@font/poppins_medium"
             android:text="@string/gear"
+            android:fontFamily="@font/poppins_medium"
             android:textColor="@color/white"
             tools:ignore="TextContrastCheck" />
 
@@ -140,11 +140,11 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/disposables_card"
+        android:id="@+id/card_disposables"
         android:layout_width="150dp"
         android:layout_height="175dp"
         android:background="@drawable/category_card_navy"
-        android:layout_below="@id/electronics_card"
+        android:layout_below="@id/card_electronics"
         android:layout_marginStart="30dp"
         android:layout_marginTop="25dp">
 
@@ -155,8 +155,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="5dp"
-            android:fontFamily="@font/poppins_medium"
             android:text="@string/disposables"
+            android:fontFamily="@font/poppins_medium"
             android:textColor="@color/white"
             tools:ignore="TextContrastCheck" />
 
@@ -170,11 +170,11 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/consumables_card"
+        android:id="@+id/card_consumables"
         android:layout_width="150dp"
         android:layout_height="175dp"
         android:background="@drawable/category_card_orange"
-        android:layout_below="@id/gear_card"
+        android:layout_below="@id/card_gear"
         android:layout_marginEnd="30dp"
         android:layout_marginTop="25dp"
         android:layout_alignParentEnd="true">
@@ -186,8 +186,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="5dp"
-            android:fontFamily="@font/poppins_medium"
             android:text="@string/consumables"
+            android:fontFamily="@font/poppins_medium"
             android:textColor="@color/white"
             tools:ignore="TextContrastCheck" />
 

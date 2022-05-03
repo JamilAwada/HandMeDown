@@ -5,24 +5,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
+        android:id="@+id/card_container"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:background="@color/white">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/card_picture_container"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:id="@+id/listing_circle"
             app:cardCornerRadius="90dp"
             android:layout_marginTop="15dp"
             android:layout_marginStart="10dp">
 
             <ImageView
+                android:id="@+id/card_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/listing_pic"
-                android:scaleType="centerCrop"
-                android:src="@drawable/placeholder1"/>
+                android:src="@drawable/no_listing_picture"
+                android:scaleType="centerCrop"/>
 
         </androidx.cardview.widget.CardView>
 
@@ -30,66 +31,66 @@
             android:id="@+id/listing_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/listing_circle"
-            android:layout_marginTop="15dp"
+            android:layout_toEndOf="@id/card_picture_container"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:text="Title"
             android:fontFamily="@font/poppins_regular"
-            android:text="Stroller"
             android:textSize="18sp"/>
 
         <TextView
-            android:id="@+id/listing_description"
+            android:id="@+id/card_description"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/listing_title"
-            android:layout_toEndOf="@id/listing_circle"
+            android:layout_toEndOf="@id/card_picture_container"
             android:layout_marginStart="10dp"
-            android:fontFamily="@font/poppins_light"
-            android:text="Barely used stroller, like new, comes with an extra bag and replaceable wheels"/>
+            android:text="Description"
+            android:fontFamily="@font/poppins_light"/>
 
         <ImageView
-            android:id="@+id/listing_price_tag"
+            android:id="@+id/card_price_icon"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_toEndOf="@id/listing_title"
             android:layout_marginStart="120dp"
             android:layout_marginTop="15dp"
-            android:layout_toEndOf="@id/listing_title"
-            android:background="@drawable/tag" />
+            android:background="@drawable/tag"/>
 
         <TextView
-            android:id="@+id/listing_price"
+            android:id="@+id/card_price_text"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/card_price_icon"
             android:layout_marginStart="5dp"
             android:layout_marginTop="14dp"
-            android:layout_toEndOf="@id/listing_price_tag"
-            android:fontFamily="@font/poppins_light"
-            android:text="$80" />
+            android:text="$ Price"
+            android:fontFamily="@font/poppins_light"/>
 
         <ImageView
+            android:id="@+id/card_date_icon"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:id="@+id/listing_date_icon"
             android:background="@drawable/calendar"
             android:layout_marginTop="15dp"
             android:layout_toEndOf="@id/listing_title"
-            android:layout_below="@id/listing_price_tag"
+            android:layout_below="@id/card_price_icon"
             android:layout_marginStart="120dp"/>
 
         <TextView
+            android:id="@+id/card_date_text"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:id="@+id/listing_date"
-            android:text="04/24/2022"
-            android:fontFamily="@font/poppins_light"
-            android:textSize="10sp"
-            android:layout_toEndOf="@id/listing_date_icon"
-            android:layout_below="@id/listing_price"
+            android:layout_toEndOf="@id/card_date_icon"
+            android:layout_below="@id/card_price_text"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="14dp"/>
+            android:layout_marginTop="14dp"
+            android:text="Date"
+            android:fontFamily="@font/poppins_light"
+            android:textSize="10sp"/>
 
         <ImageView
-            android:id="@+id/btn_edit_listing"
+            android:id="@+id/card_btn_edit"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:src="@drawable/edit_listing"
@@ -97,16 +98,14 @@
             android:layout_marginEnd="10dp"
             android:layout_marginTop="5dp"/>
 
-
-
         <androidx.constraintlayout.utils.widget.ImageFilterView
-            android:id="@+id/seperator"
+            android:id="@+id/card_seperator"
             android:layout_width="350dp"
             android:layout_height="2dp"
-            android:layout_below="@id/listing_description"
+            android:layout_below="@id/card_description"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:background="@drawable/seperator_line" />
+            android:background="@drawable/seperator_line"/>
 
 
 
