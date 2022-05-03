@@ -27,10 +27,6 @@ public class ListingExpanded extends AppCompatActivity {
     TextView sellerNumber;
     TextView date;
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

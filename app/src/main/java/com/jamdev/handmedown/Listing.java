@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 public class Listing implements Parcelable {
 
+    private String id;
     private String title;
     private String description;
     private String price;
@@ -12,6 +13,8 @@ public class Listing implements Parcelable {
     private String seller;
     private String posted_on;
     private int picture;
+
+
 
     public Listing(String title, String description, String price, String category, String seller, String posted_on, int picture) {
         this.title = title;
@@ -21,6 +24,24 @@ public class Listing implements Parcelable {
         this.seller = seller;
         this.posted_on = posted_on;
         this.picture = picture;
+    }
+    public Listing(String id, String title, String description, String price, String category, String seller, String posted_on, int picture) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+        this.seller = seller;
+        this.posted_on = posted_on;
+        this.picture = picture;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -80,6 +101,7 @@ public class Listing implements Parcelable {
     }
 
     protected Listing(Parcel in) {
+        id = in.readString();
         title = in.readString();
         description = in.readString();
         price = in.readString();
@@ -109,6 +131,7 @@ public class Listing implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
         parcel.writeString(title);
         parcel.writeString(description);
         parcel.writeString(price);

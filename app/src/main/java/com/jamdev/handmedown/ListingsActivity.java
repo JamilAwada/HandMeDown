@@ -32,13 +32,17 @@ import java.util.List;
 public class ListingsActivity extends Fragment  {
 
     RelativeLayout addListing;
+    RelativeLayout refreshBtn;
 
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     List<Listing> itemList = new ArrayList<>();
     AdapterEditable adapter;
     private GetListingsAPI getListingsAPI;
+
+
     private String getListing_url = "http://10.0.2.2/HandMeDown/listing_fetch_seller.php?id=";
+
     String userID;
 
     ImageView edit_btn;
@@ -51,7 +55,14 @@ public class ListingsActivity extends Fragment  {
         View view = inflater.inflate(R.layout.activity_listings, container, false);
 
         addListing = (RelativeLayout) view.findViewById(R.id.btn_new_listing);
-        edit_btn = (ImageView) view.findViewById(R.id.btn_edit_listing);
+        refreshBtn = (RelativeLayout) view.findViewById(R.id.btn_refresh_listings);
+
+        refreshBtn.setOnClickListener(new View.OnClickListener(){
+           @Override
+           public void onClick(View view){
+               refresh(view);
+           }
+        });
 
         addListing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +75,7 @@ public class ListingsActivity extends Fragment  {
         getListing_url = getListing_url + userID;
         getListingsAPI = new GetListingsAPI();
         getListingsAPI.execute(getListing_url);
+
 
         return view;
 
@@ -126,7 +138,7 @@ public class ListingsActivity extends Fragment  {
                     int pictures = R.drawable.placeholder2;
 
 
-                    Listing listing = new Listing(title,description,price,category,seller,posted_on,pictures);
+                    Listing listing = new Listing(id, title,description,price,category,seller,posted_on,pictures);
                     itemList.add(listing);
                 }
                 initRecyclerView();
@@ -136,6 +148,8 @@ public class ListingsActivity extends Fragment  {
             }
         }
     }
+
+
 
 
     // Initialize recyclerView function
@@ -157,8 +171,9 @@ public class ListingsActivity extends Fragment  {
     }
 
 
-
-
-
-
+    public void refresh(View view){
+        itemList.clear();
+        GetListingsAPI api = new GetListingsAPI();
+        api.execute(getListing_url);
+    }
 }

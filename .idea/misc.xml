@@ -16,16 +16,18 @@
         <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/drawable/search_bg.xml" value="0.1935" />
         <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/drawable/seperator_line.xml" value="0.2265" />
         <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_add_listing.xml" value="0.3625" />
+        <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_add_listing_fragment.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_authentication.xml" value="0.2" />
         <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_clothing.xml" value="0.246875" />
         <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_consumables.xml" value="0.246875" />
         <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_disposables.xml" value="0.246875" />
         <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_edit_listing.xml" value="0.2" />
+        <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_edit_listing_fragment.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_electronics.xml" value="0.246875" />
         <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_gear.xml" value="0.246875" />
         <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_listing_expanded.xml" value="0.33" />
-        <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_listings.xml" value="0.25" />
+        <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_listings.xml" value="0.1" />
         <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_login.xml" value="0.3625" />
         <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Jamil/Desktop/HandMeDown/Code/app/src/main/res/layout/activity_profile.xml" value="0.22" />

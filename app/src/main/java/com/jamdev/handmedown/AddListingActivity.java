@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -48,6 +49,8 @@ public class AddListingActivity extends AppCompatActivity implements AdapterView
 
     String JSONObject;
 
+    RelativeLayout addListingBtn;
+
     private String URL = "http://10.0.2.2/HandMeDown/listing_add.php";
     listingAddAPI API;
 
@@ -63,6 +66,7 @@ public class AddListingActivity extends AppCompatActivity implements AdapterView
         titleInput = (EditText) findViewById(R.id.title_input);
         descriptionInput = (EditText) findViewById(R.id.description_input);
         priceInput = (EditText) findViewById(R.id.price_input);
+        addListingBtn = (RelativeLayout) findViewById(R.id.btn_add_new);
 
         categoryInput = (Spinner) findViewById(R.id.spinner_categories);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -75,6 +79,13 @@ public class AddListingActivity extends AppCompatActivity implements AdapterView
         Bundle bundle = getIntent().getExtras();
 
         userID = bundle.getString("ID");
+
+        addListingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addListing(view);
+            }
+        });
     }
 
     public void addListing(View view) {

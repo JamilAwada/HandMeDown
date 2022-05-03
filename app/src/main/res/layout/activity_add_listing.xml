@@ -124,7 +124,6 @@
         android:layout_below="@id/price_bar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:onClick="addListing"
         android:background="@drawable/category_card_blue">
 
 
