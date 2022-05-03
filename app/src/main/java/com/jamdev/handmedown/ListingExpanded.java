@@ -3,9 +3,12 @@ package com.jamdev.handmedown;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -26,6 +29,7 @@ public class ListingExpanded extends AppCompatActivity {
     TextView sellerAddress;
     TextView sellerNumber;
     TextView date;
+    ImageView callButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,7 @@ public class ListingExpanded extends AppCompatActivity {
         sellerAddress = (TextView) findViewById(R.id.seller_address);
         sellerNumber = (TextView) findViewById(R.id.phone_number);
         date = (TextView) findViewById(R.id.posted_on);
+        callButton = (ImageView) findViewById(R.id.btn_call);
 
         Bundle intent = getIntent().getExtras();
         Listing item = intent.getParcelable("Listing");
@@ -51,6 +56,18 @@ public class ListingExpanded extends AppCompatActivity {
         sellerAddress.setText(seller.getAddress());
         sellerNumber.setText(seller.getPhoneNumber());
         date.setText(item.getPosted_on());
+
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String dial_number = sellerNumber.getText().toString();
+                String dialled_number = "tel:" + dial_number;
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse(dialled_number));
+                startActivity(intent);
+            }
+        });
+
     }
 
 
