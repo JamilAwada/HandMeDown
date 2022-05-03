@@ -20,7 +20,8 @@
         <activity
             android:name=".AddListingActivity"
             android:exported="false" />
-
+        <activity android:name=".EditListingActivity"
+            android:exported="false"/>
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

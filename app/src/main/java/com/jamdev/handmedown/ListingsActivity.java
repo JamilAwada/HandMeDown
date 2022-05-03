@@ -1,11 +1,15 @@
 package com.jamdev.handmedown;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -25,7 +29,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListingsActivity extends Fragment {
+public class ListingsActivity extends Fragment  {
 
     RelativeLayout addListing;
 
@@ -37,6 +41,8 @@ public class ListingsActivity extends Fragment {
     private String getListing_url = "http://10.0.2.2/HandMeDown/listing_fetch_seller.php?id=";
     String userID;
 
+    ImageView edit_btn;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,6 +51,7 @@ public class ListingsActivity extends Fragment {
         View view = inflater.inflate(R.layout.activity_listings, container, false);
 
         addListing = (RelativeLayout) view.findViewById(R.id.btn_new_listing);
+        edit_btn = (ImageView) view.findViewById(R.id.btn_edit_listing);
 
         addListing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +65,6 @@ public class ListingsActivity extends Fragment {
         getListingsAPI = new GetListingsAPI();
         getListingsAPI.execute(getListing_url);
 
-
         return view;
 
     }
@@ -66,6 +72,8 @@ public class ListingsActivity extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         initRecyclerView();
     }
+
+
 
     public class GetListingsAPI extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... urls) {
@@ -136,7 +144,7 @@ public class ListingsActivity extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new AdapterEditable(itemList);
+        adapter = new AdapterEditable(getContext(), itemList);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -147,6 +155,10 @@ public class ListingsActivity extends Fragment {
         goToAddListing.putExtra("ID", userID);
         startActivity(goToAddListing);
     }
+
+
+
+
 
 
 }
