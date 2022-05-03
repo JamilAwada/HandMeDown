@@ -241,4 +241,23 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/btn_logout"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/category_card_red"
+        android:layout_marginBottom="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Log Out"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
 </RelativeLayout>

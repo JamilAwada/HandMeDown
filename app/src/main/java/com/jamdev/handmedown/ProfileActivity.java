@@ -1,5 +1,6 @@
 package com.jamdev.handmedown;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
@@ -39,6 +40,7 @@ public class ProfileActivity extends Fragment {
     EditText tx_email_input;
     EditText tx_password_input;
     RelativeLayout btn_save_changes;
+    RelativeLayout btn_logout;
     TextView password_toggle;
     ImageView icon_settings;
 
@@ -78,6 +80,7 @@ public class ProfileActivity extends Fragment {
         tx_password_input = (EditText) view.findViewById(R.id.tx_password_input);
         tx_password_input.setInputType(InputType.TYPE_NULL);
         btn_save_changes = (RelativeLayout) view.findViewById(R.id.save_changes);
+        btn_logout = (RelativeLayout) view.findViewById(R.id.btn_logout);
         icon_settings = (ImageView) view.findViewById(R.id.image_settings);
 
         isInModificationMode = false;
@@ -120,6 +123,13 @@ public class ProfileActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 togglePass(view);
+            }
+        });
+
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout(view);
             }
         });
 
@@ -210,6 +220,8 @@ public class ProfileActivity extends Fragment {
             tx_username_input.setInputType(InputType.TYPE_CLASS_TEXT);
             tx_email_input.setInputType(InputType.TYPE_CLASS_TEXT);
             tx_password_input.setInputType(InputType.TYPE_CLASS_TEXT);
+            btn_logout.setVisibility(View.INVISIBLE);
+            btn_logout.setClickable(false);
             isInModificationMode = true;
         } else {
             btn_save_changes.setClickable(false);
@@ -220,6 +232,8 @@ public class ProfileActivity extends Fragment {
             tx_username_input.setInputType(InputType.TYPE_NULL);
             tx_email_input.setInputType(InputType.TYPE_NULL);
             tx_password_input.setInputType(InputType.TYPE_NULL);
+            btn_logout.setVisibility(View.VISIBLE);
+            btn_logout.setClickable(true);
             isInModificationMode = false;
         }
 
@@ -243,6 +257,8 @@ public class ProfileActivity extends Fragment {
         tx_username_input.setInputType(InputType.TYPE_NULL);
         tx_email_input.setInputType(InputType.TYPE_NULL);
         tx_password_input.setInputType(InputType.TYPE_NULL);
+        btn_logout.setVisibility(View.VISIBLE);
+        btn_logout.setClickable(true);
         isInModificationMode = false;
 
         API = new userInfoUpdateAPI();
@@ -261,6 +277,21 @@ public class ProfileActivity extends Fragment {
         }
 
     }
+
+    public void logout(View view){
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        startActivity(intent);
+        finishActivity();
+    }
+
+    private void finishActivity() {
+        if(getActivity() != null) {
+            getActivity().finish();
+        }
+    }
+
+
+
 
 
 }

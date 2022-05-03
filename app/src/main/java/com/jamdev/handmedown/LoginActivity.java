@@ -66,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
         user_authentication_api.execute();
     }
 
+
+
     public void goToSignup(View view) {
         Intent i1 = new Intent(this, SignUpActivity.class);
         startActivity(i1);
@@ -138,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("User", user);
                     startActivity(intent);
+                    finish();
                 } else {
                     // Notify user of wrong password/invalid username
                     Toast.makeText(LoginActivity.this, status, Toast.LENGTH_SHORT).show();
