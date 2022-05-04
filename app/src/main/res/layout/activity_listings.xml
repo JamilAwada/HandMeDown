@@ -43,11 +43,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/container_listings"
-        android:layout_below="@id/btn_new_listing"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        >
+        android:layout_below="@id/btn_new_listing"
+        android:layout_marginTop="20dp"
+        android:background="@color/white">
 
     </androidx.recyclerview.widget.RecyclerView>
 

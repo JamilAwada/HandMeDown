@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,6 +35,7 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
 
     RelativeLayout headerBackground;
     TextView categoryView;
+    ImageView returnButton;
 
     String category = "";
     User seller;
@@ -60,6 +63,7 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
         getListingsAPI.execute(getListingURL + category);
 
         headerBackground = (RelativeLayout) findViewById(R.id.bg_header);
+        returnButton = (ImageView) findViewById(R.id.btn_return);
 
         switch (category){
             case "Toys":
@@ -81,6 +85,14 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
                 headerBackground.setBackgroundResource(R.drawable.category_header_pink);
                 break;
         }
+
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                returnToHome(view);
+            }
+        });
+
 
         categoryView = (TextView) findViewById(R.id.tx_category);
         categoryView.setText(category);
@@ -145,7 +157,7 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
                     String category = jsonItemObject.getString("category");
                     String seller = jsonItemObject.getString("seller");
                     String posted_on = jsonItemObject.get("posted_on").toString();
-                    int pictures = R.drawable.placeholder2;
+                    int pictures = R.drawable.no_listing_picture;
 
                     Listing listing = new Listing(title,description,price,category,posted_on,seller,pictures);
 
@@ -239,6 +251,10 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
+    }
+
+    public void returnToHome(View view){
+        finish();
     }
 
 }

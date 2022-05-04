@@ -128,7 +128,7 @@ public class ListingsActivity extends Fragment  {
                     String category = jsonItemObject.getString("category");
                     String seller = jsonItemObject.getString("seller");
                     String posted_on = jsonItemObject.get("posted_on").toString();
-                    int picture = R.drawable.placeholder2;
+                    int picture = R.drawable.no_listing_picture;
 
                     Listing listing = new Listing(id, title,description,price,category,seller,posted_on,picture);
 

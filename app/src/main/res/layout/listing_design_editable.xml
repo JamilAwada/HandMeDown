@@ -52,60 +52,56 @@
             android:id="@+id/card_price_icon"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_toEndOf="@id/listing_title"
-            android:layout_marginStart="120dp"
+            android:layout_marginStart="265dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/tag"/>
+            android:background="@drawable/tag" />
 
         <TextView
             android:id="@+id/card_price_text"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/card_price_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="14dp"
+            android:layout_toEndOf="@id/card_price_icon"
+            android:fontFamily="@font/poppins_light"
             android:text="$ Price"
-            android:fontFamily="@font/poppins_light"/>
+            android:textSize="16sp"/>
 
         <ImageView
             android:id="@+id/card_date_icon"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@drawable/calendar"
-            android:layout_marginTop="15dp"
-            android:layout_toEndOf="@id/listing_title"
-            android:layout_below="@id/card_price_icon"
-            android:layout_marginStart="120dp"/>
+            android:layout_marginStart="265dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/calendar" />
 
         <TextView
             android:id="@+id/card_date_text"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/card_date_icon"
-            android:layout_below="@id/card_price_text"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="14dp"
-            android:text="Date"
+            android:layout_marginTop="50dp"
+            android:layout_toEndOf="@id/card_date_icon"
             android:fontFamily="@font/poppins_light"
-            android:textSize="10sp"/>
+            android:text="Date"
+            android:textSize="16sp"/>
 
         <ImageView
             android:id="@+id/card_btn_edit"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:src="@drawable/edit_listing"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="70dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="5dp"/>
+            android:src="@drawable/settings" />
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:id="@+id/card_seperator"
             android:layout_width="350dp"
             android:layout_height="2dp"
-            android:layout_below="@id/card_description"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/seperator_line"/>
+            android:layout_marginTop="120dp"
+            android:background="@drawable/seperator_line" />
 
 
 
