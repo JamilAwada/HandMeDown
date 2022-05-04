@@ -8,6 +8,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,6 +31,9 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
     List<Listing> listings = new ArrayList<>();
     Adapter adapter;
 
+    RelativeLayout headerBackground;
+    TextView categoryView;
+
     String category = "";
     User seller;
 
@@ -41,12 +48,44 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // These 3 lines hide the title and action bar
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_category);
 
         // Receive the selected category from the home fragment and execute the API to fetch all items belonging to that category
         category = getIntent().getExtras().getString("Category");
         getListingsAPI = new GetListingsAPI();
         getListingsAPI.execute(getListingURL + category);
+
+        headerBackground = (RelativeLayout) findViewById(R.id.bg_header);
+
+        switch (category){
+            case "Toys":
+                headerBackground.setBackgroundResource(R.drawable.category_header_blue);
+                break;
+            case "Clothing":
+                headerBackground.setBackgroundResource(R.drawable.category_header_yellow);
+                break;
+            case "Electronics":
+                headerBackground.setBackgroundResource(R.drawable.category_header_red);
+                break;
+            case "Gear":
+                headerBackground.setBackgroundResource(R.drawable.category_header_green);
+                break;
+            case "Disposables":
+                headerBackground.setBackgroundResource(R.drawable.category_header_navy);
+                break;
+            case "Consumables":
+                headerBackground.setBackgroundResource(R.drawable.category_header_pink);
+                break;
+        }
+
+        categoryView = (TextView) findViewById(R.id.tx_category);
+        categoryView.setText(category);
+
+
     }
 
     // Clicking on a listing gets you its position in the list and executes the API with that listing's seller
