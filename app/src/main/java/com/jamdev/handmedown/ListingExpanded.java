@@ -11,13 +11,13 @@ import android.widget.TextView;
 
 public class ListingExpanded extends AppCompatActivity {
 
-    TextView title;
-    TextView price;
-    TextView description;
+    TextView listingTitle;
+    TextView listingPrice;
+    TextView listingDescription;
     TextView sellerName;
     TextView sellerAddress;
     TextView sellerNumber;
-    TextView date;
+    TextView listingDate;
     ImageView callButton;
 
     @Override
@@ -25,35 +25,36 @@ public class ListingExpanded extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing_expanded);
 
-        title = (TextView) findViewById(R.id.et_title);
-        price = (TextView) findViewById(R.id.et_price);
-        description = (TextView) findViewById(R.id.et_description);
+        listingTitle = (TextView) findViewById(R.id.et_title);
+        listingPrice = (TextView) findViewById(R.id.et_price);
+        listingDescription = (TextView) findViewById(R.id.et_description);
         sellerName = (TextView) findViewById(R.id.tx_seller_name);
         sellerAddress = (TextView) findViewById(R.id.tx_seller_address);
         sellerNumber = (TextView) findViewById(R.id.tx_seller_number);
-        date = (TextView) findViewById(R.id.posted_on);
+        listingDate = (TextView) findViewById(R.id.posted_on);
         callButton = (ImageView) findViewById(R.id.btn_call);
 
-        Bundle intent = getIntent().getExtras();
-        Listing item = intent.getParcelable("Listing");
-        User seller = intent.getParcelable("Seller");
+        Bundle fromListings = getIntent().getExtras();
+        Listing item = fromListings.getParcelable("Listing");
+        User seller = fromListings.getParcelable("Seller");
 
-        title.setText(item.getTitle());
-        price.setText(item.getPrice());
-        description.setText(item.getDescription());
-        sellerName.setText(seller.getFullName());
+        listingTitle.setText(item.getTitle());
+        listingPrice.setText(item.getPrice());
+        listingDescription.setText(item.getDescription());
+        sellerName.setText(seller.getName());
         sellerAddress.setText(seller.getAddress());
-        sellerNumber.setText(seller.getPhoneNumber());
-        date.setText(item.getPosted_on());
+        sellerNumber.setText(seller.getNumber());
+        listingDate.setText(item.getPosted_on());
 
+        // The call button redirects the user to their device's native phone application
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String dial_number = sellerNumber.getText().toString();
-                String dialled_number = "tel:" + dial_number;
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse(dialled_number));
-                startActivity(intent);
+                String sellerNumber = ListingExpanded.this.sellerNumber.getText().toString();
+                String dialledNumber = "tel:" + sellerNumber;
+                Intent goToDevicePhoneApp = new Intent(Intent.ACTION_DIAL);
+                goToDevicePhoneApp.setData(Uri.parse(dialledNumber));
+                startActivity(goToDevicePhoneApp);
             }
         });
 

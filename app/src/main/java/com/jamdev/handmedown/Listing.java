@@ -10,29 +10,28 @@ public class Listing implements Parcelable {
     private String description;
     private String price;
     private String category;
-    private String seller;
     private String posted_on;
+    private String seller;
     private int picture;
 
 
-
-    public Listing(String title, String description, String price, String category, String seller, String posted_on, int picture) {
+    public Listing(String title, String description, String price, String category, String posted_on, String seller, int picture) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.category = category;
-        this.seller = seller;
         this.posted_on = posted_on;
+        this.seller = seller;
         this.picture = picture;
     }
-    public Listing(String id, String title, String description, String price, String category, String seller, String posted_on, int picture) {
+    public Listing(String id, String title, String description, String price, String category, String posted_on, String seller, int picture) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.price = price;
         this.category = category;
-        this.seller = seller;
         this.posted_on = posted_on;
+        this.seller = seller;
         this.picture = picture;
     }
 
@@ -76,20 +75,20 @@ public class Listing implements Parcelable {
         this.category = category;
     }
 
-    public String getSeller() {
-        return seller;
-    }
-
-    public void setSeller(String seller) {
-        this.seller = seller;
-    }
-
     public String getPosted_on() {
         return posted_on;
     }
 
     public void setPosted_on(String posted_on) {
         this.posted_on = posted_on;
+    }
+
+    public String getSeller() {
+        return seller;
+    }
+
+    public void setSeller(String seller) {
+        this.seller = seller;
     }
 
     public int getPicture() {
@@ -106,8 +105,8 @@ public class Listing implements Parcelable {
         description = in.readString();
         price = in.readString();
         category = in.readString();
-        seller = in.readString();
         posted_on = in.readString();
+        seller = in.readString();
         picture = in.readInt();
     }
 
@@ -136,8 +135,8 @@ public class Listing implements Parcelable {
         parcel.writeString(description);
         parcel.writeString(price);
         parcel.writeString(category);
-        parcel.writeString(seller);
         parcel.writeString(posted_on);
+        parcel.writeString(seller);
         parcel.writeInt(picture);
     }
 }

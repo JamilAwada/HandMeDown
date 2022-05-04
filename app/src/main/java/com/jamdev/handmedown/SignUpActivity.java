@@ -27,23 +27,23 @@ import java.util.ArrayList;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    EditText fullNameInput;
-    EditText phoneNumberInput;
-    EditText addressInput;
-    EditText emailInput;
-    EditText usernameInput;
-    EditText passwordInput;
+    EditText nameView;
+    EditText numberView;
+    EditText addressView;
+    EditText usernameView;
+    EditText emailView;
+    EditText passwordView;
 
-    String fullName = "";
-    String phoneNumber = "";
+    String name = "";
+    String number = "";
     String address = "";
-    String email = "";
     String username = "";
+    String email = "";
     String password = "";
 
     String JSONObject;
 
-    private String URL = "http://10.0.2.2/HandMeDown/user_signup.php";
+    private String userSignUpURL = "http://10.0.2.2/HandMeDown/user_signup.php";
     userRegistrationAPI API;
 
     @Override
@@ -55,26 +55,26 @@ public class SignUpActivity extends AppCompatActivity {
     getSupportActionBar().hide();
     setContentView(R.layout.activity_signup);
 
-    fullNameInput = (EditText) findViewById(R.id.et_name);
-    phoneNumberInput =(EditText) findViewById(R.id.et_number);
-    addressInput = (EditText) findViewById(R.id.et_address);
-    emailInput = (EditText) findViewById(R.id.et_email);
-    usernameInput = (EditText) findViewById(R.id.et_username);
-    passwordInput = (EditText) findViewById(R.id.et_password);
+    nameView = (EditText) findViewById(R.id.et_name);
+    numberView =(EditText) findViewById(R.id.et_number);
+    addressView = (EditText) findViewById(R.id.et_address);
+    emailView = (EditText) findViewById(R.id.et_email);
+    usernameView = (EditText) findViewById(R.id.et_username);
+    passwordView = (EditText) findViewById(R.id.et_password);
     }
 
     public void registerUser(View view) {
 
-        fullName = fullNameInput.getText().toString();
-        phoneNumber = phoneNumberInput.getText().toString();
-        address = addressInput.getText().toString();
-        email = emailInput.getText().toString();
-        username = usernameInput.getText().toString();
-        password = passwordInput.getText().toString();
+        name = nameView.getText().toString();
+        number = numberView.getText().toString();
+        address = addressView.getText().toString();
+        email = emailView.getText().toString();
+        username = usernameView.getText().toString();
+        password = passwordView.getText().toString();
 
 
         if (password.equalsIgnoreCase("") || username.equalsIgnoreCase("")
-                || fullName.equalsIgnoreCase("") || email.equalsIgnoreCase("") || fullName.equalsIgnoreCase("") || address.equalsIgnoreCase("")) {
+                || name.equalsIgnoreCase("") || email.equalsIgnoreCase("") || name.equalsIgnoreCase("") || address.equalsIgnoreCase("")) {
             Toast.makeText(this, "Incomplete form. Please fill in the blank fields.", Toast.LENGTH_SHORT).show();
         } else {
             API = new userRegistrationAPI();
@@ -88,20 +88,19 @@ public class SignUpActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-
+            // URL and HTTP initialization to connect to API
             HttpClient http_client = new DefaultHttpClient();
-            HttpPost http_post = new HttpPost(URL);
-
+            HttpPost http_post = new HttpPost(userSignUpURL);
 
             BasicNameValuePair usernameParam = new BasicNameValuePair("Username", username);
             BasicNameValuePair passwordParam = new BasicNameValuePair("Password", password);
-            BasicNameValuePair fullNameParam = new BasicNameValuePair("FullName", fullName);
+            BasicNameValuePair nameParam = new BasicNameValuePair("Name", name);
             BasicNameValuePair emailParam = new BasicNameValuePair("Email", email);
             BasicNameValuePair addressParam = new BasicNameValuePair("Address", address);
-            BasicNameValuePair phoneNumberParam = new BasicNameValuePair("PhoneNumber", phoneNumber);
+            BasicNameValuePair numberParam = new BasicNameValuePair("Number", number);
             ArrayList<NameValuePair> name_value_pair_list = new ArrayList<>();
-            name_value_pair_list.add(fullNameParam);
-            name_value_pair_list.add(phoneNumberParam);
+            name_value_pair_list.add(nameParam);
+            name_value_pair_list.add(numberParam);
             name_value_pair_list.add(addressParam);
             name_value_pair_list.add(emailParam);
             name_value_pair_list.add(usernameParam);
@@ -109,13 +108,13 @@ public class SignUpActivity extends AppCompatActivity {
 
 
             try {
-                // This is used to send the list with the api in an encoded form entity
+                // Send the list of name value pairs using an encoded form entity
                 UrlEncodedFormEntity url_encoded_form_entity = new UrlEncodedFormEntity(name_value_pair_list);
 
-                // This sets the entity (which holds the list of values) in the http_post object
+                // Set the post object to contain the entity
                 http_post.setEntity(url_encoded_form_entity);
 
-                // This gets the response from the post api and returns a string of the response.
+                // Reads API response and makes it a string
                 HttpResponse http_response = http_client.execute(http_post);
                 InputStream input_stream = http_response.getEntity().getContent();
                 InputStreamReader input_stream_reader = new InputStreamReader(input_stream);
@@ -155,7 +154,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void goToLogin(View view){
-        Intent i2 = new Intent(this, LoginActivity.class);
-        startActivity(i2);
+        Intent goToLogin = new Intent(this, LoginActivity.class);
+        startActivity(goToLogin);
     }
 }

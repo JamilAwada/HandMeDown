@@ -35,19 +35,15 @@ public class ListingsActivity extends Fragment  {
     LinearLayoutManager layoutManager;
     List<Listing> itemList = new ArrayList<>();
     AdapterEditable adapter;
+
+    private String getListingURL = "http://10.0.2.2/HandMeDown/listing_fetch_seller.php?id=";
     private GetListingsAPI getListingsAPI;
 
-
-    private String getListing_url = "http://10.0.2.2/HandMeDown/listing_fetch_seller.php?id=";
-
     String userID;
-
-    ImageView edit_btn;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
 
         View view = inflater.inflate(R.layout.activity_listings, container, false);
 
@@ -68,11 +64,11 @@ public class ListingsActivity extends Fragment  {
             }
         });
 
+        // Get all user listings on creation (I.E, search for all listings with foreign key matching the user's ID)
         userID = getArguments().getString("Id");
-        getListing_url = getListing_url + userID;
+        getListingURL = getListingURL + userID;
         getListingsAPI = new GetListingsAPI();
-        getListingsAPI.execute(getListing_url);
-
+        getListingsAPI.execute(getListingURL);
 
         return view;
 
@@ -83,23 +79,22 @@ public class ListingsActivity extends Fragment  {
     }
 
 
-
     public class GetListingsAPI extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... urls) {
-            // URL and HTTP initialization to connect to API 2
+            // URL and HTTP initialization to connect to API
             URL url;
             HttpURLConnection http;
 
             try {
-                // Connect to API 2
+                // Connect to API
                 url = new URL(urls[0]);
                 http = (HttpURLConnection) url.openConnection();
 
-                // Retrieve API 2 content
+                // Retrieve API content
                 InputStream in = http.getInputStream();
                 InputStreamReader reader = new InputStreamReader(in);
 
-                // Read API 2 content line by line
+                // Read API content line by line
                 BufferedReader br = new BufferedReader(reader);
                 StringBuilder sb = new StringBuilder();
 
@@ -109,7 +104,7 @@ public class ListingsActivity extends Fragment  {
                 }
 
                 br.close();
-                // Return content from API 2
+                // Return content from API
                 return sb.toString();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -123,7 +118,8 @@ public class ListingsActivity extends Fragment  {
 
                 JSONArray listJsonArray = new JSONArray(values);
 
-                for(int i=0;i<listJsonArray.length();i++){
+                for(int i = 0; i < listJsonArray.length(); i++){
+
                     JSONObject jsonItemObject = listJsonArray.getJSONObject(i);
                     String id = jsonItemObject.getString("id");
                     String title = jsonItemObject.getString("title");
@@ -132,10 +128,10 @@ public class ListingsActivity extends Fragment  {
                     String category = jsonItemObject.getString("category");
                     String seller = jsonItemObject.getString("seller");
                     String posted_on = jsonItemObject.get("posted_on").toString();
-                    int pictures = R.drawable.placeholder2;
+                    int picture = R.drawable.placeholder2;
 
+                    Listing listing = new Listing(id, title,description,price,category,seller,posted_on,picture);
 
-                    Listing listing = new Listing(id, title,description,price,category,seller,posted_on,pictures);
                     itemList.add(listing);
                 }
                 initRecyclerView();
@@ -145,8 +141,6 @@ public class ListingsActivity extends Fragment  {
             }
         }
     }
-
-
 
 
     // Initialize recyclerView function
@@ -161,16 +155,17 @@ public class ListingsActivity extends Fragment  {
 
     }
 
+    // Goes to the corresponding activity to enter listing details
     public void goToAddListing(View view){
         Intent goToAddListing = new Intent(getContext(), AddListingActivity.class);
         goToAddListing.putExtra("ID", userID);
         startActivity(goToAddListing);
     }
 
-
+    // I originally did not want to do this, but i was left no choice. I was not able to call fragmentManager and commit() without losing data
     public void refresh(View view){
         itemList.clear();
         GetListingsAPI api = new GetListingsAPI();
-        api.execute(getListing_url);
+        api.execute(getListingURL);
     }
 }

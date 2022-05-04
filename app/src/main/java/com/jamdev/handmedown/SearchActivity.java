@@ -30,25 +30,26 @@ import java.util.List;
 
 public class SearchActivity extends Fragment implements Adapter.OnListingListener {
 
-    RecyclerView recyclerView;
-    LinearLayoutManager layoutManager;
-    List<Listing> itemList = new ArrayList<>();
-    Adapter adapter;
-    private GetListingsAPI getListingsAPI;
-    private String getListing_url = "http://10.0.2.2/HandMeDown/listing_fetch_title.php?title=";
     EditText searchInput;
+
     String searchTerm;
 
+    RecyclerView recyclerView;
+    LinearLayoutManager layoutManager;
+    List<Listing> listings = new ArrayList<>();
+    Adapter adapter;
+
+    private String getListingURL = "http://10.0.2.2/HandMeDown/listing_fetch_title.php?title=";
+    private GetListingsAPI getListingsAPI;
+
+    private String getUserURL = "http://10.0.2.2/HandMeDown/user_fetch_id.php?id=";
     private GetUserAPI getUserAPI;
-    private String getUser_url = "http://10.0.2.2/HandMeDown/user_fetch_id.php?id=";
     Listing selectedItem;
     User seller;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-
         View view = inflater.inflate(R.layout.activity_search, container, false);
 
 
@@ -63,12 +64,13 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
 
         searchInput = (EditText) view.findViewById(R.id.et_search);
 
+        // Listens to any input
         searchInput.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
                 searchTerm = s.toString();
                 getListingsAPI = new GetListingsAPI();
-                getListingsAPI.execute(getListing_url + searchTerm);
+                getListingsAPI.execute(getListingURL + searchTerm);
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -78,29 +80,30 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
 
     }
 
+    // Get the listing's position and execute the API while passing in the listing's seller as a parameter
     @Override
     public void OnListingClick(int position) {
-        selectedItem = itemList.get(position);
+        selectedItem = listings.get(position);
         getUserAPI = new GetUserAPI();
-        getUserAPI.execute(getUser_url + selectedItem.getSeller());
+        getUserAPI.execute(getUserURL + selectedItem.getSeller());
     }
 
     public class GetListingsAPI extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... urls) {
-            // URL and HTTP initialization to connect to API 2
+            // URL and HTTP initialization to connect to API
             URL url;
             HttpURLConnection http;
 
             try {
-                // Connect to API 2
+                // Connect to API
                 url = new URL(urls[0]);
                 http = (HttpURLConnection) url.openConnection();
 
-                // Retrieve API 2 content
+                // Retrieve API content
                 InputStream in = http.getInputStream();
                 InputStreamReader reader = new InputStreamReader(in);
 
-                // Read API 2 content line by line
+                // Read API content line by line
                 BufferedReader br = new BufferedReader(reader);
                 StringBuilder sb = new StringBuilder();
 
@@ -110,7 +113,7 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
                 }
 
                 br.close();
-                // Return content from API 2
+                // Return content from API
                 return sb.toString();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -123,8 +126,8 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
             try {
                 Log.i("soiad", values);
                 JSONArray listJsonArray = new JSONArray(values);
-                itemList = new ArrayList<>();
-                for(int i=0;i<listJsonArray.length();i++){
+                listings = new ArrayList<>();
+                for(int i = 0; i < listJsonArray.length(); i++){
                     JSONObject jsonItemObject = listJsonArray.getJSONObject(i);
                     String id = jsonItemObject.getString("id");
                     String title = jsonItemObject.getString("title");
@@ -133,11 +136,10 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
                     String category = jsonItemObject.getString("category");
                     String seller = jsonItemObject.getString("seller");
                     String posted_on = jsonItemObject.get("posted_on").toString();
-                    int pictures = R.drawable.placeholder2;
+                    int picture = R.drawable.placeholder2;
 
-
-                    Listing listing = new Listing(title,description,price,category,seller,posted_on,pictures);
-                    itemList.add(listing);
+                    Listing listing = new Listing(title,description,price,category,seller,posted_on,picture);
+                    listings.add(listing);
                 }
                 initRecyclerView();
             } catch (Exception e) {
@@ -149,20 +151,20 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
 
     public class GetUserAPI extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... urls) {
-            // URL and HTTP initialization to connect to API 2
+            // URL and HTTP initialization to connect to API
             URL url;
             HttpURLConnection http;
 
             try {
-                // Connect to API 2
+                // Connect to API
                 url = new URL(urls[0]);
                 http = (HttpURLConnection) url.openConnection();
 
-                // Retrieve API 2 content
+                // Retrieve API content
                 InputStream in = http.getInputStream();
                 InputStreamReader reader = new InputStreamReader(in);
 
-                // Read API 2 content line by line
+                // Read API content line by line
                 BufferedReader br = new BufferedReader(reader);
                 StringBuilder sb = new StringBuilder();
 
@@ -172,7 +174,7 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
                 }
 
                 br.close();
-                // Return content from API 2
+                // Return content from API
                 return sb.toString();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -186,22 +188,25 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
                 Log.i("message", values);
                 JSONArray listJsonArray = new JSONArray(values);
 
-                for(int i=0;i<listJsonArray.length();i++){
+                for(int i = 0; i < listJsonArray.length(); i++){
+
                     JSONObject jsonItemObject = listJsonArray.getJSONObject(i);
                     String id = jsonItemObject.getString("id");
                     String username = jsonItemObject.getString("username");
                     String password = jsonItemObject.getString("password");
                     String name = jsonItemObject.getString("name");
                     String email = jsonItemObject.getString("email");
-                    String phoneNumber = jsonItemObject.getString("phone_number");
+                    String number = jsonItemObject.getString("number");
                     String address = jsonItemObject.get("address").toString();
                     int picture = R.drawable.no_picture;
 
-                    seller = new User(name,phoneNumber,address,username,email,picture,id);
-                    Intent intent = new Intent(getContext(), ListingExpanded.class);
-                    intent.putExtra("Listing", selectedItem);
-                    intent.putExtra("Seller", seller);
-                    startActivity(intent);
+                    // Get the listing and the seller, and send to the expanded listing view class
+                    seller = new User(id,name,number,address,username,email,picture);
+
+                    Intent goToExpanded = new Intent(getContext(), ListingExpanded.class);
+                    goToExpanded.putExtra("Listing", selectedItem);
+                    goToExpanded.putExtra("Seller", seller);
+                    startActivity(goToExpanded);
 
                 }
             } catch (Exception e) {
@@ -213,13 +218,14 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
 
 
 
+
     // Initialize recyclerView function
     private void initRecyclerView() {
         recyclerView = (RecyclerView) getView().findViewById(R.id.container_listings);
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new Adapter(itemList, this);
+        adapter = new Adapter(listings, this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 

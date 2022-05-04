@@ -14,10 +14,7 @@ import com.jamdev.handmedown.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActivityMainBinding binding;
     User user;
-    Intent LoginIntent;
-
     String userName;
     String userNumber;
     String userAddress;
@@ -25,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
     String userUsername;
     String userPassword;
     String userID;
+
+    ActivityMainBinding binding;
+
+    Intent LoginIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +39,13 @@ public class MainActivity extends AppCompatActivity {
         // Default fragment is home
         replaceFragment(new HomeActivity());
 
+        // Get user info from login activity
         LoginIntent = getIntent();
         user = (User) LoginIntent.getParcelableExtra("User");
 
-        userName = user.getFullName();
-        userNumber = user.getPhoneNumber();
+        // Set user data to be bundled and sent to fragments
+        userName = user.getName();
+        userNumber = user.getNumber();
         userAddress = user.getAddress();
         userEmail = user.getEmail();
         userUsername = user.getUsername();
@@ -64,45 +67,40 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new SearchActivity());
                     break;
                 case R.id.nav_listings:
+                    Bundle listingsBundle = new Bundle();
+                    listingsBundle.putString("Name", userName);
+                    listingsBundle.putString("Phone Number", userNumber);
+                    listingsBundle.putString("Address", userAddress);
+                    listingsBundle.putString("Username", userUsername);
+                    listingsBundle.putString("Email", userEmail);
+                    listingsBundle.putString("Id", userID);
+                    listingsBundle.putString("Password", userPassword);
 
-
-                    Bundle bundle3 = new Bundle();
-                    bundle3.putString("Name", userName);
-                    bundle3.putString("Phone Number", userNumber);
-                    bundle3.putString("Address", userAddress);
-                    bundle3.putString("Username", userUsername);
-                    bundle3.putString("Email", userEmail);
-                    bundle3.putString("Id", userID);
-                    bundle3.putString("Password", userPassword);
-
-                    ListingsActivity fragobj3 = new ListingsActivity();
-                    fragobj3.setArguments(bundle3);
-                    replaceFragment(fragobj3);
+                    ListingsActivity listingsFragment = new ListingsActivity();
+                    listingsFragment.setArguments(listingsBundle);
+                    replaceFragment(listingsFragment);
                     break;
 
                 case R.id.nav_profile:
+                    Bundle profileBundle = new Bundle();
+                    profileBundle.putString("Name", userName);
+                    profileBundle.putString("Phone Number", userNumber);
+                    profileBundle.putString("Address", userAddress);
+                    profileBundle.putString("Username", userUsername);
+                    profileBundle.putString("Email", userEmail);
+                    profileBundle.putString("Id", userID);
+                    profileBundle.putString("Password", userPassword);
 
-                    Bundle bundle4 = new Bundle();
-                    bundle4.putString("Name", userName);
-                    bundle4.putString("Phone Number", userNumber);
-                    bundle4.putString("Address", userAddress);
-                    bundle4.putString("Username", userUsername);
-                    bundle4.putString("Email", userEmail);
-                    bundle4.putString("Id", userID);
-                    bundle4.putString("Password", userPassword);
-
-                    ProfileActivity fragobj4 = new ProfileActivity();
-                    fragobj4.setArguments(bundle4);
-                    replaceFragment(fragobj4);
+                    ProfileActivity profileFragment = new ProfileActivity();
+                    profileFragment.setArguments(profileBundle);
+                    replaceFragment(profileFragment);
                     break;
             }
             return true;
         });
     }
 
-
-
-    // Function used to replaceFragment, takes target fragment as destination
+    // Function used to replaceFragment, takes destination fragment as parameter
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

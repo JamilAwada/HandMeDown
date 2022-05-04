@@ -6,7 +6,7 @@ import android.os.Parcelable;
 public class MyParcelable implements Parcelable {
     private int mData;
 
-    /* everything below here is for implementing Parcelable */
+    // Everything below here is for implementing Parcelable
 
     // 99.9% of the time you can just ignore this
     @Override
@@ -14,13 +14,13 @@ public class MyParcelable implements Parcelable {
         return 0;
     }
 
-    // write your object's data to the passed-in Parcel
+    // Write your object's data to the passed-in Parcel
     @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeInt(mData);
     }
 
-    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    // This is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
     public static final Parcelable.Creator<MyParcelable> CREATOR = new Parcelable.Creator<MyParcelable>() {
         public MyParcelable createFromParcel(Parcel in) {
             return new MyParcelable(in);
@@ -31,7 +31,7 @@ public class MyParcelable implements Parcelable {
         }
     };
 
-    // example constructor that takes a Parcel and gives you an object populated with it's values
+    // Example constructor that takes a Parcel and gives you an object populated with it's values
     private MyParcelable(Parcel in) {
         mData = in.readInt();
     }

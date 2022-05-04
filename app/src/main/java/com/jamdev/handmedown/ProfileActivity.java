@@ -33,32 +33,35 @@ import java.util.ArrayList;
 
 public class ProfileActivity extends Fragment {
 
-    EditText tx_name;
-    EditText tx_number;
-    EditText tx_address;
-    EditText tx_username_input;
-    EditText tx_email_input;
-    EditText tx_password_input;
-    RelativeLayout btn_save_changes;
-    RelativeLayout btn_logout;
-    TextView password_toggle;
-    ImageView icon_settings;
+    EditText nameView;
+    EditText numberView;
+    EditText addressView;
+    EditText usernameView;
+    EditText emailView;
+    EditText passwordView;
+
+    RelativeLayout saveChangesButton;
+    RelativeLayout logoutButton;
+
+    TextView togglePasswordButton;
+    ImageView settingsButton;
 
     boolean isInModificationMode;
     boolean passIsVisible;
-    String userID;
 
-    String fullName = "";
-    String phoneNumber = "";
+    String id;
+    String name = "";
+    String number = "";
     String address = "";
     String email = "";
     String username = "";
     String password = "";
 
-    String JSONObject;
 
-    private String URL = "http://10.0.2.2/HandMeDown/user_edit.php";
-    userInfoUpdateAPI API;
+
+    private String editUserURL = "http://10.0.2.2/HandMeDown/user_edit.php";
+    String JSONObject;
+    UserInfoUpdateAPI API;
 
 
     @Nullable
@@ -67,43 +70,45 @@ public class ProfileActivity extends Fragment {
 
         View view = inflater.inflate(R.layout.activity_profile, container, false);
 
-        tx_name = (EditText) view.findViewById(R.id.tx_name);
-        tx_name.setInputType(InputType.TYPE_NULL);
-        tx_number = (EditText) view.findViewById(R.id.tx_number);
-        tx_number.setInputType(InputType.TYPE_NULL);
-        tx_address = (EditText) view.findViewById(R.id.tx_address);
-        tx_address.setInputType(InputType.TYPE_NULL);
-        tx_username_input = (EditText) view.findViewById(R.id.tx_username_input);
-        tx_username_input.setInputType(InputType.TYPE_NULL);
-        tx_email_input = (EditText) view.findViewById(R.id.tx_email_input);
-        tx_email_input.setInputType(InputType.TYPE_NULL);
-        tx_password_input = (EditText) view.findViewById(R.id.tx_password_input);
-        tx_password_input.setInputType(InputType.TYPE_NULL);
-        btn_save_changes = (RelativeLayout) view.findViewById(R.id.btn_user_save_changes);
-        btn_logout = (RelativeLayout) view.findViewById(R.id.btn_logout);
-        icon_settings = (ImageView) view.findViewById(R.id.image_settings);
+        nameView = (EditText) view.findViewById(R.id.tx_name);
+        nameView.setInputType(InputType.TYPE_NULL);
+        numberView = (EditText) view.findViewById(R.id.tx_number);
+        numberView.setInputType(InputType.TYPE_NULL);
+        addressView = (EditText) view.findViewById(R.id.tx_address);
+        addressView.setInputType(InputType.TYPE_NULL);
+        usernameView = (EditText) view.findViewById(R.id.tx_username_input);
+        usernameView.setInputType(InputType.TYPE_NULL);
+        emailView = (EditText) view.findViewById(R.id.tx_email_input);
+        emailView.setInputType(InputType.TYPE_NULL);
+        passwordView = (EditText) view.findViewById(R.id.tx_password_input);
+        passwordView.setInputType(InputType.TYPE_NULL);
+        saveChangesButton = (RelativeLayout) view.findViewById(R.id.btn_user_save_changes);
+        logoutButton = (RelativeLayout) view.findViewById(R.id.btn_logout);
+        settingsButton = (ImageView) view.findViewById(R.id.image_settings);
 
         isInModificationMode = false;
         passIsVisible = false;
 
-        password_toggle = (TextView) view.findViewById(R.id.tx_password);
+        togglePasswordButton = (TextView) view.findViewById(R.id.tx_password);
 
-        fullName = getArguments().getString("Name");
-        tx_name.setText(fullName);
-        phoneNumber = getArguments().getString("Phone Number");
-        tx_number.setText(phoneNumber);
+        name = getArguments().getString("Name");
+        nameView.setText(name);
+        number = getArguments().getString("Phone Number");
+        numberView.setText(number);
         address = getArguments().getString("Address");
-        tx_address.setText(address);
+        addressView.setText(address);
         username = getArguments().getString("Username");
-        tx_username_input.setText(username);
+        usernameView.setText(username);
         email = getArguments().getString("Email");
-        tx_email_input.setText(email);
+        emailView.setText(email);
         password = getArguments().getString("Password");
-        tx_password_input.setText(password);
-        Log.i("password" , tx_password_input.getText().toString());
-        userID = getArguments().getString("Id");
+        passwordView.setText(password);
+        Log.i("password" , passwordView.getText().toString());
+        id = getArguments().getString("Id");
 
-        icon_settings.setOnClickListener(new View.OnClickListener() {
+        // On Click Listeners for the respective buttons
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toggleModificationMode(view);
@@ -112,21 +117,21 @@ public class ProfileActivity extends Fragment {
 
         });
 
-        btn_save_changes.setOnClickListener(new View.OnClickListener(){
+        saveChangesButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 saveChanges(view);
             }
         });
 
-        password_toggle.setOnClickListener(new View.OnClickListener(){
+        togglePasswordButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 togglePass(view);
             }
         });
 
-        btn_logout.setOnClickListener(new View.OnClickListener() {
+        logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 logout(view);
@@ -141,21 +146,21 @@ public class ProfileActivity extends Fragment {
 
     }
 
-    class userInfoUpdateAPI extends AsyncTask<String, Void, String> {
+    class UserInfoUpdateAPI extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
 
             HttpClient http_client = new DefaultHttpClient();
-            HttpPost http_post = new HttpPost(URL);
+            HttpPost http_post = new HttpPost(editUserURL);
 
-            BasicNameValuePair idParam = new BasicNameValuePair("Id", userID);
+            BasicNameValuePair idParam = new BasicNameValuePair("ID", id);
             BasicNameValuePair usernameParam = new BasicNameValuePair("Username", username);
             BasicNameValuePair passwordParam = new BasicNameValuePair("Password", password);
-            BasicNameValuePair fullNameParam = new BasicNameValuePair("FullName", fullName);
+            BasicNameValuePair fullNameParam = new BasicNameValuePair("Name", name);
             BasicNameValuePair emailParam = new BasicNameValuePair("Email", email);
             BasicNameValuePair addressParam = new BasicNameValuePair("Address", address);
-            BasicNameValuePair phoneNumberParam = new BasicNameValuePair("PhoneNumber", phoneNumber);
+            BasicNameValuePair phoneNumberParam = new BasicNameValuePair("Number", number);
             ArrayList<NameValuePair> name_value_pair_list = new ArrayList<>();
             name_value_pair_list.add(idParam);
             name_value_pair_list.add(fullNameParam);
@@ -167,13 +172,13 @@ public class ProfileActivity extends Fragment {
 
 
             try {
-                // This is used to send the list with the api in an encoded form entity
+                // Send the list in an encoded form entity
                 UrlEncodedFormEntity url_encoded_form_entity = new UrlEncodedFormEntity(name_value_pair_list);
 
-                // This sets the entity (which holds the list of values) in the http_post object
+                // Set the entity holding the values in the http_post object
                 http_post.setEntity(url_encoded_form_entity);
 
-                // This gets the response from the post api and returns a string of the response.
+                // Get API response and return it as a string
                 HttpResponse http_response = http_client.execute(http_post);
                 InputStream input_stream = http_response.getEntity().getContent();
                 InputStreamReader input_stream_reader = new InputStreamReader(input_stream);
@@ -212,28 +217,28 @@ public class ProfileActivity extends Fragment {
     }
     public void toggleModificationMode(View view) {
         if (!isInModificationMode) {
-            btn_save_changes.setClickable(true);
-            btn_save_changes.setVisibility(View.VISIBLE);
-            tx_name.setInputType(InputType.TYPE_CLASS_TEXT);
-            tx_number.setInputType(InputType.TYPE_CLASS_TEXT);
-            tx_address.setInputType(InputType.TYPE_CLASS_TEXT);
-            tx_username_input.setInputType(InputType.TYPE_CLASS_TEXT);
-            tx_email_input.setInputType(InputType.TYPE_CLASS_TEXT);
-            tx_password_input.setInputType(InputType.TYPE_CLASS_TEXT);
-            btn_logout.setVisibility(View.INVISIBLE);
-            btn_logout.setClickable(false);
+            saveChangesButton.setClickable(true);
+            saveChangesButton.setVisibility(View.VISIBLE);
+            nameView.setInputType(InputType.TYPE_CLASS_TEXT);
+            numberView.setInputType(InputType.TYPE_CLASS_TEXT);
+            addressView.setInputType(InputType.TYPE_CLASS_TEXT);
+            usernameView.setInputType(InputType.TYPE_CLASS_TEXT);
+            emailView.setInputType(InputType.TYPE_CLASS_TEXT);
+            passwordView.setInputType(InputType.TYPE_CLASS_TEXT);
+            logoutButton.setVisibility(View.INVISIBLE);
+            logoutButton.setClickable(false);
             isInModificationMode = true;
         } else {
-            btn_save_changes.setClickable(false);
-            btn_save_changes.setVisibility(View.INVISIBLE);
-            tx_name.setInputType(InputType.TYPE_NULL);
-            tx_number.setInputType(InputType.TYPE_NULL);
-            tx_address.setInputType(InputType.TYPE_NULL);
-            tx_username_input.setInputType(InputType.TYPE_NULL);
-            tx_email_input.setInputType(InputType.TYPE_NULL);
-            tx_password_input.setInputType(InputType.TYPE_NULL);
-            btn_logout.setVisibility(View.VISIBLE);
-            btn_logout.setClickable(true);
+            saveChangesButton.setClickable(false);
+            saveChangesButton.setVisibility(View.INVISIBLE);
+            nameView.setInputType(InputType.TYPE_NULL);
+            numberView.setInputType(InputType.TYPE_NULL);
+            addressView.setInputType(InputType.TYPE_NULL);
+            usernameView.setInputType(InputType.TYPE_NULL);
+            emailView.setInputType(InputType.TYPE_NULL);
+            passwordView.setInputType(InputType.TYPE_NULL);
+            logoutButton.setVisibility(View.VISIBLE);
+            logoutButton.setClickable(true);
             isInModificationMode = false;
         }
 
@@ -241,38 +246,38 @@ public class ProfileActivity extends Fragment {
     }
 
     public void saveChanges(View view) {
-        fullName = tx_name.getText().toString();
-        phoneNumber = tx_number.getText().toString();
-        address = tx_address.getText().toString();
-        email = tx_email_input.getText().toString();
-        username = tx_username_input.getText().toString();
-        password = tx_password_input.getText().toString();
+        name = nameView.getText().toString();
+        number = numberView.getText().toString();
+        address = addressView.getText().toString();
+        email = emailView.getText().toString();
+        username = usernameView.getText().toString();
+        password = passwordView.getText().toString();
 
-        btn_save_changes.setClickable(false);
-        btn_save_changes.setVisibility(View.INVISIBLE);
+        saveChangesButton.setClickable(false);
+        saveChangesButton.setVisibility(View.INVISIBLE);
 
-        tx_name.setInputType(InputType.TYPE_NULL);
-        tx_number.setInputType(InputType.TYPE_NULL);
-        tx_address.setInputType(InputType.TYPE_NULL);
-        tx_username_input.setInputType(InputType.TYPE_NULL);
-        tx_email_input.setInputType(InputType.TYPE_NULL);
-        tx_password_input.setInputType(InputType.TYPE_NULL);
-        btn_logout.setVisibility(View.VISIBLE);
-        btn_logout.setClickable(true);
+        nameView.setInputType(InputType.TYPE_NULL);
+        numberView.setInputType(InputType.TYPE_NULL);
+        addressView.setInputType(InputType.TYPE_NULL);
+        usernameView.setInputType(InputType.TYPE_NULL);
+        emailView.setInputType(InputType.TYPE_NULL);
+        passwordView.setInputType(InputType.TYPE_NULL);
+        logoutButton.setVisibility(View.VISIBLE);
+        logoutButton.setClickable(true);
         isInModificationMode = false;
 
-        API = new userInfoUpdateAPI();
+        API = new UserInfoUpdateAPI();
         API.execute();
 
     }
 
     public void togglePass(View view){
         if (!passIsVisible){
-            tx_password_input.setVisibility(View.VISIBLE);
+            passwordView.setVisibility(View.VISIBLE);
             passIsVisible = true;
         }
         else {
-            tx_password_input.setVisibility(View.INVISIBLE);
+            passwordView.setVisibility(View.INVISIBLE);
             passIsVisible = false;
         }
 

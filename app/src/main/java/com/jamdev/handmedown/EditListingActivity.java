@@ -42,12 +42,9 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
     String price = "";
     String category = "";
 
-    listingEditAPI API;
-
+    private String editListingURL = "http://10.0.2.2/HandMeDown/listing_edit.php";
     String JSONObject;
-
-    private String URL = "http://10.0.2.2/HandMeDown/listing_edit.php";
-//    listingAddAPI API;
+    ListingEditAPI API;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +60,7 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
         priceInput = (EditText) findViewById(R.id.et_price);
         saveChanges = (RelativeLayout) findViewById(R.id.btn_save_changes);
 
+        // Category is selected through a spinner
         categoryInput = (Spinner) findViewById(R.id.spinner_categories);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
@@ -71,19 +69,22 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
         // Apply the adapter to the spinner
         categoryInput.setAdapter(adapter);
 
-        Bundle intent = getIntent().getExtras();
-        id = intent.getString("Item ID");
-        title = intent.getString("Item Title");
-        description = intent.getString("Item Description");
-        price = intent.getString("Item Price");
-        category = intent.getString("Item Category");
+        // Get listing details from Listings activity
+        Bundle fromListings = getIntent().getExtras();
+        id = fromListings.getString("Item ID");
+        title = fromListings.getString("Item Title");
+        description = fromListings.getString("Item Description");
+        price = fromListings.getString("Item Price");
+        category = fromListings.getString("Item Category");
         int spinnerPosition = adapter.getPosition(category);
         categoryInput.setSelection(spinnerPosition);
 
+        // Set the pre-existing details
         titleInput.setText(title);
         descriptionInput.setText(description);
         priceInput.setText(price);
 
+        // The save changes button executes the editListing() function
         saveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,11 +95,13 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
 
     public void editListing(View view) {
 
+        // Collect the entered values
         title = titleInput.getText().toString();
         description = descriptionInput.getText().toString();
         price = priceInput.getText().toString();
         category = categoryInput.getSelectedItem().toString();
 
+        // Check for a complete form
         if (title.equalsIgnoreCase("")) {
             Toast.makeText(this, "Incomplete form. Please fill in the title.", Toast.LENGTH_SHORT).show();
         }
@@ -106,7 +109,7 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
             Toast.makeText(this, "Incomplete form. Please set a price.", Toast.LENGTH_SHORT).show();
         }
         else {
-            API = new listingEditAPI();
+            API = new ListingEditAPI();
             API.execute();
 
         }
@@ -115,14 +118,15 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
 
     }
 
-    class listingEditAPI extends AsyncTask<String, Void, String> {
+    class ListingEditAPI extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
 
             HttpClient http_client = new DefaultHttpClient();
-            HttpPost http_post = new HttpPost(URL);
+            HttpPost http_post = new HttpPost(editListingURL);
 
+            // Name value pairs for POST in PHP file
             BasicNameValuePair titleParam = new BasicNameValuePair("Title", title);
             BasicNameValuePair descriptionParam = new BasicNameValuePair("Description", description);
             BasicNameValuePair priceParam = new BasicNameValuePair("Price", price);
@@ -137,13 +141,13 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
 
 
             try {
-                // This is used to send the list with the api in an encoded form entity
+                // Send the list in an encoded form entity
                 UrlEncodedFormEntity url_encoded_form_entity = new UrlEncodedFormEntity(name_value_pair_list);
 
-                // This sets the entity (which holds the list of values) in the http_post object
+                // Set the entity in the http_post object
                 http_post.setEntity(url_encoded_form_entity);
 
-                // This gets the response from the post api and returns a string of the response.
+                // Get API response and return it as a string
                 HttpResponse http_response = http_client.execute(http_post);
                 InputStream input_stream = http_response.getEntity().getContent();
                 InputStreamReader input_stream_reader = new InputStreamReader(input_stream);

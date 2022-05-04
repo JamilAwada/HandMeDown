@@ -28,11 +28,13 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private String URL = "http://10.0.2.2/HandMeDown/user_login.php";
     public String username;
     public String password;
     public EditText usernameInput;
     public EditText passwordInput;
+
+    private String userLoginURL = "http://10.0.2.2/HandMeDown/user_login.php";
+    UserAuthenticationAPI API;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        userAuthenticationAPI user_authentication_api = new userAuthenticationAPI();
-        user_authentication_api.execute();
+        API = new UserAuthenticationAPI();
+        API.execute();
     }
 
 
@@ -61,13 +63,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    class userAuthenticationAPI extends AsyncTask<String, Void, String> {
+    class UserAuthenticationAPI extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
-
+            // URL and HTTP initialization to connect to API
             HttpClient http_client = new DefaultHttpClient();
-            HttpPost http_post = new HttpPost(URL);
+            HttpPost http_post = new HttpPost(userLoginURL);
 
             username = usernameInput.getText().toString();
             password = passwordInput.getText().toString();
@@ -113,20 +115,20 @@ public class LoginActivity extends AppCompatActivity {
                 String status = json.getString("status");
 
                 if (status.equalsIgnoreCase("accepted")) {
-                    String id = json.getString("Id");
-                    String fullName = json.getString("Name");
-                    String phoneNumber = json.getString("PhoneNumber");
+                    String id = json.getString("ID");
+                    String name = json.getString("Name");
+                    String number = json.getString("Number");
                     String address = json.getString("Address");
                     String username = json.getString("Username");
                     String email = json.getString("Email");
                     String password = json.getString("Password");
-                    int profilePicture = R.drawable.no_picture;
+                    int picture = R.drawable.no_picture;
 
-                    User user = new User(fullName, phoneNumber, address, username, email, password, profilePicture, id);
+                    User user = new User(id, name, number, address, username, email, password, picture);
 
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("User", user);
-                    startActivity(intent);
+                    Intent goToLanding = new Intent(LoginActivity.this, MainActivity.class);
+                    goToLanding.putExtra("User", user);
+                    startActivity(goToLanding);
                     finish();
                 } else {
                     // Notify user of wrong password/invalid username

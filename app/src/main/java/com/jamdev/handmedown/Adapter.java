@@ -39,7 +39,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         String listingSeller = listings.get(position).getSeller();
         int listingPicture = listings.get(position).getPicture();
 
-        holder.setData(listingPicture,listingTitle,listingDescription,listingPrice,listingSeller,listingDate);
+        holder.setData(listingTitle,listingDescription,listingPrice,listingDate,listingSeller,listingPicture);
 
     }
     @Override
@@ -72,16 +72,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         }
 
-        public void setData(int resource, String title, String description, String price, String owner, String date) {
-            listingPictureView.setImageResource(resource);
+        public void setData(String title, String description, String price, String date, String seller, int picture) {
             listingTitleView.setText(title);
             listingDescriptionView.setText(description);
             listingPriceView.setText(price);
-            listingOwnerView.setText(owner);
             listingDateView.setText(date);
+            listingOwnerView.setText(seller);
+            listingPictureView.setImageResource(picture);
 
         }
 
+        // Get the position of the item clicked
         @Override
         public void onClick(View view) {
             onListingListener.OnListingClick(getBindingAdapterPosition());

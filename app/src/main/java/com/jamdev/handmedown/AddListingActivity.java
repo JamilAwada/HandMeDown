@@ -28,26 +28,25 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class AddListingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class  AddListingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     EditText titleInput;
     EditText descriptionInput;
     EditText priceInput;
     Spinner categoryInput;
 
-    String title = "";
-    String description = "";
-    String price = "";
-    String category = "";
+    String listingTitle = "";
+    String listingDescription = "";
+    String listingPrice = "";
+    String listingCategory = "";
 
     String userID;
 
+    RelativeLayout addListingButton;
+
+    private String addListingURL = "http://10.0.2.2/HandMeDown/listing_add.php";
     String JSONObject;
-
-    RelativeLayout addListingBtn;
-
-    private String URL = "http://10.0.2.2/HandMeDown/listing_add.php";
-    listingAddAPI API;
+    AddListingAPI API;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +57,13 @@ public class AddListingActivity extends AppCompatActivity implements AdapterView
         getSupportActionBar().hide();
         setContentView(R.layout.activity_add_listing);
 
+        // Get listing details from input fields
         titleInput = (EditText) findViewById(R.id.et_title);
         descriptionInput = (EditText) findViewById(R.id.et_description);
         priceInput = (EditText) findViewById(R.id.et_price);
-        addListingBtn = (RelativeLayout) findViewById(R.id.btn_add_new);
+        addListingButton = (RelativeLayout) findViewById(R.id.btn_add_new);
 
+        // Category is selected through a spinner
         categoryInput = (Spinner) findViewById(R.id.spinner_categories);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
@@ -75,7 +76,8 @@ public class AddListingActivity extends AppCompatActivity implements AdapterView
 
         userID = bundle.getString("ID");
 
-        addListingBtn.setOnClickListener(new View.OnClickListener() {
+        // The add listing button executes the addListing() function
+        addListingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addListing(view);
@@ -85,19 +87,22 @@ public class AddListingActivity extends AppCompatActivity implements AdapterView
 
     public void addListing(View view) {
 
-        title = titleInput.getText().toString();
-        description = descriptionInput.getText().toString();
-        price = priceInput.getText().toString();
-        category = categoryInput.getSelectedItem().toString();
+        // Collect the entered values
+        listingTitle = titleInput.getText().toString();
+        listingDescription = descriptionInput.getText().toString();
+        listingPrice = priceInput.getText().toString();
+        listingCategory = categoryInput.getSelectedItem().toString();
 
-        if (title.equalsIgnoreCase("")) {
+        // Check for a complete form
+        if (listingTitle.equalsIgnoreCase("")) {
             Toast.makeText(this, "Incomplete form. Please fill in the title.", Toast.LENGTH_SHORT).show();
         }
-        else if (price.equalsIgnoreCase("")){
+        else if (listingPrice.equalsIgnoreCase("")){
             Toast.makeText(this, "Incomplete form. Please set a price.", Toast.LENGTH_SHORT).show();
         }
         else {
-            API = new listingAddAPI();
+            // Execute API
+            API = new AddListingAPI();
             API.execute();
         }
 
@@ -105,18 +110,19 @@ public class AddListingActivity extends AppCompatActivity implements AdapterView
 
     }
 
-    class listingAddAPI extends AsyncTask<String, Void, String> {
+    class AddListingAPI extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
 
             HttpClient http_client = new DefaultHttpClient();
-            HttpPost http_post = new HttpPost(URL);
+            HttpPost http_post = new HttpPost(addListingURL);
 
-            BasicNameValuePair titleParam = new BasicNameValuePair("Title", title);
-            BasicNameValuePair descriptionParam = new BasicNameValuePair("Description", description);
-            BasicNameValuePair priceParam = new BasicNameValuePair("Price", price);
-            BasicNameValuePair categoryParam = new BasicNameValuePair("Category", category);
+            // Name value pairs for POST in PHP file
+            BasicNameValuePair titleParam = new BasicNameValuePair("Title", listingTitle);
+            BasicNameValuePair descriptionParam = new BasicNameValuePair("Description", listingDescription);
+            BasicNameValuePair priceParam = new BasicNameValuePair("Price", listingPrice);
+            BasicNameValuePair categoryParam = new BasicNameValuePair("Category", listingCategory);
             BasicNameValuePair sellerParam = new BasicNameValuePair("Seller", userID);
             ArrayList<NameValuePair> name_value_pair_list = new ArrayList<>();
             name_value_pair_list.add(titleParam);
@@ -127,13 +133,13 @@ public class AddListingActivity extends AppCompatActivity implements AdapterView
 
 
             try {
-                // This is used to send the list with the api in an encoded form entity
+                // Send the list in an encoded form entity
                 UrlEncodedFormEntity url_encoded_form_entity = new UrlEncodedFormEntity(name_value_pair_list);
 
-                // This sets the entity (which holds the list of values) in the http_post object
+                // Set the entity holding the values in the http_post object
                 http_post.setEntity(url_encoded_form_entity);
 
-                // This gets the response from the post api and returns a string of the response.
+                // Get API response and return it as a string
                 HttpResponse http_response = http_client.execute(http_post);
                 InputStream input_stream = http_response.getEntity().getContent();
                 InputStreamReader input_stream_reader = new InputStreamReader(input_stream);
@@ -153,18 +159,18 @@ public class AddListingActivity extends AppCompatActivity implements AdapterView
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+        protected void onPostExecute(String values) {
+            super.onPostExecute(values);
             try {
-                if (s.equalsIgnoreCase("Listing added")) {
+                if (values.equalsIgnoreCase("Listing added")) {
                     Toast.makeText(getApplicationContext(),"Listing added", Toast.LENGTH_SHORT).show();
                     onBackPressed();
                     onBackPressed();
                 } else {
-                    Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), values, Toast.LENGTH_SHORT).show();
                     Log.i("json", JSONObject);
                 }
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), values, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -182,6 +188,7 @@ public class AddListingActivity extends AppCompatActivity implements AdapterView
 
     }
 
+    // I understand this is bad practice, but moving from an activity back to a fragment is a herculean task
     public void returnToListings(View view){
         onBackPressed();
         onBackPressed();

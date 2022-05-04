@@ -6,54 +6,54 @@ import android.os.Parcelable;
 public class User implements Parcelable {
 
     private String id;
-    private String fullName;
-    private String phoneNumber;
+    private String name;
+    private String number;
     private String address;
     private String username;
     private String email;
     private String password;
-    private int profilePicture;
+    private int picture;
 
 
-    public User(String fullName, String phoneNumber, String address, String username, String email, int profilePicture, String id) {
-        this.fullName = fullName;
-        this.phoneNumber = phoneNumber;
+    public User(String id, String name, String number, String address, String username, String email, int picture) {
+        this.id = id;
+        this.name = name;
+        this.number = number;
         this.address = address;
         this.username = username;
         this.email = email;
-        this.profilePicture = profilePicture;
-        this.id = id;
+        this.picture = picture;
     }
 
-    public User(String fullName, String phoneNumber, String address, String username, String email, String password, String id) {
-        this.fullName = fullName;
-        this.phoneNumber = phoneNumber;
+    public User(String id, String name, String number, String address, String username, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.number = number;
         this.address = address;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.id = id;
     }
 
-    public User(String fullName, String phoneNumber, String address, String username, String email, String password, int profilePicture, String id) {
-        this.fullName = fullName;
-        this.phoneNumber = phoneNumber;
+    public User(String id, String name, String number, String address, String username, String email, String password, int picture) {
+        this.id = id;
+        this.name = name;
+        this.number = number;
         this.address = address;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.profilePicture = profilePicture;
-        this.id = id;
+        this.picture = picture;
     }
 
     protected User(Parcel in) {
-        fullName = in.readString();
-        phoneNumber = in.readString();
+        name = in.readString();
+        number = in.readString();
         address = in.readString();
         username = in.readString();
         email = in.readString();
         password = in.readString();
-        profilePicture = in.readInt();
+        picture = in.readInt();
         id = in.readString();
     }
 
@@ -73,20 +73,20 @@ public class User implements Parcelable {
 
     public void setId(String id) { this.id = id; }
 
-    public String getFullName() {
-        return fullName;
+    public String getName() {
+        return name;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getNumber() {
+        return number;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getAddress() {
@@ -121,12 +121,12 @@ public class User implements Parcelable {
         this.password = password;
     }
 
-    public int getProfilePicture() {
-        return profilePicture;
+    public int getPicture() {
+        return picture;
     }
 
-    public void setProfilePicture(int profilePicture) {
-        this.profilePicture = profilePicture;
+    public void setPicture(int picture) {
+        this.picture = picture;
     }
 
     @Override
@@ -136,13 +136,13 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(fullName);
-        parcel.writeString(phoneNumber);
+        parcel.writeString(name);
+        parcel.writeString(number);
         parcel.writeString(address);
         parcel.writeString(username);
         parcel.writeString(email);
         parcel.writeString(password);
-        parcel.writeInt(profilePicture);
+        parcel.writeInt(picture);
         parcel.writeString(id);
     }
 }

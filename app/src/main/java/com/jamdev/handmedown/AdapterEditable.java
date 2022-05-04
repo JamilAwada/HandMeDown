@@ -25,12 +25,13 @@ import java.util.List;
 
 public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHolder> {
 
-    private List<Listing> itemList = new ArrayList<>();
+    private List<Listing> listings = new ArrayList<>();
     private Context listingsActivity;
 
-    public AdapterEditable(Context listingsActivity, List<Listing> itemList){
+    // Pass in context
+    public AdapterEditable(Context listingsActivity, List<Listing> listings){
         this.listingsActivity = listingsActivity;
-        this.itemList = itemList;
+        this.listings = listings;
     }
 
     @NonNull
@@ -43,59 +44,59 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
     @Override
     public void onBindViewHolder(@NonNull AdapterEditable.ViewHolder holder, int position) {
 
-        int resource = itemList.get(position).getPicture();
-        String id = itemList.get(position).getId();
-        String title = itemList.get(position).getTitle();
-        String description = itemList.get(position).getDescription();
-        String price = itemList.get(position).getPrice();
-        String owner = itemList.get(position).getSeller();
-        String date = itemList.get(position).getPosted_on();
+        String listingID = listings.get(position).getId();
+        String listingTitle = listings.get(position).getTitle();
+        String listingDescription = listings.get(position).getDescription();
+        String listingPrice = listings.get(position).getPrice();
+        String listingDate = listings.get(position).getPosted_on();
+        int listingPicture = listings.get(position).getPicture();
 
-        holder.setData(id,resource,title,description,price,owner,date);
+        holder.setData(listingID,listingTitle,listingDescription,listingPrice, listingDate,listingPicture);
 
     }
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return listings.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements PopupMenu.OnMenuItemClickListener{
 
-        private String deleteListing_url = "http://10.0.2.2/HandMeDown/listing_delete.php?Id=";
-        private DeleteListingAPI api;
+        private String deleteListingURL = "http://10.0.2.2/HandMeDown/listing_delete.php?ID=";
+        private DeleteListingAPI API;
 
-        private ImageView listing_pic;
-        private TextView listing_title;
-        private TextView listing_description;
-        private TextView listing_price;
-        private TextView listing_date;
-        private ImageView edit_btn;
-        private String listing_id;
+        private String listingID;
+        private TextView listingTitle;
+        private TextView listingDescription;
+        private TextView listingPrice;
+        private TextView listingDate;
+        private ImageView listingPicture;
+
+        private ImageView editButton;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            listing_pic = itemView.findViewById(R.id.card_picture);
-            listing_title = itemView.findViewById(R.id.listing_title);
-            listing_description = itemView.findViewById(R.id.card_description);
-            listing_price = itemView.findViewById(R.id.card_price_text);
-            listing_date = itemView.findViewById(R.id.card_date_text);
-            edit_btn = itemView.findViewById(R.id.card_btn_edit);
+            listingTitle = itemView.findViewById(R.id.listing_title);
+            listingDescription = itemView.findViewById(R.id.card_description);
+            listingPrice = itemView.findViewById(R.id.card_price_text);
+            listingDate = itemView.findViewById(R.id.card_date_text);
+            listingPicture = itemView.findViewById(R.id.card_picture);
+
+            editButton = itemView.findViewById(R.id.card_btn_edit);
 
 
-            edit_btn.setOnClickListener(new View.OnClickListener() {
+            editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showPopup(edit_btn);
+                    showPopup(editButton);
                 }
             });
 
 
-
-
-
         }
 
+        // Function to show popup menu for editing and deleting
         public void showPopup(ImageView edit_btn){
             PopupMenu popup = new PopupMenu(listingsActivity, edit_btn);
             popup.setOnMenuItemClickListener(this);
@@ -104,14 +105,13 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
         }
 
 
-        public void setData(String id, int resource, String title, String description, String price, String owner, String date) {
-            listing_pic.setImageResource(resource);
-            listing_title.setText(title);
-            listing_description.setText(description);
-            listing_price.setText(price);
-            listing_date.setText(date);
-            listing_id = id;
-
+        public void setData(String id, String title, String description, String price, String date, int picture) {
+            listingID = id;
+            listingTitle.setText(title);
+            listingDescription.setText(description);
+            listingPrice.setText(price);
+            listingDate.setText(date);
+            listingPicture.setImageResource(picture);
         }
 
         @Override
@@ -119,35 +119,35 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
             switch(menuItem.getItemId()){
                 case R.id.edit_option:
                     Intent goToEdit = new Intent(listingsActivity, EditListingActivity.class);
-                    goToEdit.putExtra("Item Title", listing_title.getText().toString());
-                    goToEdit.putExtra("Item Description", listing_description.getText().toString());
-                    goToEdit.putExtra("Item Price", listing_price.getText().toString());
-                    goToEdit.putExtra("Item Category", listing_price.getText().toString());
-                    goToEdit.putExtra("Item ID", listing_id);
+                    goToEdit.putExtra("Item Title", listingTitle.getText().toString());
+                    goToEdit.putExtra("Item Description", listingDescription.getText().toString());
+                    goToEdit.putExtra("Item Price", listingPrice.getText().toString());
+                    goToEdit.putExtra("Item Category", listingPrice.getText().toString());
+                    goToEdit.putExtra("Item ID", listingID);
                     listingsActivity.startActivity(goToEdit);
                 case R.id.delete_option:
                     deleteListing();
-                    itemList.remove(getAbsoluteAdapterPosition());
+                    listings.remove(getAbsoluteAdapterPosition());
                 default:
                     return false;
             }
         }
         public class DeleteListingAPI extends AsyncTask<String, Void, String> {
             protected String doInBackground(String... urls) {
-                // URL and HTTP initialization to connect to API 2
+
                 URL url;
                 HttpURLConnection http;
 
                 try {
-                    // Connect to API 2
+                    // Connect to API
                     url = new URL(urls[0]);
                     http = (HttpURLConnection) url.openConnection();
 
-                    // Retrieve API 2 content
+                    // Retrieve API content
                     InputStream in = http.getInputStream();
                     InputStreamReader reader = new InputStreamReader(in);
 
-                    // Read API 2 content line by line
+                    // Read API content line by line
                     BufferedReader br = new BufferedReader(reader);
                     StringBuilder sb = new StringBuilder();
 
@@ -157,7 +157,7 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
                     }
 
                     br.close();
-                    // Return content from API 2
+                    // Return content from API
                     return sb.toString();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -177,9 +177,8 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
         }
 
         public void deleteListing(){
-            api = new DeleteListingAPI();
-            api.execute(deleteListing_url + listing_id);
-
+            API = new DeleteListingAPI();
+            API.execute(deleteListingURL + listingID);
         }
     }
 }
