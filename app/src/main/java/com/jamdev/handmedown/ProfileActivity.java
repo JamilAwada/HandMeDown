@@ -1,9 +1,12 @@
 package com.jamdev.handmedown;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import org.apache.http.HttpResponse;
@@ -44,16 +48,19 @@ public class ProfileActivity extends Fragment {
     EditText addressView;
     EditText usernameView;
     EditText emailView;
-    EditText passwordView;
 
     RelativeLayout saveChangesButton;
     RelativeLayout logoutButton;
 
     TextView togglePasswordButton;
     ImageView settingsButton;
+    Dialog dialog;
+
+    RelativeLayout cancelPassButton;
+    RelativeLayout savePassButton;
+    String newPass;
 
     boolean isInModificationMode = false;
-    boolean passIsVisible = false;
 
     User user;
 
@@ -65,6 +72,9 @@ public class ProfileActivity extends Fragment {
     String userUsername = "";
     String userPassword = "";
 
+    EditText oldPasswordInput;
+    EditText newPasswordInput;
+
     RotateAnimation rotateRight;
     RotateAnimation rotateLeft;
 
@@ -74,6 +84,9 @@ public class ProfileActivity extends Fragment {
 
     private String getUserURL = "http://10.0.2.2/HandMeDown/user_fetch_id.php?id=";
     private GetUserAPI getUserAPI;
+
+    private String changePassURL = "http://10.0.2.2/HandMeDown/user_change_pass.php";
+    private ChangePassAPI changePassAPI;
 
 
     @Nullable
@@ -92,11 +105,22 @@ public class ProfileActivity extends Fragment {
         usernameView.setEnabled(false);
         emailView = (EditText) view.findViewById(R.id.tx_email_input);
         emailView.setEnabled(false);
-        passwordView = (EditText) view.findViewById(R.id.tx_password_input);
-        passwordView.setEnabled(false);
         saveChangesButton = (RelativeLayout) view.findViewById(R.id.btn_user_save_changes);
         logoutButton = (RelativeLayout) view.findViewById(R.id.btn_logout);
         settingsButton = (ImageView) view.findViewById(R.id.image_settings);
+
+        dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.dialogue_bg);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            dialog.getWindow().setBackgroundDrawable(getActivity().getDrawable(R.drawable.dialogue_shape));
+        }
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        RelativeLayout cancelPassButton = dialog.findViewById(R.id.btn_cancel);
+        RelativeLayout savePassButton = dialog.findViewById(R.id.btn_save_new_password);
+
+        oldPasswordInput = (EditText) dialog.findViewById(R.id.et_old_input);
+        newPasswordInput = (EditText) dialog.findViewById(R.id.et_new_input);
 
         togglePasswordButton = (TextView) view.findViewById(R.id.tx_password);
 
@@ -132,14 +156,33 @@ public class ProfileActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 saveChanges(view);
+
             }
         });
 
         togglePasswordButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                togglePass(view);
+                    dialog.show();
             }
+        });
+
+        cancelPassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    dialog.dismiss();
+            }
+        });
+
+        savePassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    newPass = newPasswordInput.getText().toString();
+                    changePassAPI = new ChangePassAPI();
+                    changePassAPI.execute();
+
+                    }
+
         });
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -167,7 +210,6 @@ public class ProfileActivity extends Fragment {
 
             BasicNameValuePair idParam = new BasicNameValuePair("ID", id);
             BasicNameValuePair usernameParam = new BasicNameValuePair("Username", userUsername);
-            BasicNameValuePair passwordParam = new BasicNameValuePair("Password", userPassword);
             BasicNameValuePair fullNameParam = new BasicNameValuePair("Name", userName);
             BasicNameValuePair emailParam = new BasicNameValuePair("Email", userEmail);
             BasicNameValuePair addressParam = new BasicNameValuePair("Address", userAddress);
@@ -179,7 +221,7 @@ public class ProfileActivity extends Fragment {
             name_value_pair_list.add(addressParam);
             name_value_pair_list.add(emailParam);
             name_value_pair_list.add(usernameParam);
-            name_value_pair_list.add(passwordParam);
+
 
 
             try {
@@ -278,20 +320,20 @@ public class ProfileActivity extends Fragment {
                     int picture = R.drawable.no_picture;
 
                     // Get the listing and the seller, and send to the expanded listing view class
-                    user = new User(id,name,number,address,username,email,picture);
+                    user = new User(id,name,number,address,username,email, password, picture);
 
                     userName = name;
                     userNumber = number;
                     userAddress = address;
                     userUsername = username;
                     userEmail = email;
+                    userPassword = password;
 
                     nameView.setText(userName);
                     numberView.setText(userNumber);
                     addressView.setText(userAddress);
                     usernameView.setText(userUsername);
                     emailView.setText(userEmail);
-                    passwordView.setText(userPassword);
 
 
                 }
@@ -301,6 +343,76 @@ public class ProfileActivity extends Fragment {
             }
         }
     }
+
+    class ChangePassAPI extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            HttpClient http_client = new DefaultHttpClient();
+            HttpPost http_post = new HttpPost(changePassURL);
+
+            BasicNameValuePair idParam = new BasicNameValuePair("ID", id);
+            BasicNameValuePair oldPasswordParam = new BasicNameValuePair("OldPassword", userPassword);
+            Log.i("password", userPassword);
+            BasicNameValuePair newPasswordParam = new BasicNameValuePair("NewPassword", newPass);
+            ArrayList<NameValuePair> name_value_pair_list = new ArrayList<>();
+            name_value_pair_list.add(idParam);
+            name_value_pair_list.add(oldPasswordParam);
+            name_value_pair_list.add(newPasswordParam);
+
+
+            try {
+                // Send the list in an encoded form entity
+                UrlEncodedFormEntity url_encoded_form_entity = new UrlEncodedFormEntity(name_value_pair_list);
+
+                // Set the entity holding the values in the http_post object
+                http_post.setEntity(url_encoded_form_entity);
+
+                // Get API response and return it as a string
+                HttpResponse http_response = http_client.execute(http_post);
+                InputStream input_stream = http_response.getEntity().getContent();
+                InputStreamReader input_stream_reader = new InputStreamReader(input_stream);
+                BufferedReader buffered_reader = new BufferedReader(input_stream_reader);
+                StringBuilder string_builder = new StringBuilder();
+                String buffered_str_chunk = null;
+                while ((buffered_str_chunk = buffered_reader.readLine()) != null) {
+                    string_builder.append(buffered_str_chunk);
+                }
+                return string_builder.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+
+                if (s.equalsIgnoreCase("Password changed.")) {
+                    Toast.makeText(getContext(),  s, Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    oldPasswordInput.setText("");
+                    newPasswordInput.setText("");
+                    getUserAPI = new GetUserAPI();
+                    getUserAPI.execute(getUserURL + id);
+                } else {
+                    Log.i("what", s);
+                    Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+                    oldPasswordInput.setText("");
+                    newPasswordInput.setText("");
+                }
+                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
     public void toggleModificationMode(View view) {
         if (!isInModificationMode) {
             saveChangesButton.setClickable(true);
@@ -310,7 +422,6 @@ public class ProfileActivity extends Fragment {
             addressView.setEnabled(true);
             usernameView.setEnabled(true);
             emailView.setEnabled(true);
-            passwordView.setEnabled(true);
             logoutButton.setVisibility(View.INVISIBLE);
             logoutButton.setClickable(false);
             settingsButton.startAnimation(rotateLeft);
@@ -324,7 +435,7 @@ public class ProfileActivity extends Fragment {
             addressView.setEnabled(false);
             usernameView.setEnabled(false);
             emailView.setEnabled(false);
-            passwordView.setEnabled(false);
+
             logoutButton.setVisibility(View.VISIBLE);
             logoutButton.setClickable(true);
             settingsButton.startAnimation(rotateRight);
@@ -336,47 +447,35 @@ public class ProfileActivity extends Fragment {
     }
 
     public void saveChanges(View view) {
-        userName = nameView.getText().toString();
-        userNumber = numberView.getText().toString();
-        userAddress = addressView.getText().toString();
-        userEmail = emailView.getText().toString();
-        userUsername = usernameView.getText().toString();
-        userPassword = passwordView.getText().toString();
+        if (isInModificationMode){
+            userName = nameView.getText().toString();
+            userNumber = numberView.getText().toString();
+            userAddress = addressView.getText().toString();
+            userEmail = emailView.getText().toString();
+            userUsername = usernameView.getText().toString();
 
-        saveChangesButton.setEnabled(false);
-        saveChangesButton.setVisibility(View.INVISIBLE);
+            saveChangesButton.setEnabled(false);
+            saveChangesButton.setVisibility(View.INVISIBLE);
 
-        nameView.setInputType(InputType.TYPE_NULL);
-        numberView.setInputType(InputType.TYPE_NULL);
-        addressView.setEnabled(false);
-        usernameView.setInputType(InputType.TYPE_NULL);
-        emailView.setInputType(InputType.TYPE_NULL);
-        passwordView.setInputType(InputType.TYPE_NULL);
-        logoutButton.setVisibility(View.VISIBLE);
-        logoutButton.setClickable(true);
-        isInModificationMode = false;
+            nameView.setEnabled(false);
+            numberView.setEnabled(false);
+            addressView.setEnabled(false);
+            usernameView.setEnabled(false);
+            emailView.setEnabled(false);
+            logoutButton.setVisibility(View.VISIBLE);
+            logoutButton.setClickable(true);
+            isInModificationMode = false;
 
-        userInfoUpdateAPI = new UserInfoUpdateAPI();
-        userInfoUpdateAPI.execute();
+            userInfoUpdateAPI = new UserInfoUpdateAPI();
+            userInfoUpdateAPI.execute();
 
-        getUserAPI = new GetUserAPI();
-        getUserAPI.execute(getUserURL + id);
+            getUserAPI = new GetUserAPI();
+            getUserAPI.execute(getUserURL + id);
+        }
+
 
     }
 
-    public void togglePass(View view){
-        if (!passIsVisible){
-            passwordView.animate().alpha(1f).setDuration(1000);
-            passwordView.setVisibility(View.VISIBLE);
-            passIsVisible = true;
-        }
-        else {
-            passwordView.animate().alpha(0f).setDuration(1000);
-            passwordView.setInputType(InputType.TYPE_NULL);
-            passIsVisible = false;
-        }
-
-    }
 
     public void logout(View view){
         Intent intent = new Intent(getContext(), LoginActivity.class);
