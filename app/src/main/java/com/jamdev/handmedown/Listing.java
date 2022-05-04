@@ -15,6 +15,16 @@ public class Listing implements Parcelable {
     private String sellerName;
     private int picture;
 
+    public Listing(int picture,String id, String title, String description, String price, String category, String posted_on, String seller) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+        this.posted_on = posted_on;
+        this.seller = seller;
+        this.picture = picture;
+    }
 
     public Listing(String title, String description, String price, String category, String posted_on, String seller, int picture) {
         this.title = title;

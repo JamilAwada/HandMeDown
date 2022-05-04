@@ -11,8 +11,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +39,11 @@ public class ListingsActivity extends Fragment  {
     RelativeLayout refreshButton;
     ImageView refreshIcon;
 
+    RelativeLayout sortButton;
+    TextView sortOrderView;
+    String sortOrder = "";
+
+
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     List<Listing> itemList = new ArrayList<>();
@@ -59,6 +66,10 @@ public class ListingsActivity extends Fragment  {
         refreshButton = (RelativeLayout) view.findViewById(R.id.btn_refresh_listings);
         refreshIcon = (ImageView) view.findViewById(R.id.image_refresh);
 
+        sortButton = (RelativeLayout) view.findViewById(R.id.btn_sort);
+        sortOrderView = (TextView) view.findViewById(R.id.tx_sort_order);
+        sortOrder = sortOrderView.getText().toString();
+
         rotateLeft = new RotateAnimation(0, -360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotateLeft.setDuration(1000);
         rotateLeft.setInterpolator(new LinearInterpolator());
@@ -72,6 +83,13 @@ public class ListingsActivity extends Fragment  {
            }
         });
 
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeOrder(view);
+            }
+        });
+
         addListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +99,7 @@ public class ListingsActivity extends Fragment  {
 
         // Get all user listings on creation (I.E, search for all listings with foreign key matching the user's ID)
         userID = getArguments().getString("Id");
-        getListingURL = getListingURL + userID;
+        getListingURL = getListingURL + userID + "&order=" + sortOrder;
         getListingsAPI = new GetListingsAPI();
         getListingsAPI.execute(getListingURL);
 
@@ -134,7 +152,7 @@ public class ListingsActivity extends Fragment  {
                 initRecyclerView();
                 if (!values.equalsIgnoreCase("0")) {
                     JSONArray listJsonArray = new JSONArray(values);
-
+                    itemList = new ArrayList<>();
                     for(int i = 0; i < listJsonArray.length(); i++){
 
                         JSONObject jsonItemObject = listJsonArray.getJSONObject(i);
@@ -147,7 +165,7 @@ public class ListingsActivity extends Fragment  {
                         String posted_on = jsonItemObject.get("posted_on").toString();
                         int picture = R.drawable.no_listing_picture;
 
-                        Listing listing = new Listing(id, title,description,price,category,posted_on,seller,picture);
+                        Listing listing = new Listing(picture, id, title,description,price,category,posted_on,seller);
 
 
                         itemList.add(listing);
@@ -185,7 +203,19 @@ public class ListingsActivity extends Fragment  {
     // I originally did not want to do this, but i was left no choice. I was not able to call fragmentManager and commit() without losing data
     public void refresh(View view){
         itemList.clear();
-        GetListingsAPI api = new GetListingsAPI();
-        api.execute(getListingURL);
+        GetListingsAPI getListingsAPI = new GetListingsAPI();
+        getListingURL = getListingURL + userID + "&order=" + sortOrder;
+        getListingsAPI.execute(getListingURL);
+    }
+
+    public void changeOrder(View view){
+        if (sortOrder.equalsIgnoreCase("New")){
+            sortOrderView.setText("Old");
+            sortOrder = "Old";
+        }
+        else if (sortOrder.equalsIgnoreCase("Old")){
+            sortOrderView.setText("New");
+            sortOrder = "New";
+        }
     }
 }

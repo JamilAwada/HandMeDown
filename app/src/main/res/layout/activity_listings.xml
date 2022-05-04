@@ -10,8 +10,8 @@
         android:id="@+id/btn_new_listing"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/category_card_blue">
 
         <TextView
@@ -41,6 +41,44 @@
             android:background="@drawable/refresh" />
 
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="Sort by"
+        android:textSize="18sp" />
+
+    <RelativeLayout
+        android:id="@+id/btn_sort"
+        android:layout_width="75dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="240dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/search_bg">
+
+        <TextView
+            android:id="@+id/tx_sort_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:text="New"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/flip" />
+
+    </RelativeLayout>
+        
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/container_listings"

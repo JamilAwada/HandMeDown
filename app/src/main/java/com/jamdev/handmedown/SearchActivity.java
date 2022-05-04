@@ -135,11 +135,11 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
                     String price = jsonItemObject.getString("price");
                     String category = jsonItemObject.getString("category");
                     String seller = jsonItemObject.getString("seller");
-                    String sellerName = jsonItemObject.getString("sellerName");
+                    String sellerName = jsonItemObject.getString("seller_name");
                     String posted_on = jsonItemObject.get("posted_on").toString();
                     int picture = R.drawable.no_listing_picture;
 
-                    Listing listing = new Listing(title,description,price,category,posted_on,seller, sellerName,picture);
+                    Listing listing = new Listing(title,description,price,category,posted_on,seller,sellerName,picture);
                     listings.add(listing);
                 }
                 initRecyclerView();
