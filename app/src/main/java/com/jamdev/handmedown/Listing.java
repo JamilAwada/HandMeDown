@@ -12,6 +12,7 @@ public class Listing implements Parcelable {
     private String category;
     private String posted_on;
     private String seller;
+    private String sellerName;
     private int picture;
 
 
@@ -24,16 +25,18 @@ public class Listing implements Parcelable {
         this.seller = seller;
         this.picture = picture;
     }
-    public Listing(String id, String title, String description, String price, String category, String posted_on, String seller, int picture) {
-        this.id = id;
+
+    public Listing(String title, String description, String price, String category, String posted_on, String seller, String sellerName, int picture) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.category = category;
         this.posted_on = posted_on;
         this.seller = seller;
+        this.sellerName = sellerName;
         this.picture = picture;
     }
+
 
     public String getId() {
         return id;
@@ -107,6 +110,7 @@ public class Listing implements Parcelable {
         category = in.readString();
         posted_on = in.readString();
         seller = in.readString();
+        sellerName = in.readString();
         picture = in.readInt();
     }
 
@@ -137,6 +141,15 @@ public class Listing implements Parcelable {
         parcel.writeString(category);
         parcel.writeString(posted_on);
         parcel.writeString(seller);
+        parcel.writeString(sellerName);
         parcel.writeInt(picture);
+    }
+
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
     }
 }

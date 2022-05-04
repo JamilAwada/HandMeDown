@@ -37,9 +37,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         String listingPrice = listings.get(position).getPrice();
         String listingDate = listings.get(position).getPosted_on();
         String listingSeller = listings.get(position).getSeller();
+        String listingSellerName = listings.get(position).getSellerName();
         int listingPicture = listings.get(position).getPicture();
 
-        holder.setData(listingTitle,listingDescription,listingPrice,listingDate,listingSeller,listingPicture);
+        holder.setData(listingTitle,listingDescription,listingPrice,listingDate,listingSeller,listingSellerName,listingPicture);
 
     }
     @Override
@@ -72,12 +73,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         }
 
-        public void setData(String title, String description, String price, String date, String seller, int picture) {
+        public void setData(String title, String description, String price, String date, String seller,String sellerName, int picture) {
             listingTitleView.setText(title);
             listingDescriptionView.setText(description);
             listingPriceView.setText(price);
             listingDateView.setText(date);
-            listingSellerView.setText(seller);
+            listingSellerView.setText(sellerName);
             listingPictureView.setImageResource(picture);
 
         }
