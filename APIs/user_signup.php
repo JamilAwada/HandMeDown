@@ -2,14 +2,14 @@
 include("db_info.php");
 
 // User data that will be collected in order to make a new account
-$FullName = $_POST["FullName"];
-$PhoneNumber = $_POST["PhoneNumber"];
+$Name = $_POST["Name"];
+$Number = $_POST["Number"];
 $Address = $_POST["Address"];
 $Email = $_POST["Email"];
 $Username = $_POST["Username"];
 $Password = $_POST["Password"];
 
-$Id = rand(1, 999999);
+$ID = rand(1, 999999);
 
 // Check if the email is a valid email
 if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
@@ -19,6 +19,7 @@ if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
 // Check for duplicate username or email
 $UsernameQuery = $mysqli->query("SELECT username from user where username='$Username'");
 $EmailQuery = $mysqli->query("SELECT username from user where email='$Email'");
+$NumberQuery = $mysqli->query("SELECT username from user where number='$Number'");
 
 // If returned rows is greater than 0 then duplicate exists
 if($UsernameQuery->num_rows > 0){
@@ -27,15 +28,18 @@ if($UsernameQuery->num_rows > 0){
 if($EmailQuery->num_rows > 0){
     exit('Email taken. Try logging in with it if it belongs to you.');
 }
+if($NumberQuery->num_rows > 0){
+    exit('Phone number already in use.');
+}
 
 // Hash the password 
 $HashedPassword = password_hash($Password, PASSWORD_BCRYPT);
 
 // Register the client to the Database
-$FullName = ucwords($FullName);
+$Name = ucwords($Name);
 
 // Query to register the new user with the inputted details
-$RegisterUser = $mysqli->query("INSERT INTO user (id, name, phone_number, address, email, username, password) VALUES ('$Id','$FullName','$PhoneNumber','$Address','$Email','$Username','$HashedPassword')"); 
+$RegisterUser = $mysqli->query("INSERT INTO user (id, name, number, address, email, username, password) VALUES ('$ID','$Name','$Number','$Address','$Email','$Username','$HashedPassword')"); 
 
 if($RegisterUser){
     echo "User registered";

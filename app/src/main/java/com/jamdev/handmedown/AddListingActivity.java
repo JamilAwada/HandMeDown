@@ -2,6 +2,7 @@ package com.jamdev.handmedown;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -45,6 +47,7 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
     String[] categories = { "Toys", "Clothing", "Electronics", "Gear", "Disposables", "Consumables" };
 
     RelativeLayout addListingButton;
+    ImageView returnButton;
 
     private String addListingURL = "http://10.0.2.2/HandMeDown/listing_add.php";
     String JSONObject;
@@ -58,6 +61,8 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_add_listing);
+
+        returnButton = (ImageView) findViewById(R.id.btn_return);
 
         // Get listing details from input fields
         titleInput = (EditText) findViewById(R.id.et_title);
@@ -85,6 +90,13 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
                 addListing(view);
             }
         });
+
+        returnButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                returnToListings();
+            }
+        });
     }
 
     public void addListing(View view) {
@@ -106,6 +118,7 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
             // Execute API
             API = new AddListingAPI();
             API.execute();
+            returnToListings();
         }
 
 
@@ -151,8 +164,6 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
                 while ((buffered_str_chunk = buffered_reader.readLine()) != null) {
                     string_builder.append(buffered_str_chunk);
                 }
-                Log.i("result", string_builder.toString());
-                JSONObject = string_builder.toString();
                 return string_builder.toString();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -166,11 +177,9 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
             try {
                 if (values.equalsIgnoreCase("Listing added")) {
                     Toast.makeText(getApplicationContext(),"Listing added", Toast.LENGTH_SHORT).show();
-                    onBackPressed();
-                    onBackPressed();
+
                 } else {
                     Toast.makeText(getApplicationContext(), values, Toast.LENGTH_SHORT).show();
-                    Log.i("json", JSONObject);
                 }
                 Toast.makeText(getApplicationContext(), values, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
@@ -191,7 +200,7 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
     }
 
     // I understand this is bad practice, but moving from an activity back to a fragment is a herculean task
-    public void returnToListings(View view){
+    public void returnToListings(){
         onBackPressed();
         onBackPressed();
     }

@@ -86,6 +86,7 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
         selectedItem = listings.get(position);
         getUserAPI = new GetUserAPI();
         getUserAPI.execute(getUserURL + selectedItem.getSeller());
+        Log.i("Result:", getUserURL + selectedItem.getSeller());
     }
 
     public class GetListingsAPI extends AsyncTask<String, Void, String> {
@@ -124,7 +125,6 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
         protected void onPostExecute(String values) {
             super.onPostExecute(values);
             try {
-                Log.i("soiad", values);
                 JSONArray listJsonArray = new JSONArray(values);
                 listings = new ArrayList<>();
                 for(int i = 0; i < listJsonArray.length(); i++){
@@ -136,9 +136,9 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
                     String category = jsonItemObject.getString("category");
                     String seller = jsonItemObject.getString("seller");
                     String posted_on = jsonItemObject.get("posted_on").toString();
-                    int picture = R.drawable.placeholder2;
+                    int picture = R.drawable.no_listing_picture;
 
-                    Listing listing = new Listing(title,description,price,category,seller,posted_on,picture);
+                    Listing listing = new Listing(title,description,price,category,posted_on,seller,picture);
                     listings.add(listing);
                 }
                 initRecyclerView();
@@ -185,9 +185,7 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
         protected void onPostExecute(String values) {
             super.onPostExecute(values);
             try {
-                Log.i("message", values);
                 JSONArray listJsonArray = new JSONArray(values);
-
                 for(int i = 0; i < listJsonArray.length(); i++){
 
                     JSONObject jsonItemObject = listJsonArray.getJSONObject(i);

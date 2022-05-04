@@ -53,7 +53,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         private TextView listingDescriptionView;
         private TextView listingPriceView;
         private TextView listingDateView;
-        private TextView listingOwnerView;
+        private TextView listingSellerView;
         private ImageView listingPictureView;
 
         OnListingListener onListingListener;
@@ -65,7 +65,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             listingTitleView = itemView.findViewById(R.id.listing_title);
             listingDescriptionView = itemView.findViewById(R.id.card_description);
             listingPriceView = itemView.findViewById(R.id.card_price_text);
-            listingOwnerView = itemView.findViewById(R.id.card_seller_text);
+            listingSellerView = itemView.findViewById(R.id.card_seller_text);
             listingDateView = itemView.findViewById(R.id.card_date_text);
 
             itemView.setOnClickListener(this);
@@ -77,7 +77,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             listingDescriptionView.setText(description);
             listingPriceView.setText(price);
             listingDateView.setText(date);
-            listingOwnerView.setText(seller);
+            listingSellerView.setText(seller);
             listingPictureView.setImageResource(picture);
 
         }

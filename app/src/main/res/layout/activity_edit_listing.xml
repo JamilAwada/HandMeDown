@@ -38,15 +38,15 @@
 
         <EditText
             android:id="@+id/et_title"
-            android:layout_width="match_parent"
+            android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:hint="Title"
-            android:textColor="@color/black"
             android:inputType="textNoSuggestions"
+            android:textColor="@color/black"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </RelativeLayout>
@@ -68,9 +68,9 @@
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
-            android:hint="Description"
-            android:inputType="textNoSuggestions"
             android:gravity="top"
+            android:hint="Description"
+            android:inputType="textMultiLine|textNoSuggestions"
             android:textColor="@color/black"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 

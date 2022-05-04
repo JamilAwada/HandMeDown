@@ -208,7 +208,7 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
         protected void onPostExecute(String values) {
             super.onPostExecute(values);
             try {
-                Log.i("message", values);
+
                 JSONArray listJsonArray = new JSONArray(values);
 
                 for(int i = 0; i < listJsonArray.length(); i++){

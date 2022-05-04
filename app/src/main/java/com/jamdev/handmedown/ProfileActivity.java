@@ -3,6 +3,7 @@ package com.jamdev.handmedown;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,7 +66,6 @@ public class ProfileActivity extends Fragment {
 
 
     private String editUserURL = "http://10.0.2.2/HandMeDown/user_edit.php";
-    String JSONObject;
     UserInfoUpdateAPI API;
 
 
@@ -108,7 +108,6 @@ public class ProfileActivity extends Fragment {
         emailView.setText(email);
         password = getArguments().getString("Password");
         passwordView.setText(password);
-        Log.i("password" , passwordView.getText().toString());
         id = getArguments().getString("Id");
 
         rotateRight = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -202,8 +201,6 @@ public class ProfileActivity extends Fragment {
                 while ((buffered_str_chunk = buffered_reader.readLine()) != null) {
                     string_builder.append(buffered_str_chunk);
                 }
-                Log.i("result", string_builder.toString());
-                JSONObject = string_builder.toString();
                 return string_builder.toString();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -219,7 +216,6 @@ public class ProfileActivity extends Fragment {
                     Toast.makeText(getContext(),  s, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
-                    Log.i("json", JSONObject);
                 }
                 Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
@@ -235,7 +231,7 @@ public class ProfileActivity extends Fragment {
             saveChangesButton.setVisibility(View.VISIBLE);
             nameView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
             numberView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-            addressView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+            addressView.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
             usernameView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
             emailView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
             passwordView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);

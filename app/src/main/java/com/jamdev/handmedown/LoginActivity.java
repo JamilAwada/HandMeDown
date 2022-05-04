@@ -107,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
                 while ((buffered_str_chunk = buffered_reader.readLine()) != null) {
                     string_builder.append(buffered_str_chunk);
                 }
-                Log.i("result", string_builder.toString());
                 return string_builder.toString();
             } catch (Exception e) {
                 e.printStackTrace();

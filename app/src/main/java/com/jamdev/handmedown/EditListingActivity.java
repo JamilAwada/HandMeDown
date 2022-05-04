@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
     Spinner categoryInput;
     RelativeLayout saveChanges;
     RelativeLayout deleteListing;
+    ImageView returnButton;
 
     String id = "";
     String title = "";
@@ -49,7 +51,6 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
     String[] categories = { "Toys", "Clothing", "Electronics", "Gear", "Disposables", "Consumables" };
 
     private String editListingURL = "http://10.0.2.2/HandMeDown/listing_edit.php";
-    String JSONObject;
     EditListingAPI editListingAPI;
 
     private String deleteListingURL = "http://10.0.2.2/HandMeDown/listing_delete.php?ID=";
@@ -69,6 +70,8 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
         priceInput = (EditText) findViewById(R.id.et_price);
         saveChanges = (RelativeLayout) findViewById(R.id.btn_save_changes);
         deleteListing = (RelativeLayout) findViewById(R.id.btn_delete_listing);
+        returnButton = (ImageView) findViewById(R.id.btn_return);
+
 
         // Category is selected through a spinner
         categoryInput = (Spinner) findViewById(R.id.spinner_categories);
@@ -106,6 +109,13 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
             @Override
             public void onClick(View view) {
                 deleteListing();
+            }
+        });
+
+        returnButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                returnToListings();
             }
         });
     }
@@ -175,8 +185,6 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
                 while ((buffered_str_chunk = buffered_reader.readLine()) != null) {
                     string_builder.append(buffered_str_chunk);
                 }
-                Log.i("result", string_builder.toString());
-                JSONObject = string_builder.toString();
                 return string_builder.toString();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -193,7 +201,6 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
 
                 } else {
                     Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                    Log.i("json", JSONObject);
                 }
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {

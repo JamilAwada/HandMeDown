@@ -2,9 +2,9 @@
 include("db_info.php");
 
 // User data that will be collected in order to modify user data
-$Id = $_POST["Id"];
-$FullName = $_POST["FullName"];
-$PhoneNumber = $_POST["PhoneNumber"];
+$ID = $_POST["ID"];
+$Name = $_POST["Name"];
+$Number = $_POST["Number"];
 $Address = $_POST["Address"];
 $Email = $_POST["Email"];
 $Username = $_POST["Username"];
@@ -31,7 +31,7 @@ if($EmailQuery->num_rows > 1){
 $HashedPassword = password_hash($Password, PASSWORD_BCRYPT);
 
 // Query to update user info with the inputted details
-$UpdateUser = $mysqli->query("UPDATE user SET name = '$FullName', phone_number = '$PhoneNumber', address = '$Address', username = '$Username', email = '$Email', password = '$HashedPassword' WHERE id = '$Id'"); 
+$UpdateUser = $mysqli->query("UPDATE user SET name = '$Name', number = '$Number', address = '$Address', username = '$Username', email = '$Email', password = '$HashedPassword' WHERE id = '$ID'"); 
 
 if($UpdateUser){
     echo "User info updated.";

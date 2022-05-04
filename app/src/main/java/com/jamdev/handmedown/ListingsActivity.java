@@ -58,7 +58,7 @@ public class ListingsActivity extends Fragment  {
         refreshButton = (RelativeLayout) view.findViewById(R.id.btn_refresh_listings);
         refreshIcon = (ImageView) view.findViewById(R.id.image_refresh);
 
-        rotateLeft = new RotateAnimation(0, -180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateLeft = new RotateAnimation(0, -360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotateLeft.setDuration(1000);
         rotateLeft.setInterpolator(new LinearInterpolator());
 
@@ -66,7 +66,7 @@ public class ListingsActivity extends Fragment  {
         refreshButton.setOnClickListener(new View.OnClickListener(){
            @Override
            public void onClick(View view){
-               refreshIcon.setAnimation(rotateLeft);
+               refreshIcon.startAnimation(rotateLeft);
                refresh(view);
            }
         });
@@ -144,7 +144,7 @@ public class ListingsActivity extends Fragment  {
                     String posted_on = jsonItemObject.get("posted_on").toString();
                     int picture = R.drawable.no_listing_picture;
 
-                    Listing listing = new Listing(id, title,description,price,category,seller,posted_on,picture);
+                    Listing listing = new Listing(id, title,description,price,category,posted_on,seller,picture);
 
                     itemList.add(listing);
                 }

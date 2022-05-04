@@ -3,6 +3,7 @@ package com.jamdev.handmedown;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,9 +50,10 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
         String listingDescription = listings.get(position).getDescription();
         String listingPrice = listings.get(position).getPrice();
         String listingDate = listings.get(position).getPosted_on();
+        Log.i("Listing date:", listingDate);
         int listingPicture = listings.get(position).getPicture();
 
-        holder.setData(listingID,listingTitle,listingDescription,listingPrice, listingDate,listingPicture);
+        holder.setData(listingID,listingTitle,listingDescription,listingPrice,listingDate,listingPicture);
 
     }
     @Override

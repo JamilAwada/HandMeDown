@@ -179,7 +179,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_below="@id/tx_seller_info"
-        android:layout_marginStart="250dp"
+        android:layout_marginStart="230dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/calendar" />
 
@@ -188,9 +188,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tx_seller_info"
-        android:layout_marginStart="290dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="270dp"
+        android:layout_marginTop="22dp"
         android:fontFamily="@font/poppins_regular"
-        android:text="Date" />
+        android:text="Date"
+        android:textSize="16sp" />
 
 </RelativeLayout>

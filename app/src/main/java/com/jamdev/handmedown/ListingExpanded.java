@@ -20,7 +20,9 @@ public class ListingExpanded extends AppCompatActivity {
     TextView sellerAddress;
     TextView sellerNumber;
     TextView listingDate;
+
     ImageView callButton;
+    ImageView returnButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,9 @@ public class ListingExpanded extends AppCompatActivity {
         sellerAddress = (TextView) findViewById(R.id.tx_seller_address);
         sellerNumber = (TextView) findViewById(R.id.tx_seller_number);
         listingDate = (TextView) findViewById(R.id.posted_on);
+
         callButton = (ImageView) findViewById(R.id.btn_call);
+        returnButton = (ImageView) findViewById(R.id.btn_return);
 
         Bundle fromListings = getIntent().getExtras();
         Listing item = fromListings.getParcelable("Listing");
@@ -61,6 +65,14 @@ public class ListingExpanded extends AppCompatActivity {
                 Intent goToDevicePhoneApp = new Intent(Intent.ACTION_DIAL);
                 goToDevicePhoneApp.setData(Uri.parse(dialledNumber));
                 startActivity(goToDevicePhoneApp);
+            }
+        });
+
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+                onBackPressed();
             }
         });
 
