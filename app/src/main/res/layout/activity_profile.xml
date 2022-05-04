@@ -34,25 +34,36 @@
         android:layout_marginEnd="20dp"
         android:src="@drawable/no_picture"/>
 
+    <TextView
+        android:id="@+id/tx_contact_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tx_profile"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Contact Info"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
 
     <ImageView
         android:id="@+id/image_name"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="140dp"
         android:layout_marginStart="20dp"
-        app:srcCompat="@drawable/user_2"/>
+        android:layout_marginTop="150dp"
+        app:srcCompat="@drawable/user_2" />
 
     <EditText
         android:id="@+id/tx_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="150dp"
         android:layout_toEndOf="@id/image_name"
         android:background="@null"
         android:fontFamily="@font/poppins_medium"
-        android:inputType="none"
         android:text="Name"
         android:textSize="18sp" />
 
@@ -75,7 +86,6 @@
         android:layout_toEndOf="@id/image_number"
         android:background="@null"
         android:fontFamily="@font/poppins_medium"
-        android:inputType="none"
         android:text="Phone Number"
         android:textSize="18sp" />
 
@@ -83,22 +93,35 @@
         android:id="@+id/image_address"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_below="@id/image_number"
+        android:layout_below="@id/tx_address_info"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="32dp"
-        app:srcCompat="@drawable/address"/>
+        app:srcCompat="@drawable/address" />
+
+    <TextView
+        android:id="@+id/tx_address_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tx_number"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Address"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/tx_address"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/image_number"
+        android:layout_below="@id/tx_address_info"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="10dp"
         android:layout_toEndOf="@id/image_address"
         android:background="@null"
         android:fontFamily="@font/poppins_medium"
-        android:inputType="none"
+        android:gravity="top"
+        android:inputType="textMultiLine"
         android:text="Address"
         android:textSize="18sp" />
 
@@ -108,11 +131,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/image_address"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
-        android:text="@string/account_details"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/poppins_medium"
-        android:textSize="24sp"
-        android:textColor="@color/black"/>
+        android:text="@string/account_details"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
 
     <ImageView
         android:id="@+id/image_username"
@@ -121,20 +144,20 @@
         android:layout_below="@id/tx_account_details"
         android:layout_marginStart="20dp"
         android:layout_marginTop="17dp"
-        app:srcCompat="@drawable/quote"/>
+        app:srcCompat="@drawable/quote" />
 
     <TextView
         android:id="@+id/tx_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/image_username"
         android:layout_below="@id/tx_account_details"
         android:layout_marginStart="10dp"
         android:layout_marginTop="17dp"
-        android:text="@string/username"
-        android:textSize="20sp"
+        android:layout_toEndOf="@id/image_username"
         android:fontFamily="@font/poppins_semibold"
-        android:textColor="@color/gray"/>
+        android:text="@string/username"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/tx_username_input"
@@ -143,11 +166,10 @@
         android:layout_below="@id/tx_username"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/image_username"
-        android:text="Username"
-        android:fontFamily="@font/poppins_medium"
-        android:textSize="18sp"
         android:background="@null"
-        android:inputType="none"/>
+        android:fontFamily="@font/poppins_medium"
+        android:text="Username"
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/image_email"
@@ -162,14 +184,14 @@
         android:id="@+id/tx_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/image_email"
         android:layout_below="@id/image_username"
         android:layout_marginStart="10dp"
         android:layout_marginTop="52dp"
-        android:text="@string/email"
-        android:textSize="20sp"
+        android:layout_toEndOf="@id/image_email"
         android:fontFamily="@font/poppins_semibold"
-        android:textColor="@color/gray"/>
+        android:text="@string/email"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/tx_email_input"
@@ -179,11 +201,10 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@id/image_email"
-        android:text="Email"
-        android:fontFamily="@font/poppins_medium"
-        android:textSize="18sp"
         android:background="@null"
-        android:inputType="none"/>
+        android:fontFamily="@font/poppins_medium"
+        android:text="Email"
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/image_password"
@@ -216,10 +237,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@id/image_password"
-        android:background="@null"
         android:alpha="0"
+        android:background="@null"
         android:fontFamily="@font/poppins_medium"
-        android:inputType="none"
         android:text="Password"
         android:textSize="18sp"
         android:visibility="invisible" />
@@ -230,16 +250,16 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/save_changes_bg"
         android:clickable="false"
-        android:visibility="invisible"
-        android:background="@drawable/save_changes_bg">
+        android:visibility="invisible">
 
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/check"/>
+            android:background="@drawable/check" />
 
     </RelativeLayout>
 
@@ -247,18 +267,18 @@
         android:id="@+id/btn_logout"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/category_card_red">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Log Out"
             android:fontFamily="@font/poppins_regular"
-            android:textColor="@color/white"/>
+            android:text="Log Out"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 

@@ -3,9 +3,7 @@ package com.jamdev.handmedown;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +27,14 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ProfileActivity extends Fragment {
@@ -50,23 +52,28 @@ public class ProfileActivity extends Fragment {
     TextView togglePasswordButton;
     ImageView settingsButton;
 
-    boolean isInModificationMode;
-    boolean passIsVisible;
+    boolean isInModificationMode = false;
+    boolean passIsVisible = false;
+
+    User user;
 
     String id;
-    String name = "";
-    String number = "";
-    String address = "";
-    String email = "";
-    String username = "";
-    String password = "";
+    String userName = "";
+    String userNumber = "";
+    String userAddress = "";
+    String userEmail = "";
+    String userUsername = "";
+    String userPassword = "";
 
     RotateAnimation rotateRight;
     RotateAnimation rotateLeft;
 
 
     private String editUserURL = "http://10.0.2.2/HandMeDown/user_edit.php";
-    UserInfoUpdateAPI API;
+    UserInfoUpdateAPI userInfoUpdateAPI;
+
+    private String getUserURL = "http://10.0.2.2/HandMeDown/user_fetch_id.php?id=";
+    private GetUserAPI getUserAPI;
 
 
     @Nullable
@@ -76,39 +83,28 @@ public class ProfileActivity extends Fragment {
         View view = inflater.inflate(R.layout.activity_profile, container, false);
 
         nameView = (EditText) view.findViewById(R.id.tx_name);
-        nameView.setInputType(InputType.TYPE_NULL);
+        nameView.setEnabled(false);
         numberView = (EditText) view.findViewById(R.id.tx_number);
-        numberView.setInputType(InputType.TYPE_NULL);
+        numberView.setEnabled(false);
         addressView = (EditText) view.findViewById(R.id.tx_address);
-        addressView.setInputType(InputType.TYPE_NULL);
+        addressView.setEnabled(false);
         usernameView = (EditText) view.findViewById(R.id.tx_username_input);
-        usernameView.setInputType(InputType.TYPE_NULL);
+        usernameView.setEnabled(false);
         emailView = (EditText) view.findViewById(R.id.tx_email_input);
-        emailView.setInputType(InputType.TYPE_NULL);
+        emailView.setEnabled(false);
         passwordView = (EditText) view.findViewById(R.id.tx_password_input);
-        passwordView.setInputType(InputType.TYPE_NULL);
+        passwordView.setEnabled(false);
         saveChangesButton = (RelativeLayout) view.findViewById(R.id.btn_user_save_changes);
         logoutButton = (RelativeLayout) view.findViewById(R.id.btn_logout);
         settingsButton = (ImageView) view.findViewById(R.id.image_settings);
 
-        isInModificationMode = false;
-        passIsVisible = false;
-
         togglePasswordButton = (TextView) view.findViewById(R.id.tx_password);
 
-        name = getArguments().getString("Name");
-        nameView.setText(name);
-        number = getArguments().getString("Phone Number");
-        numberView.setText(number);
-        address = getArguments().getString("Address");
-        addressView.setText(address);
-        username = getArguments().getString("Username");
-        usernameView.setText(username);
-        email = getArguments().getString("Email");
-        emailView.setText(email);
-        password = getArguments().getString("Password");
-        passwordView.setText(password);
         id = getArguments().getString("Id");
+
+        getUserAPI = new GetUserAPI();
+        getUserAPI.execute(getUserURL + id);
+
 
         rotateRight = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotateRight.setDuration(1000);
@@ -125,6 +121,8 @@ public class ProfileActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 toggleModificationMode(view);
+                getUserAPI = new GetUserAPI();
+                getUserAPI.execute(getUserURL + id);
             }
 
 
@@ -168,12 +166,12 @@ public class ProfileActivity extends Fragment {
             HttpPost http_post = new HttpPost(editUserURL);
 
             BasicNameValuePair idParam = new BasicNameValuePair("ID", id);
-            BasicNameValuePair usernameParam = new BasicNameValuePair("Username", username);
-            BasicNameValuePair passwordParam = new BasicNameValuePair("Password", password);
-            BasicNameValuePair fullNameParam = new BasicNameValuePair("Name", name);
-            BasicNameValuePair emailParam = new BasicNameValuePair("Email", email);
-            BasicNameValuePair addressParam = new BasicNameValuePair("Address", address);
-            BasicNameValuePair phoneNumberParam = new BasicNameValuePair("Number", number);
+            BasicNameValuePair usernameParam = new BasicNameValuePair("Username", userUsername);
+            BasicNameValuePair passwordParam = new BasicNameValuePair("Password", userPassword);
+            BasicNameValuePair fullNameParam = new BasicNameValuePair("Name", userName);
+            BasicNameValuePair emailParam = new BasicNameValuePair("Email", userEmail);
+            BasicNameValuePair addressParam = new BasicNameValuePair("Address", userAddress);
+            BasicNameValuePair phoneNumberParam = new BasicNameValuePair("Number", userNumber);
             ArrayList<NameValuePair> name_value_pair_list = new ArrayList<>();
             name_value_pair_list.add(idParam);
             name_value_pair_list.add(fullNameParam);
@@ -224,17 +222,95 @@ public class ProfileActivity extends Fragment {
         }
 
 
+
+
+    }
+
+    public class GetUserAPI extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... urls) {
+            // URL and HTTP initialization to connect to API 2
+            URL url;
+            HttpURLConnection http;
+
+            try {
+                // Connect to API
+                url = new URL(urls[0]);
+                http = (HttpURLConnection) url.openConnection();
+
+                // Retrieve API content
+                InputStream in = http.getInputStream();
+                InputStreamReader reader = new InputStreamReader(in);
+
+                // Read API content line by line
+                BufferedReader br = new BufferedReader(reader);
+                StringBuilder sb = new StringBuilder();
+
+                String line;
+                while ((line = br.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+
+                br.close();
+                // Return content from API
+                return sb.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        protected void onPostExecute(String values) {
+            super.onPostExecute(values);
+            try {
+
+                JSONArray listJsonArray = new JSONArray(values);
+
+                for(int i = 0; i < listJsonArray.length(); i++){
+
+                    JSONObject jsonItemObject = listJsonArray.getJSONObject(i);
+                    String id = jsonItemObject.getString("id");
+                    String username = jsonItemObject.getString("username");
+                    String password = jsonItemObject.getString("password");
+                    String name = jsonItemObject.getString("name");
+                    String email = jsonItemObject.getString("email");
+                    String number = jsonItemObject.getString("number");
+                    String address = jsonItemObject.get("address").toString();
+                    int picture = R.drawable.no_picture;
+
+                    // Get the listing and the seller, and send to the expanded listing view class
+                    user = new User(id,name,number,address,username,email,picture);
+
+                    userName = name;
+                    userNumber = number;
+                    userAddress = address;
+                    userUsername = username;
+                    userEmail = email;
+
+                    nameView.setText(userName);
+                    numberView.setText(userNumber);
+                    addressView.setText(userAddress);
+                    usernameView.setText(userUsername);
+                    emailView.setText(userEmail);
+                    passwordView.setText(userPassword);
+
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        }
     }
     public void toggleModificationMode(View view) {
         if (!isInModificationMode) {
             saveChangesButton.setClickable(true);
             saveChangesButton.setVisibility(View.VISIBLE);
-            nameView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-            numberView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-            addressView.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-            usernameView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-            emailView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-            passwordView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+            nameView.setEnabled(true);
+            numberView.setEnabled(true);
+            addressView.setEnabled(true);
+            usernameView.setEnabled(true);
+            emailView.setEnabled(true);
+            passwordView.setEnabled(true);
             logoutButton.setVisibility(View.INVISIBLE);
             logoutButton.setClickable(false);
             settingsButton.startAnimation(rotateLeft);
@@ -243,12 +319,12 @@ public class ProfileActivity extends Fragment {
         } else {
             saveChangesButton.setClickable(false);
             saveChangesButton.setVisibility(View.INVISIBLE);
-            nameView.setInputType(InputType.TYPE_NULL);
-            numberView.setInputType(InputType.TYPE_NULL);
-            addressView.setInputType(InputType.TYPE_NULL);
-            usernameView.setInputType(InputType.TYPE_NULL);
-            emailView.setInputType(InputType.TYPE_NULL);
-            passwordView.setInputType(InputType.TYPE_NULL);
+            nameView.setEnabled(false);
+            numberView.setEnabled(false);
+            addressView.setEnabled(false);
+            usernameView.setEnabled(false);
+            emailView.setEnabled(false);
+            passwordView.setEnabled(false);
             logoutButton.setVisibility(View.VISIBLE);
             logoutButton.setClickable(true);
             settingsButton.startAnimation(rotateRight);
@@ -260,19 +336,19 @@ public class ProfileActivity extends Fragment {
     }
 
     public void saveChanges(View view) {
-        name = nameView.getText().toString();
-        number = numberView.getText().toString();
-        address = addressView.getText().toString();
-        email = emailView.getText().toString();
-        username = usernameView.getText().toString();
-        password = passwordView.getText().toString();
+        userName = nameView.getText().toString();
+        userNumber = numberView.getText().toString();
+        userAddress = addressView.getText().toString();
+        userEmail = emailView.getText().toString();
+        userUsername = usernameView.getText().toString();
+        userPassword = passwordView.getText().toString();
 
-        saveChangesButton.setClickable(false);
+        saveChangesButton.setEnabled(false);
         saveChangesButton.setVisibility(View.INVISIBLE);
 
         nameView.setInputType(InputType.TYPE_NULL);
         numberView.setInputType(InputType.TYPE_NULL);
-        addressView.setInputType(InputType.TYPE_NULL);
+        addressView.setEnabled(false);
         usernameView.setInputType(InputType.TYPE_NULL);
         emailView.setInputType(InputType.TYPE_NULL);
         passwordView.setInputType(InputType.TYPE_NULL);
@@ -280,8 +356,11 @@ public class ProfileActivity extends Fragment {
         logoutButton.setClickable(true);
         isInModificationMode = false;
 
-        API = new UserInfoUpdateAPI();
-        API.execute();
+        userInfoUpdateAPI = new UserInfoUpdateAPI();
+        userInfoUpdateAPI.execute();
+
+        getUserAPI = new GetUserAPI();
+        getUserAPI.execute(getUserURL + id);
 
     }
 
@@ -309,6 +388,12 @@ public class ProfileActivity extends Fragment {
         if(getActivity() != null) {
             getActivity().finish();
         }
+    }
+
+    public void refreshUI(View view){
+        GetUserAPI getUserAPI = new GetUserAPI();
+        getUserAPI.execute(getUserURL + id);
+
     }
 
 
