@@ -3,6 +3,7 @@ package com.jamdev.handmedown;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -129,24 +130,29 @@ public class ListingsActivity extends Fragment  {
         protected void onPostExecute(String values) {
             super.onPostExecute(values);
             try {
+                Log.i("values", values);
+                initRecyclerView();
+                if (!values.equalsIgnoreCase("0")) {
+                    JSONArray listJsonArray = new JSONArray(values);
 
-                JSONArray listJsonArray = new JSONArray(values);
+                    for(int i = 0; i < listJsonArray.length(); i++){
 
-                for(int i = 0; i < listJsonArray.length(); i++){
+                        JSONObject jsonItemObject = listJsonArray.getJSONObject(i);
+                        String id = jsonItemObject.getString("id");
+                        String title = jsonItemObject.getString("title");
+                        String description = jsonItemObject.getString("description");
+                        String price = jsonItemObject.getString("price");
+                        String category = jsonItemObject.getString("category");
+                        String seller = jsonItemObject.getString("seller");
+                        String posted_on = jsonItemObject.get("posted_on").toString();
+                        int picture = R.drawable.no_listing_picture;
 
-                    JSONObject jsonItemObject = listJsonArray.getJSONObject(i);
-                    String id = jsonItemObject.getString("id");
-                    String title = jsonItemObject.getString("title");
-                    String description = jsonItemObject.getString("description");
-                    String price = jsonItemObject.getString("price");
-                    String category = jsonItemObject.getString("category");
-                    String seller = jsonItemObject.getString("seller");
-                    String posted_on = jsonItemObject.get("posted_on").toString();
-                    int picture = R.drawable.no_listing_picture;
+                        Listing listing = new Listing(id, title,description,price,category,posted_on,seller,picture);
 
-                    Listing listing = new Listing(id, title,description,price,category,posted_on,seller,picture);
 
-                    itemList.add(listing);
+                        itemList.add(listing);
+                }
+
                 }
                 initRecyclerView();
             } catch (Exception e) {

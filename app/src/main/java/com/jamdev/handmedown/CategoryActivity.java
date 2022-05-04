@@ -174,7 +174,7 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
 
     public class GetUserAPI extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... urls) {
-            // URL and HTTP initialization to connect to API 2
+            // URL and HTTP initialization to connect to API 
             URL url;
             HttpURLConnection http;
 
