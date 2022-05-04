@@ -178,8 +178,14 @@ public class ProfileActivity extends Fragment {
             @Override
             public void onClick(View view) {
                     newPass = newPasswordInput.getText().toString();
-                    changePassAPI = new ChangePassAPI();
-                    changePassAPI.execute();
+                    if (newPass.equalsIgnoreCase("") || oldPasswordInput.getText().toString().equalsIgnoreCase("")){
+                        Toast.makeText(getContext(),    "Missing fields.", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        changePassAPI = new ChangePassAPI();
+                        changePassAPI.execute();
+                    }
+
 
                     }
 
@@ -353,7 +359,7 @@ public class ProfileActivity extends Fragment {
             HttpPost http_post = new HttpPost(changePassURL);
 
             BasicNameValuePair idParam = new BasicNameValuePair("ID", id);
-            BasicNameValuePair oldPasswordParam = new BasicNameValuePair("OldPassword", userPassword);
+            BasicNameValuePair oldPasswordParam = new BasicNameValuePair("OldPassword", oldPasswordInput.getText().toString());
             Log.i("password", userPassword);
             BasicNameValuePair newPasswordParam = new BasicNameValuePair("NewPassword", newPass);
             ArrayList<NameValuePair> name_value_pair_list = new ArrayList<>();
