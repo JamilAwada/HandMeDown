@@ -12,33 +12,32 @@
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
-        android:background="@drawable/category_card_green">
+        android:background="@drawable/category_card_blue">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="New Listing"
             android:fontFamily="@font/poppins_regular"
+            android:text="New Listing"
             android:textColor="@color/white" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/btn_refresh_listings"
-        android:layout_width="100dp"
+        android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="100dp"
-        android:background="@drawable/category_card_blue">
+        android:layout_marginEnd="20dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/category_card_green">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Refresh"
-            android:fontFamily="@font/poppins_regular"
-            android:textColor="@color/white"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:background="@drawable/refresh"/>
 
     </RelativeLayout>
 

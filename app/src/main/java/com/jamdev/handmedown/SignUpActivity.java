@@ -41,7 +41,6 @@ public class SignUpActivity extends AppCompatActivity {
     String email = "";
     String password = "";
 
-    String JSONObject;
 
     private String userSignUpURL = "http://10.0.2.2/HandMeDown/user_signup.php";
     userRegistrationAPI API;
@@ -124,8 +123,6 @@ public class SignUpActivity extends AppCompatActivity {
                 while ((buffered_str_chunk = buffered_reader.readLine()) != null) {
                     string_builder.append(buffered_str_chunk);
                 }
-                Log.i("result", string_builder.toString());
-                JSONObject = string_builder.toString();
                 return string_builder.toString();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -143,7 +140,6 @@ public class SignUpActivity extends AppCompatActivity {
                     startActivity(landing);
                 } else {
                     Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                    Log.i("json", JSONObject);
                 }
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
@@ -156,5 +152,6 @@ public class SignUpActivity extends AppCompatActivity {
     public void goToLogin(View view){
         Intent goToLogin = new Intent(this, LoginActivity.class);
         startActivity(goToLogin);
+        finish();
     }
 }

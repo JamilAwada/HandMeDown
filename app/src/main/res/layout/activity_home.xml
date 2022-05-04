@@ -173,7 +173,7 @@
         android:id="@+id/card_consumables"
         android:layout_width="150dp"
         android:layout_height="175dp"
-        android:background="@drawable/category_card_orange"
+        android:background="@drawable/category_card_yellow"
         android:layout_below="@id/card_gear"
         android:layout_marginEnd="30dp"
         android:layout_marginTop="25dp"

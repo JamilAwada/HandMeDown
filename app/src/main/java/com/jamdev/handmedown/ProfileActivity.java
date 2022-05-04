@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -57,6 +60,8 @@ public class ProfileActivity extends Fragment {
     String username = "";
     String password = "";
 
+    RotateAnimation rotateLeft;
+    RotateAnimation rotateRight;
 
 
     private String editUserURL = "http://10.0.2.2/HandMeDown/user_edit.php";
@@ -105,6 +110,15 @@ public class ProfileActivity extends Fragment {
         passwordView.setText(password);
         Log.i("password" , passwordView.getText().toString());
         id = getArguments().getString("Id");
+
+        rotateLeft = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateLeft.setDuration(1000);
+        rotateLeft.setInterpolator(new LinearInterpolator());
+
+        rotateRight = new RotateAnimation(0, -180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateRight.setDuration(1000);
+        rotateRight.setInterpolator(new LinearInterpolator());
+
 
         // On Click Listeners for the respective buttons
 
@@ -219,15 +233,17 @@ public class ProfileActivity extends Fragment {
         if (!isInModificationMode) {
             saveChangesButton.setClickable(true);
             saveChangesButton.setVisibility(View.VISIBLE);
-            nameView.setInputType(InputType.TYPE_CLASS_TEXT);
-            numberView.setInputType(InputType.TYPE_CLASS_TEXT);
-            addressView.setInputType(InputType.TYPE_CLASS_TEXT);
-            usernameView.setInputType(InputType.TYPE_CLASS_TEXT);
-            emailView.setInputType(InputType.TYPE_CLASS_TEXT);
-            passwordView.setInputType(InputType.TYPE_CLASS_TEXT);
+            nameView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+            numberView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+            addressView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+            usernameView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+            emailView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+            passwordView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
             logoutButton.setVisibility(View.INVISIBLE);
             logoutButton.setClickable(false);
+            settingsButton.startAnimation(rotateRight);
             isInModificationMode = true;
+
         } else {
             saveChangesButton.setClickable(false);
             saveChangesButton.setVisibility(View.INVISIBLE);
@@ -239,7 +255,9 @@ public class ProfileActivity extends Fragment {
             passwordView.setInputType(InputType.TYPE_NULL);
             logoutButton.setVisibility(View.VISIBLE);
             logoutButton.setClickable(true);
+            settingsButton.startAnimation(rotateLeft);
             isInModificationMode = false;
+
         }
 
 
@@ -273,11 +291,13 @@ public class ProfileActivity extends Fragment {
 
     public void togglePass(View view){
         if (!passIsVisible){
+            passwordView.animate().alpha(1f).setDuration(1000);
             passwordView.setVisibility(View.VISIBLE);
             passIsVisible = true;
         }
         else {
-            passwordView.setVisibility(View.INVISIBLE);
+            passwordView.animate().alpha(0f).setDuration(1000);
+            passwordView.setInputType(InputType.TYPE_NULL);
             passIsVisible = false;
         }
 

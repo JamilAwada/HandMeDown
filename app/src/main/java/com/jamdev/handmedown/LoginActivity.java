@@ -9,7 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -32,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     public String password;
     public EditText usernameInput;
     public EditText passwordInput;
+    public ImageView logo;
 
     private String userLoginURL = "http://10.0.2.2/HandMeDown/user_login.php";
     UserAuthenticationAPI API;
@@ -47,6 +51,10 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameInput = (EditText) findViewById(R.id.et_username);
         passwordInput = (EditText) findViewById(R.id.et_password);
+        logo = (ImageView) findViewById(R.id.image_logo);
+
+        Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+        logo.setAnimation(shake);
 
     }
 
@@ -57,9 +65,10 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    public void goToSignup(View view) {
-        Intent i1 = new Intent(this, SignUpActivity.class);
-        startActivity(i1);
+    public void goToSignUp(View view) {
+        Intent goToSignUp = new Intent(this, SignUpActivity.class);
+        startActivity(goToSignUp);
+        finish();
     }
 
 
@@ -107,14 +116,14 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+        protected void onPostExecute(String values) {
+            super.onPostExecute(values);
             try {
-                JSONObject json = new JSONObject(s);
+                JSONObject json = new JSONObject(values);
                 // Returned status from the post API
                 String status = json.getString("status");
 
-                if (status.equalsIgnoreCase("accepted")) {
+                if (status.equalsIgnoreCase("Welcome")) {
                     String id = json.getString("ID");
                     String name = json.getString("Name");
                     String number = json.getString("Number");
@@ -125,6 +134,8 @@ public class LoginActivity extends AppCompatActivity {
                     int picture = R.drawable.no_picture;
 
                     User user = new User(id, name, number, address, username, email, password, picture);
+
+                    Toast.makeText(LoginActivity.this, status + " " + name + "!", Toast.LENGTH_SHORT).show();
 
                     Intent goToLanding = new Intent(LoginActivity.this, MainActivity.class);
                     goToLanding.putExtra("User", user);

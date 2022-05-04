@@ -30,10 +30,11 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/image_search"
-            android:hint="@string/search"
-            android:fontFamily="@font/poppins_regular"
-            android:textColor="@color/gray"
             android:background="@android:color/transparent"
+            android:fontFamily="@font/poppins_regular"
+            android:hint="@string/search"
+            android:textColor="@color/black"
+            android:inputType="textNoSuggestions"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </RelativeLayout>

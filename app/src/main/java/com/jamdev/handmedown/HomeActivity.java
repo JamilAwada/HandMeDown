@@ -2,14 +2,20 @@ package com.jamdev.handmedown;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeActivity extends Fragment {
 
@@ -19,6 +25,7 @@ public class HomeActivity extends Fragment {
     RelativeLayout gear;
     RelativeLayout disposables;
     RelativeLayout consumables;
+
 
     @Nullable
     @Override
@@ -77,6 +84,7 @@ public class HomeActivity extends Fragment {
 
         return view;
     }
+
 
     public void goToToys(View view){
         Intent iToys = new Intent(getContext(), CategoryActivity.class);
