@@ -61,7 +61,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView, OnListingListener onListingListener) {
             super(itemView);
             this.onListingListener = onListingListener;
-            listingPictureView = itemView.findViewById(R.id.card_picture);
+            listingPictureView = itemView.findViewById(R.id.card_picture_container);
             listingTitleView = itemView.findViewById(R.id.listing_title);
             listingDescriptionView = itemView.findViewById(R.id.card_description);
             listingPriceView = itemView.findViewById(R.id.card_price_text);
