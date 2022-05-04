@@ -415,30 +415,27 @@ public class ProfileActivity extends Fragment {
 
     public void toggleModificationMode(View view) {
         if (!isInModificationMode) {
-            saveChangesButton.setClickable(true);
             saveChangesButton.setVisibility(View.VISIBLE);
+            saveChangesButton.setClickable(true);
+            logoutButton.setVisibility(View.INVISIBLE);
+            logoutButton.setClickable(false);
             nameView.setEnabled(true);
             numberView.setEnabled(true);
             addressView.setEnabled(true);
             usernameView.setEnabled(true);
             emailView.setEnabled(true);
-            logoutButton.setVisibility(View.INVISIBLE);
-            logoutButton.setClickable(false);
-            settingsButton.startAnimation(rotateLeft);
             isInModificationMode = true;
 
         } else {
-            saveChangesButton.setClickable(false);
             saveChangesButton.setVisibility(View.INVISIBLE);
+            saveChangesButton.setClickable(false);
+            logoutButton.setVisibility(View.VISIBLE);
+            logoutButton.setClickable(true);
             nameView.setEnabled(false);
             numberView.setEnabled(false);
             addressView.setEnabled(false);
             usernameView.setEnabled(false);
             emailView.setEnabled(false);
-
-            logoutButton.setVisibility(View.VISIBLE);
-            logoutButton.setClickable(true);
-            settingsButton.startAnimation(rotateRight);
             isInModificationMode = false;
 
         }
@@ -454,23 +451,13 @@ public class ProfileActivity extends Fragment {
             userEmail = emailView.getText().toString();
             userUsername = usernameView.getText().toString();
 
-            saveChangesButton.setEnabled(false);
-            saveChangesButton.setVisibility(View.INVISIBLE);
-
-            nameView.setEnabled(false);
-            numberView.setEnabled(false);
-            addressView.setEnabled(false);
-            usernameView.setEnabled(false);
-            emailView.setEnabled(false);
-            logoutButton.setVisibility(View.VISIBLE);
-            logoutButton.setClickable(true);
-            isInModificationMode = false;
-
             userInfoUpdateAPI = new UserInfoUpdateAPI();
             userInfoUpdateAPI.execute();
 
             getUserAPI = new GetUserAPI();
             getUserAPI.execute(getUserURL + id);
+
+            toggleModificationMode(view);
         }
 
 

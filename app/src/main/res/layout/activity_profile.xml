@@ -249,7 +249,7 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/save_changes_bg"
         android:clickable="false"
