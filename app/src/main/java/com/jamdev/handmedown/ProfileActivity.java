@@ -60,8 +60,8 @@ public class ProfileActivity extends Fragment {
     String username = "";
     String password = "";
 
-    RotateAnimation rotateLeft;
     RotateAnimation rotateRight;
+    RotateAnimation rotateLeft;
 
 
     private String editUserURL = "http://10.0.2.2/HandMeDown/user_edit.php";
@@ -111,13 +111,13 @@ public class ProfileActivity extends Fragment {
         Log.i("password" , passwordView.getText().toString());
         id = getArguments().getString("Id");
 
-        rotateLeft = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotateLeft.setDuration(1000);
-        rotateLeft.setInterpolator(new LinearInterpolator());
-
-        rotateRight = new RotateAnimation(0, -180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateRight = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotateRight.setDuration(1000);
         rotateRight.setInterpolator(new LinearInterpolator());
+
+        rotateLeft = new RotateAnimation(0, -180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateLeft.setDuration(1000);
+        rotateLeft.setInterpolator(new LinearInterpolator());
 
 
         // On Click Listeners for the respective buttons
@@ -241,7 +241,7 @@ public class ProfileActivity extends Fragment {
             passwordView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
             logoutButton.setVisibility(View.INVISIBLE);
             logoutButton.setClickable(false);
-            settingsButton.startAnimation(rotateRight);
+            settingsButton.startAnimation(rotateLeft);
             isInModificationMode = true;
 
         } else {
@@ -255,7 +255,7 @@ public class ProfileActivity extends Fragment {
             passwordView.setInputType(InputType.TYPE_NULL);
             logoutButton.setVisibility(View.VISIBLE);
             logoutButton.setClickable(true);
-            settingsButton.startAnimation(rotateLeft);
+            settingsButton.startAnimation(rotateRight);
             isInModificationMode = false;
 
         }

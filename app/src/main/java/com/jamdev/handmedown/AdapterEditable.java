@@ -59,10 +59,9 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
         return listings.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements PopupMenu.OnMenuItemClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private String deleteListingURL = "http://10.0.2.2/HandMeDown/listing_delete.php?ID=";
-        private DeleteListingAPI API;
+
 
         private String listingID;
         private TextView listingTitle;
@@ -81,7 +80,7 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
             listingDescription = itemView.findViewById(R.id.card_description);
             listingPrice = itemView.findViewById(R.id.card_price_text);
             listingDate = itemView.findViewById(R.id.card_date_text);
-            listingPicture = itemView.findViewById(R.id.card_picture);
+            listingPicture = itemView.findViewById(R.id.card_picture_container);
 
             editButton = itemView.findViewById(R.id.card_btn_edit);
 
@@ -89,19 +88,22 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showPopup(editButton);
+                    goToEditListing(view);
                 }
             });
 
 
         }
 
-        // Function to show popup menu for editing and deleting
-        public void showPopup(ImageView edit_btn){
-            PopupMenu popup = new PopupMenu(listingsActivity, edit_btn);
-            popup.setOnMenuItemClickListener(this);
-            popup.inflate(R.menu.popup_menu);
-            popup.show();
+
+        public void goToEditListing(View view){
+            Intent goToEdit = new Intent(listingsActivity, EditListingActivity.class);
+            goToEdit.putExtra("Item Title", listingTitle.getText().toString());
+            goToEdit.putExtra("Item Description", listingDescription.getText().toString());
+            goToEdit.putExtra("Item Price", listingPrice.getText().toString());
+            goToEdit.putExtra("Item Category", listingPrice.getText().toString());
+            goToEdit.putExtra("Item ID", listingID);
+            listingsActivity.startActivity(goToEdit);
         }
 
 
@@ -114,71 +116,6 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
             listingPicture.setImageResource(picture);
         }
 
-        @Override
-        public boolean onMenuItemClick(MenuItem menuItem) {
-            switch(menuItem.getItemId()){
-                case R.id.edit_option:
-                    Intent goToEdit = new Intent(listingsActivity, EditListingActivity.class);
-                    goToEdit.putExtra("Item Title", listingTitle.getText().toString());
-                    goToEdit.putExtra("Item Description", listingDescription.getText().toString());
-                    goToEdit.putExtra("Item Price", listingPrice.getText().toString());
-                    goToEdit.putExtra("Item Category", listingPrice.getText().toString());
-                    goToEdit.putExtra("Item ID", listingID);
-                    listingsActivity.startActivity(goToEdit);
-                case R.id.delete_option:
-                    deleteListing();
-                    listings.remove(getAbsoluteAdapterPosition());
-                default:
-                    return false;
-            }
-        }
-        public class DeleteListingAPI extends AsyncTask<String, Void, String> {
-            protected String doInBackground(String... urls) {
 
-                URL url;
-                HttpURLConnection http;
-
-                try {
-                    // Connect to API
-                    url = new URL(urls[0]);
-                    http = (HttpURLConnection) url.openConnection();
-
-                    // Retrieve API content
-                    InputStream in = http.getInputStream();
-                    InputStreamReader reader = new InputStreamReader(in);
-
-                    // Read API content line by line
-                    BufferedReader br = new BufferedReader(reader);
-                    StringBuilder sb = new StringBuilder();
-
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        sb.append(line + "\n");
-                    }
-
-                    br.close();
-                    // Return content from API
-                    return sb.toString();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            }
-
-            protected void onPostExecute(String values) {
-                super.onPostExecute(values);
-                try {
-                    Toast.makeText(listingsActivity, values, Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-                }
-            }
-        }
-
-        public void deleteListing(){
-            API = new DeleteListingAPI();
-            API.execute(deleteListingURL + listingID);
-        }
     }
 }

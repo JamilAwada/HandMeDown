@@ -34,10 +34,11 @@
         android:background="@drawable/category_card_green">
 
         <ImageView
+            android:id="@+id/image_refresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@drawable/refresh"/>
+            android:background="@drawable/refresh" />
 
     </RelativeLayout>
 

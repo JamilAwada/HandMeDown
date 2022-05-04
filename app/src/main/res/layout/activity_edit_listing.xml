@@ -17,23 +17,15 @@
         android:textColor="@color/black"
         android:textSize="32sp" />
 
-    <androidx.cardview.widget.CardView
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/card_picture_container"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:id="@+id/card_picture_container"
-        app:cardCornerRadius="90dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/tx_edit_listing"
-        android:layout_marginTop="30dp">
-
-        <ImageView
-            android:id="@+id/card_picture"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/no_listing_picture"/>
-
-    </androidx.cardview.widget.CardView>
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/no_listing_picture" />
 
     <RelativeLayout
         android:id="@+id/bar_title"
@@ -53,8 +45,9 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:hint="Title"
-            android:textColor="@color/gray"
-            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"/>
+            android:textColor="@color/black"
+            android:inputType="textNoSuggestions"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </RelativeLayout>
 
@@ -70,14 +63,16 @@
         <EditText
             android:id="@+id/et_description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="220dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:hint="Description"
-            android:textColor="@color/gray"
-            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"/>
+            android:inputType="textNoSuggestions"
+            android:gravity="top"
+            android:textColor="@color/black"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </RelativeLayout>
 
@@ -85,8 +80,8 @@
         android:id="@+id/bar_price"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="56dp"
         android:layout_below="@id/bar_description"
+        android:layout_marginLeft="56dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/search_bg">
 
@@ -100,8 +95,9 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:hint="Price"
-            android:textColor="@color/gray"
-            tools:ignore="TouchTargetSizeCheck,TextContrastCheck"/>
+            android:textColor="@color/black"
+            android:inputType="textNoSuggestions"
+            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </RelativeLayout>
 
@@ -131,7 +127,26 @@
             android:layout_centerInParent="true"
             android:fontFamily="@font/poppins_regular"
             android:text="Save Changes"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btn_delete_listing"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/btn_save_changes"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/category_card_red">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Delete Listing"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 

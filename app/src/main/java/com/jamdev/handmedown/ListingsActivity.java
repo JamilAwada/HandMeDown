@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -29,12 +33,15 @@ import java.util.List;
 public class ListingsActivity extends Fragment  {
 
     RelativeLayout addListing;
-    RelativeLayout refreshBtn;
+    RelativeLayout refreshButton;
+    ImageView refreshIcon;
 
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     List<Listing> itemList = new ArrayList<>();
     AdapterEditable adapter;
+
+    RotateAnimation rotateLeft;
 
     private String getListingURL = "http://10.0.2.2/HandMeDown/listing_fetch_seller.php?id=";
     private GetListingsAPI getListingsAPI;
@@ -48,11 +55,18 @@ public class ListingsActivity extends Fragment  {
         View view = inflater.inflate(R.layout.activity_listings, container, false);
 
         addListing = (RelativeLayout) view.findViewById(R.id.btn_new_listing);
-        refreshBtn = (RelativeLayout) view.findViewById(R.id.btn_refresh_listings);
+        refreshButton = (RelativeLayout) view.findViewById(R.id.btn_refresh_listings);
+        refreshIcon = (ImageView) view.findViewById(R.id.image_refresh);
 
-        refreshBtn.setOnClickListener(new View.OnClickListener(){
+        rotateLeft = new RotateAnimation(0, -180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateLeft.setDuration(1000);
+        rotateLeft.setInterpolator(new LinearInterpolator());
+
+
+        refreshButton.setOnClickListener(new View.OnClickListener(){
            @Override
            public void onClick(View view){
+               refreshIcon.setAnimation(rotateLeft);
                refresh(view);
            }
         });

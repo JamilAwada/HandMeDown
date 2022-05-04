@@ -26,6 +26,8 @@ import org.apache.http.message.BasicNameValuePair;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class EditListingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -35,6 +37,7 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
     EditText priceInput;
     Spinner categoryInput;
     RelativeLayout saveChanges;
+    RelativeLayout deleteListing;
 
     String id = "";
     String title = "";
@@ -42,9 +45,15 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
     String price = "";
     String category = "";
 
+
+    String[] categories = { "Toys", "Clothing", "Electronics", "Gear", "Disposables", "Consumables" };
+
     private String editListingURL = "http://10.0.2.2/HandMeDown/listing_edit.php";
     String JSONObject;
-    ListingEditAPI API;
+    EditListingAPI editListingAPI;
+
+    private String deleteListingURL = "http://10.0.2.2/HandMeDown/listing_delete.php?ID=";
+    private DeleteListingAPI deleteListingAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +68,14 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
         descriptionInput = (EditText) findViewById(R.id.et_description);
         priceInput = (EditText) findViewById(R.id.et_price);
         saveChanges = (RelativeLayout) findViewById(R.id.btn_save_changes);
+        deleteListing = (RelativeLayout) findViewById(R.id.btn_delete_listing);
 
         // Category is selected through a spinner
         categoryInput = (Spinner) findViewById(R.id.spinner_categories);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, R.layout.custom_spinner_dropdown_item, categories);
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
         // Apply the adapter to the spinner
         categoryInput.setAdapter(adapter);
 
@@ -91,6 +101,13 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
                 editListing(view);
             }
         });
+
+        deleteListing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteListing();
+            }
+        });
     }
 
     public void editListing(View view) {
@@ -109,8 +126,9 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
             Toast.makeText(this, "Incomplete form. Please set a price.", Toast.LENGTH_SHORT).show();
         }
         else {
-            API = new ListingEditAPI();
-            API.execute();
+            editListingAPI = new EditListingAPI();
+            editListingAPI.execute();
+            returnToListings();
 
         }
 
@@ -118,7 +136,7 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
 
     }
 
-    class ListingEditAPI extends AsyncTask<String, Void, String> {
+    class EditListingAPI extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
@@ -183,6 +201,53 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
             }
         }
 
+
+
+
+    }
+
+    public class DeleteListingAPI extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... urls) {
+
+            URL url;
+            HttpURLConnection http;
+
+            try {
+                // Connect to API
+                url = new URL(urls[0]);
+                http = (HttpURLConnection) url.openConnection();
+
+                // Retrieve API content
+                InputStream in = http.getInputStream();
+                InputStreamReader reader = new InputStreamReader(in);
+
+                // Read API content line by line
+                BufferedReader br = new BufferedReader(reader);
+                StringBuilder sb = new StringBuilder();
+
+                String line;
+                while ((line = br.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+
+                br.close();
+                // Return content from API
+                return sb.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        protected void onPostExecute(String values) {
+            super.onPostExecute(values);
+            try {
+                Toast.makeText(getApplicationContext(), values, Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        }
     }
 
     @Override
@@ -195,9 +260,15 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
 
     }
 
-    public void returnToListings(View view){
+    public void returnToListings(){
         onBackPressed();
         onBackPressed();
+    }
+
+    public void deleteListing(){
+        deleteListingAPI = new DeleteListingAPI();
+        deleteListingAPI.execute(deleteListingURL + id);
+        returnToListings();
     }
 
 }

@@ -42,6 +42,8 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
 
     String userID;
 
+    String[] categories = { "Toys", "Clothing", "Electronics", "Gear", "Disposables", "Consumables" };
+
     RelativeLayout addListingButton;
 
     private String addListingURL = "http://10.0.2.2/HandMeDown/listing_add.php";
@@ -66,9 +68,9 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
         // Category is selected through a spinner
         categoryInput = (Spinner) findViewById(R.id.spinner_categories);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, R.layout.custom_spinner_dropdown_item, categories);
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
         // Apply the adapter to the spinner
         categoryInput.setAdapter(adapter);
 
