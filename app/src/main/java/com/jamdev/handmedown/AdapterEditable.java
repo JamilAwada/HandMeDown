@@ -2,25 +2,16 @@ package com.jamdev.handmedown;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,11 +57,11 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
 
 
         private String listingID;
-        private TextView listingTitle;
-        private TextView listingDescription;
-        private TextView listingPrice;
-        private TextView listingDate;
-        private ImageView listingPicture;
+        private TextView listingTitleView;
+        private TextView listingDescriptionView;
+        private TextView listingPriceView;
+        private TextView listingDateView;
+        private ImageView listingPictureView;
 
         private ImageView editButton;
 
@@ -78,11 +69,11 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            listingTitle = itemView.findViewById(R.id.listing_title);
-            listingDescription = itemView.findViewById(R.id.card_description);
-            listingPrice = itemView.findViewById(R.id.card_price_text);
-            listingDate = itemView.findViewById(R.id.card_date_text);
-            listingPicture = itemView.findViewById(R.id.card_picture_container);
+            listingTitleView = itemView.findViewById(R.id.listing_title);
+            listingDescriptionView = itemView.findViewById(R.id.card_description);
+            listingPriceView = itemView.findViewById(R.id.card_price_text);
+            listingDateView = itemView.findViewById(R.id.card_date_text);
+            listingPictureView = itemView.findViewById(R.id.card_picture_container);
 
             editButton = itemView.findViewById(R.id.card_btn_edit);
 
@@ -100,10 +91,10 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
 
         public void goToEditListing(View view){
             Intent goToEdit = new Intent(listingsActivity, EditListingActivity.class);
-            goToEdit.putExtra("Item Title", listingTitle.getText().toString());
-            goToEdit.putExtra("Item Description", listingDescription.getText().toString());
-            goToEdit.putExtra("Item Price", listingPrice.getText().toString());
-            goToEdit.putExtra("Item Category", listingPrice.getText().toString());
+            goToEdit.putExtra("Item Title", listingTitleView.getText().toString());
+            goToEdit.putExtra("Item Description", listingDescriptionView.getText().toString());
+            goToEdit.putExtra("Item Price", listingPriceView.getText().toString());
+            goToEdit.putExtra("Item Category", listingPriceView.getText().toString());
             goToEdit.putExtra("Item ID", listingID);
             listingsActivity.startActivity(goToEdit);
         }
@@ -111,11 +102,11 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
 
         public void setData(String id, String title, String description, String price, String date, int picture) {
             listingID = id;
-            listingTitle.setText(title);
-            listingDescription.setText(description);
-            listingPrice.setText(price);
-            listingDate.setText(date);
-            listingPicture.setImageResource(picture);
+            listingTitleView.setText(title);
+            listingDescriptionView.setText(description);
+            listingPriceView.setText(price);
+            listingDateView.setText(date);
+            listingPictureView.setImageResource(picture);
         }
 
 

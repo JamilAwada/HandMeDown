@@ -22,6 +22,7 @@ public class ListingExpanded extends AppCompatActivity {
     TextView sellerAddress;
     TextView sellerNumber;
     TextView listingDate;
+    ImageView listingPicture;
     CircularImageView sellerPicture;
 
     int fetchedPicture;
@@ -41,6 +42,7 @@ public class ListingExpanded extends AppCompatActivity {
         listingTitle = (TextView) findViewById(R.id.et_title);
         listingPrice = (TextView) findViewById(R.id.et_price);
         listingDescription = (TextView) findViewById(R.id.et_description);
+        listingPicture = (ImageView) findViewById(R.id.card_picture_container);
         sellerName = (TextView) findViewById(R.id.tx_seller_name);
         sellerAddress = (TextView) findViewById(R.id.tx_seller_address);
         sellerNumber = (TextView) findViewById(R.id.tx_seller_number);
@@ -62,6 +64,7 @@ public class ListingExpanded extends AppCompatActivity {
         sellerNumber.setText(seller.getNumber());
         listingDate.setText(item.getPosted_on());
         sellerPicture.setImageResource(seller.getPicture());
+        listingPicture.setImageResource(item.getPicture());
 
         // The call button redirects the user to their device's native phone application
         callButton.setOnClickListener(new View.OnClickListener() {

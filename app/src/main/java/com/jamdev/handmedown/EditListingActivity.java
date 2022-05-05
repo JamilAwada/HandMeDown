@@ -41,12 +41,20 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
     RelativeLayout deleteListing;
     ImageView returnButton;
 
+    int picture;
+
+    Spinner editDemo;
+
+    ImageView listingPicture;
+
+    ArrayAdapter<CharSequence> adapter2;
+
     String id = "";
     String title = "";
     String description = "";
     String price = "";
     String category = "";
-
+    String fetchedPicture = "";
 
     String[] categories = { "Toys", "Clothing", "Electronics", "Gear", "Disposables", "Consumables" };
 
@@ -65,6 +73,8 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
         getSupportActionBar().hide();
         setContentView(R.layout.activity_edit_listing);
 
+        listingPicture = (ImageView) findViewById(R.id.card_picture_container);
+
         titleInput = (EditText) findViewById(R.id.et_title);
         descriptionInput = (EditText) findViewById(R.id.et_description);
         priceInput = (EditText) findViewById(R.id.et_price);
@@ -72,6 +82,11 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
         deleteListing = (RelativeLayout) findViewById(R.id.btn_delete_listing);
         returnButton = (ImageView) findViewById(R.id.btn_return);
 
+        editDemo = (Spinner) findViewById(R.id.edit_DEMO);
+
+        adapter2 = ArrayAdapter.createFromResource(this, R.array.pictures, android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        editDemo.setAdapter(adapter2);
 
         // Category is selected through a spinner
         categoryInput = (Spinner) findViewById(R.id.spinner_categories);
@@ -118,6 +133,53 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
                 returnToListings();
             }
         });
+
+        editDemo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = editDemo.getSelectedItem().toString();
+                if (item.equalsIgnoreCase("DEMO: Man 1")){
+                    picture = R.drawable.demo_man1;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Man 2")){
+                    picture = R.drawable.demo_man2;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Woman 1")){
+                    picture = R.drawable.demo_woman1;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Woman 2")){
+                    picture = R.drawable.demo_woman2;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Bear")){
+                    picture = R.drawable.demo_bear;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Onesie")){
+                    picture = R.drawable.demo_onesie;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Monitor")){
+                    picture = R.drawable.demo_monitor;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Stroller")){
+                    picture = R.drawable.demo_stroller;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Diapers")){
+                    picture = R.drawable.demo_diapers;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Formula")){
+                    picture = R.drawable.demo_formula;
+                }
+                else {
+                    picture = R.drawable.no_picture;
+                }
+                listingPicture.setImageResource(picture);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     public void editListing(View view) {
@@ -160,12 +222,14 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
             BasicNameValuePair priceParam = new BasicNameValuePair("Price", price);
             BasicNameValuePair categoryParam = new BasicNameValuePair("Category", category);
             BasicNameValuePair idParam = new BasicNameValuePair("ID", id);
+            BasicNameValuePair pictureParam = new BasicNameValuePair("Picture", editDemo.getSelectedItem().toString());
             ArrayList<NameValuePair> name_value_pair_list = new ArrayList<>();
             name_value_pair_list.add(titleParam);
             name_value_pair_list.add(descriptionParam);
             name_value_pair_list.add(priceParam);
             name_value_pair_list.add(categoryParam);
             name_value_pair_list.add(idParam);
+            name_value_pair_list.add(pictureParam);
 
 
             try {

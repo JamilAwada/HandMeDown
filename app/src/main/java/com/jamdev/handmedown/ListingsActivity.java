@@ -43,6 +43,7 @@ public class ListingsActivity extends Fragment  {
     TextView sortOrderView;
     String sortOrder = "";
 
+    int picture;
 
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
@@ -163,7 +164,41 @@ public class ListingsActivity extends Fragment  {
                         String category = jsonItemObject.getString("category");
                         String seller = jsonItemObject.getString("seller");
                         String posted_on = jsonItemObject.get("posted_on").toString();
-                        int picture = R.drawable.no_listing_picture;
+                        String fetchedPicture = jsonItemObject.getString("picture");
+                        Log.i("Fetched picture", fetchedPicture);
+                        if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")){
+                            picture = R.drawable.demo_man1;
+                        }
+                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")){
+                            picture = R.drawable.demo_man2;
+                        }
+                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 1")){
+                            picture = R.drawable.demo_woman1;
+                        }
+                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 2")){
+                            picture = R.drawable.demo_woman2;
+                        }
+                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Bear")){
+                            picture = R.drawable.demo_bear;
+                        }
+                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Onesie")){
+                            picture = R.drawable.demo_onesie;
+                        }
+                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Monitor")){
+                            picture = R.drawable.demo_monitor;
+                        }
+                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Stroller")){
+                            picture = R.drawable.demo_stroller;
+                        }
+                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Diapers")){
+                            picture = R.drawable.demo_diapers;
+                        }
+                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Formula")){
+                            picture = R.drawable.demo_formula;
+                        }
+                        else {
+                            picture = R.drawable.no_picture;
+                        }
 
                         Listing listing = new Listing(picture, id, title,description,price,category,posted_on,seller);
 

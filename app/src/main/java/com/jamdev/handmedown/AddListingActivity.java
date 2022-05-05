@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.antlr.v4.runtime.atn.BasicBlockStartState;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -42,6 +43,15 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
     String listingPrice = "";
     String listingCategory = "";
 
+
+    int picture;
+
+    Spinner addDemo;
+
+    ImageView listingPicture;
+
+    ArrayAdapter<CharSequence> adapter2;
+
     String userID;
 
     String[] categories = { "Toys", "Clothing", "Electronics", "Gear", "Disposables", "Consumables" };
@@ -64,11 +74,15 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
 
         returnButton = (ImageView) findViewById(R.id.btn_return);
 
+        listingPicture = (ImageView) findViewById(R.id.card_picture_container);
+
         // Get listing details from input fields
         titleInput = (EditText) findViewById(R.id.et_title);
         descriptionInput = (EditText) findViewById(R.id.et_description);
         priceInput = (EditText) findViewById(R.id.et_price);
         addListingButton = (RelativeLayout) findViewById(R.id.btn_add_new);
+
+        addDemo = (Spinner) findViewById(R.id.add_DEMO);
 
         // Category is selected through a spinner
         categoryInput = (Spinner) findViewById(R.id.spinner_categories);
@@ -78,6 +92,10 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
         adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
         // Apply the adapter to the spinner
         categoryInput.setAdapter(adapter);
+
+        adapter2 = ArrayAdapter.createFromResource(this, R.array.pictures, android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        addDemo.setAdapter(adapter2);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -95,6 +113,53 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
             @Override
             public void onClick(View view) {
                 returnToListings();
+            }
+        });
+
+        addDemo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = addDemo.getSelectedItem().toString();
+                if (item.equalsIgnoreCase("DEMO: Man 1")){
+                    picture = R.drawable.demo_man1;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Man 2")){
+                    picture = R.drawable.demo_man2;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Woman 1")){
+                    picture = R.drawable.demo_woman1;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Woman 2")){
+                    picture = R.drawable.demo_woman2;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Bear")){
+                    picture = R.drawable.demo_bear;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Onesie")){
+                    picture = R.drawable.demo_onesie;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Monitor")){
+                    picture = R.drawable.demo_monitor;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Stroller")){
+                    picture = R.drawable.demo_stroller;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Diapers")){
+                    picture = R.drawable.demo_diapers;
+                }
+                else if (item.equalsIgnoreCase("DEMO: Formula")){
+                    picture = R.drawable.demo_formula;
+                }
+                else {
+                    picture = R.drawable.no_picture;
+                }
+                listingPicture.setImageResource(picture);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
     }
@@ -139,12 +204,14 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
             BasicNameValuePair priceParam = new BasicNameValuePair("Price", listingPrice);
             BasicNameValuePair categoryParam = new BasicNameValuePair("Category", listingCategory);
             BasicNameValuePair sellerParam = new BasicNameValuePair("Seller", userID);
+            BasicNameValuePair pictureParam = new BasicNameValuePair("Picture", addDemo.getSelectedItem().toString());
             ArrayList<NameValuePair> name_value_pair_list = new ArrayList<>();
             name_value_pair_list.add(titleParam);
             name_value_pair_list.add(descriptionParam);
             name_value_pair_list.add(priceParam);
             name_value_pair_list.add(categoryParam);
             name_value_pair_list.add(sellerParam);
+            name_value_pair_list.add(pictureParam);
 
 
             try {
