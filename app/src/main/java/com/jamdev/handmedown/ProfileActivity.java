@@ -81,6 +81,7 @@ public class ProfileActivity extends Fragment {
     String userUsername = "";
     String userPassword = "";
     String userPicture = "";
+    String oldName = "";
 
     Spinner profileDemo;
     ArrayAdapter<CharSequence> adapter;
@@ -384,6 +385,7 @@ public class ProfileActivity extends Fragment {
                     user = new User(id,name,number,address,username,email, password, picture);
 
                     userName = name;
+                    oldName = name;
                     userNumber = number;
                     userAddress = address;
                     userUsername = username;
@@ -391,7 +393,6 @@ public class ProfileActivity extends Fragment {
                     userPassword = password;
                     userPicture = fetchedPicture;
 
-                    nameView.setText(userName);
                     numberView.setText(userNumber);
                     addressView.setText(userAddress);
                     usernameView.setText(userUsername);
@@ -418,7 +419,6 @@ public class ProfileActivity extends Fragment {
 
             BasicNameValuePair idParam = new BasicNameValuePair("ID", id);
             BasicNameValuePair oldPasswordParam = new BasicNameValuePair("OldPassword", oldPasswordInput.getText().toString());
-            Log.i("password", userPassword);
             BasicNameValuePair newPasswordParam = new BasicNameValuePair("NewPassword", newPass);
             ArrayList<NameValuePair> name_value_pair_list = new ArrayList<>();
             name_value_pair_list.add(idParam);
@@ -450,32 +450,8 @@ public class ProfileActivity extends Fragment {
             return null;
         }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            try {
-
-                if (s.equalsIgnoreCase("Password changed.")) {
-                    Toast.makeText(getContext(),  s, Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                    oldPasswordInput.setText("");
-                    newPasswordInput.setText("");
-                    getUserAPI = new GetUserAPI();
-                    getUserAPI.execute(getUserURL + id);
-                } else {
-                    Log.i("what", s);
-                    Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
-                    oldPasswordInput.setText("");
-                    newPasswordInput.setText("");
-                }
-                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-
     }
+
 
     public void toggleModificationMode(View view) {
         if (!isInModificationMode) {
@@ -484,7 +460,6 @@ public class ProfileActivity extends Fragment {
             settingsButton.startAnimation(rotateLeft);
             logoutButton.setVisibility(View.INVISIBLE);
             logoutButton.setClickable(false);
-            nameView.setEnabled(true);
             numberView.setEnabled(true);
             addressView.setEnabled(true);
             usernameView.setEnabled(true);
@@ -498,7 +473,6 @@ public class ProfileActivity extends Fragment {
             settingsButton.startAnimation(rotateRight);
             logoutButton.setVisibility(View.VISIBLE);
             logoutButton.setClickable(true);
-            nameView.setEnabled(false);
             numberView.setEnabled(false);
             addressView.setEnabled(false);
             usernameView.setEnabled(false);
