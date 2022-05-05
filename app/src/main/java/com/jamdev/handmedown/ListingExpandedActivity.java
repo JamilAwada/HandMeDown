@@ -13,22 +13,20 @@ import android.widget.TextView;
 
 import com.mikhaellopez.circularimageview.CircularImageView;
 
-public class ListingExpanded extends AppCompatActivity {
+public class ListingExpandedActivity extends AppCompatActivity {
 
-    TextView listingTitle;
-    TextView listingPrice;
-    TextView listingDescription;
-    TextView sellerName;
-    TextView sellerAddress;
-    TextView sellerNumber;
-    TextView listingDate;
-    ImageView listingPicture;
-    CircularImageView sellerPicture;
+    private TextView listingTitle;
+    private TextView listingPrice;
+    private TextView listingDescription;
+    private TextView sellerName;
+    private TextView sellerAddress;
+    private TextView sellerNumber;
+    private TextView listingDate;
+    private ImageView listingPicture;
+    private CircularImageView sellerPicture;
 
-    int fetchedPicture;
-
-    ImageView callButton;
-    ImageView returnButton;
+    private ImageView callButton;
+    private ImageView returnButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,35 +40,38 @@ public class ListingExpanded extends AppCompatActivity {
         listingTitle = (TextView) findViewById(R.id.et_title);
         listingPrice = (TextView) findViewById(R.id.et_price);
         listingDescription = (TextView) findViewById(R.id.et_description);
+        listingDate = (TextView) findViewById(R.id.posted_on);
         listingPicture = (ImageView) findViewById(R.id.card_picture_container);
+
         sellerName = (TextView) findViewById(R.id.tx_seller_name);
         sellerAddress = (TextView) findViewById(R.id.tx_seller_address);
         sellerNumber = (TextView) findViewById(R.id.tx_seller_number);
-        listingDate = (TextView) findViewById(R.id.posted_on);
         sellerPicture = (CircularImageView) findViewById(R.id.card_seller_picture_container);
 
         callButton = (ImageView) findViewById(R.id.btn_call);
         returnButton = (ImageView) findViewById(R.id.btn_return);
 
+        // Get extra from whichever activity led here
         Bundle fromListings = getIntent().getExtras();
-        Listing item = fromListings.getParcelable("Listing");
+        Listing listing = fromListings.getParcelable("Listing");
         User seller = fromListings.getParcelable("Seller");
 
-        listingTitle.setText(item.getTitle());
-        listingPrice.setText(item.getPrice());
-        listingDescription.setText(item.getDescription());
+        listingTitle.setText(listing.getTitle());
+        listingPrice.setText(listing.getPrice());
+        listingDescription.setText(listing.getDescription());
+        listingDate.setText(listing.getPosted_on());
+        listingPicture.setImageResource(listing.getPicture());
+
         sellerName.setText(seller.getName());
         sellerAddress.setText(seller.getAddress());
         sellerNumber.setText(seller.getNumber());
-        listingDate.setText(item.getPosted_on());
         sellerPicture.setImageResource(seller.getPicture());
-        listingPicture.setImageResource(item.getPicture());
 
         // The call button redirects the user to their device's native phone application
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String sellerNumber = ListingExpanded.this.sellerNumber.getText().toString();
+                String sellerNumber = ListingExpandedActivity.this.sellerNumber.getText().toString();
                 String dialledNumber = "tel:" + sellerNumber;
                 Intent goToDevicePhoneApp = new Intent(Intent.ACTION_DIAL);
                 goToDevicePhoneApp.setData(Uri.parse(dialledNumber));
@@ -87,8 +88,6 @@ public class ListingExpanded extends AppCompatActivity {
         });
 
     }
-
-
 
 
 }

@@ -14,10 +14,12 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
+    // The onListingListener listens for user clicks
+    // It will be used to redirect the user to the ListingExpanded class
     private List<Listing> listings = new ArrayList<>();
     private OnListingListener onListingListener;
 
-    public Adapter(List<Listing> listings, OnListingListener onListingListener){
+    public Adapter(List<Listing> listings, OnListingListener onListingListener) {
         this.listings = listings;
         this.onListingListener = onListingListener;
     }
@@ -32,6 +34,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
 
+        // This is all data we need to display on the individual listing,
+        // Except for listingSeller, which will be used to fetch user details with the respective API instead
         String listingTitle = listings.get(position).getTitle();
         String listingDescription = listings.get(position).getDescription();
         String listingPrice = listings.get(position).getPrice();
@@ -40,16 +44,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         String listingSellerName = listings.get(position).getSellerName();
         int listingPicture = listings.get(position).getPicture();
 
-        holder.setData(listingTitle,listingDescription,listingPrice,listingDate,listingSeller,listingSellerName,listingPicture);
+        holder.setData(listingTitle, listingDescription, listingPrice, listingDate, listingSeller, listingSellerName, listingPicture);
 
     }
+
     @Override
     public int getItemCount() {
         return listings.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        // The UI components of the individual listing
         private TextView listingTitleView;
         private TextView listingDescriptionView;
         private TextView listingPriceView;
@@ -59,6 +65,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         OnListingListener onListingListener;
 
+        // Link the components to the layout components
         public ViewHolder(@NonNull View itemView, OnListingListener onListingListener) {
             super(itemView);
             this.onListingListener = onListingListener;
@@ -73,7 +80,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         }
 
-        public void setData(String title, String description, String price, String date, String seller,String sellerName, int picture) {
+        // Set their data to hold whatever the earlier onBindViewHolder received from the click listener
+        public void setData(String title, String description, String price, String date, String seller, String sellerName, int picture) {
             listingTitleView.setText(title);
             listingDescriptionView.setText(description);
             listingPriceView.setText(price);
@@ -90,7 +98,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         }
     }
 
-    public interface OnListingListener{
+    public interface OnListingListener {
         void OnListingClick(int position);
     }
 }

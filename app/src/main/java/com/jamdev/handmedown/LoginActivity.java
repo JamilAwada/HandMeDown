@@ -31,11 +31,12 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public String username;
-    public String password;
-    public EditText usernameInput;
-    public EditText passwordInput;
-    public ImageView logo;
+    private String username;
+    private String password;
+    int picture;
+    private EditText usernameInput;
+    private EditText passwordInput;
+    private ImageView logo;
 
     private String userLoginURL = "http://10.0.2.2/HandMeDown/user_login.php";
     UserAuthenticationAPI API;
@@ -62,7 +63,6 @@ public class LoginActivity extends AppCompatActivity {
         API = new UserAuthenticationAPI();
         API.execute();
     }
-
 
 
     public void goToSignUp(View view) {
@@ -123,14 +123,37 @@ public class LoginActivity extends AppCompatActivity {
                 String status = json.getString("status");
 
                 if (status.equalsIgnoreCase("Welcome")) {
-                    String id = json.getString("ID");
-                    String name = json.getString("Name");
-                    String number = json.getString("Number");
-                    String address = json.getString("Address");
-                    String username = json.getString("Username");
-                    String email = json.getString("Email");
-                    String password = json.getString("Password");
-                    int picture = R.drawable.no_picture;
+                    String id = json.getString("id");
+                    String name = json.getString("name");
+                    String number = json.getString("number");
+                    String address = json.getString("address");
+                    String username = json.getString("username");
+                    String email = json.getString("email");
+                    String password = json.getString("password");
+                    String fetchedPicture = json.getString("picture");
+                    if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")) {
+                        picture = R.drawable.demo_man1;
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")) {
+                        picture = R.drawable.demo_man2;
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 1")) {
+                        picture = R.drawable.demo_woman1;
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 2")) {
+                        picture = R.drawable.demo_woman2;
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Bear")) {
+                        picture = R.drawable.demo_bear;
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Onesie")) {
+                        picture = R.drawable.demo_onesie;
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Monitor")) {
+                        picture = R.drawable.demo_monitor;
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Stroller")) {
+                        picture = R.drawable.demo_stroller;
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Diapers")) {
+                        picture = R.drawable.demo_diapers;
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Formula")) {
+                        picture = R.drawable.demo_formula;
+                    } else {
+                        picture = R.drawable.no_picture;
+                    }
 
                     User user = new User(id, name, number, address, username, email, password, picture);
 

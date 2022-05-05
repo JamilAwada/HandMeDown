@@ -28,19 +28,21 @@ import java.util.List;
 
 public class CategoryActivity extends AppCompatActivity implements Adapter.OnListingListener {
 
-    RecyclerView recyclerView;
-    LinearLayoutManager layoutManager;
-    List<Listing> listings = new ArrayList<>();
-    Adapter adapter;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+    private List<Listing> listings = new ArrayList<>();
+    private Adapter adapter;
+    // Temporary buffer for every listing's picture to load into
+    private int picture;
+    private Listing selectedItem;
 
-    RelativeLayout headerBackground;
-    TextView categoryView;
-    ImageView returnButton;
+    private RelativeLayout headerBackground;
+    private TextView categoryView;
+    private ImageView returnButton;
 
-    int picture;
-
-    String category = "";
-    User seller;
+    // Variables to be sent to the ListingExpandedActivity
+    private String category = "";
+    private User seller;
 
     private String getListingURL = "http://10.0.2.2/HandMeDown/listing_fetch_category.php?category=";
     private GetListingsAPI getListingsAPI;
@@ -48,7 +50,6 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
     private String getUserURL = "http://10.0.2.2/HandMeDown/user_fetch_id.php?id=";
     private GetUserAPI getUserAPI;
 
-    Listing selectedItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,15 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
         headerBackground = (RelativeLayout) findViewById(R.id.bg_header);
         returnButton = (ImageView) findViewById(R.id.btn_return);
 
-        switch (category){
+
+        // Set the text to reflect the category
+        categoryView = (TextView) findViewById(R.id.tx_category);
+        categoryView.setText(category);
+
+        // Change the header's background depending on the selected category
+        // This is much more efficient resource-wise than creating seperate activities for each category
+        // As the only real difference between categories is merely semantic
+        switch (category) {
             case "Toys":
                 headerBackground.setBackgroundResource(R.drawable.category_header_blue);
                 break;
@@ -95,14 +104,9 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
             }
         });
 
-
-        categoryView = (TextView) findViewById(R.id.tx_category);
-        categoryView.setText(category);
-
-
     }
 
-    // Clicking on a listing gets you its position in the list and executes the API with that listing's seller
+    // Clicking on a listing gets you its position in the list and executes the API with that listing's seller ID as a parameter
     @Override
     public void OnListingClick(int position) {
         selectedItem = listings.get(position);
@@ -149,9 +153,9 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
             try {
                 Log.i("message", values);
                 JSONArray listingJsonArray = new JSONArray(values);
-                // Retrieve JSON object array and decompose it
-                for(int i = 0; i < listingJsonArray.length(); i++){
 
+                // Retrieve JSON object array and decompose it
+                for (int i = 0; i < listingJsonArray.length(); i++) {
                     JSONObject jsonItemObject = listingJsonArray.getJSONObject(i);
                     String title = jsonItemObject.getString("title");
                     String description = jsonItemObject.getString("description");
@@ -161,42 +165,33 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
                     String sellerName = jsonItemObject.getString("seller_name");
                     String posted_on = jsonItemObject.get("posted_on").toString();
                     String fetchedPicture = jsonItemObject.getString("picture");
-                    Log.i("Fetched picture", fetchedPicture);
-                    if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")){
+
+                    // I really wish Glide worked
+                    if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")) {
                         picture = R.drawable.demo_man1;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")) {
                         picture = R.drawable.demo_man2;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 1")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 1")) {
                         picture = R.drawable.demo_woman1;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 2")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 2")) {
                         picture = R.drawable.demo_woman2;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Bear")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Bear")) {
                         picture = R.drawable.demo_bear;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Onesie")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Onesie")) {
                         picture = R.drawable.demo_onesie;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Monitor")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Monitor")) {
                         picture = R.drawable.demo_monitor;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Stroller")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Stroller")) {
                         picture = R.drawable.demo_stroller;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Diapers")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Diapers")) {
                         picture = R.drawable.demo_diapers;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Formula")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Formula")) {
                         picture = R.drawable.demo_formula;
-                    }
-                    else {
+                    } else {
                         picture = R.drawable.no_picture;
                     }
 
-                    Listing listing = new Listing(title,description,price,category,posted_on,seller,sellerName,picture);
+                    Listing listing = new Listing(title, description, price, category, posted_on, seller, sellerName, picture);
 
                     listings.add(listing);
                 }
@@ -248,58 +243,48 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
 
                 JSONArray listJsonArray = new JSONArray(values);
 
-                for(int i = 0; i < listJsonArray.length(); i++){
+                for (int i = 0; i < listJsonArray.length(); i++) {
 
                     JSONObject jsonItemObject = listJsonArray.getJSONObject(i);
                     String id = jsonItemObject.getString("id");
                     String username = jsonItemObject.getString("username");
-                    String password = jsonItemObject.getString("password");
                     String name = jsonItemObject.getString("name");
                     String email = jsonItemObject.getString("email");
                     String number = jsonItemObject.getString("number");
                     String address = jsonItemObject.get("address").toString();
                     String fetchedPicture = jsonItemObject.getString("picture");
-                    if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")){
+                    if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")) {
                         picture = R.drawable.demo_man1;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")) {
                         picture = R.drawable.demo_man2;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 1")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 1")) {
                         picture = R.drawable.demo_woman1;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 2")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 2")) {
                         picture = R.drawable.demo_woman2;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Bear")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Bear")) {
                         picture = R.drawable.demo_bear;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Onesie")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Onesie")) {
                         picture = R.drawable.demo_onesie;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Monitor")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Monitor")) {
                         picture = R.drawable.demo_monitor;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Stroller")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Stroller")) {
                         picture = R.drawable.demo_stroller;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Diapers")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Diapers")) {
                         picture = R.drawable.demo_diapers;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Formula")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Formula")) {
                         picture = R.drawable.demo_formula;
-                    }
-                    else {
+                    } else {
                         picture = R.drawable.no_picture;
                     }
 
                     // Get the listing and the seller, and send to the expanded listing view class
-                    seller = new User(id,name,number,address,username,email,picture);
+                    seller = new User(id, name, number, address, username, email, picture);
 
-                    Intent goToExpanded = new Intent(getApplicationContext(), ListingExpanded.class);
+                    Intent goToExpanded = new Intent(getApplicationContext(), ListingExpandedActivity.class);
                     goToExpanded.putExtra("Listing", selectedItem);
                     goToExpanded.putExtra("Seller", seller);
                     startActivity(goToExpanded);
+                    finish();
 
                 }
             } catch (Exception e) {
@@ -308,7 +293,6 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
             }
         }
     }
-
 
 
     // Initialize recyclerView function
@@ -323,8 +307,7 @@ public class CategoryActivity extends AppCompatActivity implements Adapter.OnLis
 
     }
 
-    public void returnToHome(View view){
+    public void returnToHome(View view) {
         finish();
     }
-
 }

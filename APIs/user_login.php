@@ -47,6 +47,6 @@ else{
 
 }
 
-$Response= array("status" =>$Result, "ID" => $ID, "Name"=> $Name,"Number"=>$Number,"Address"=>$Address,"Username"=>$Username, "Email"=>$Email, "Password"=>$Password);
+$Response = array("status" =>$Result, "ID" => $ID, "Name"=> $Name,"Number"=>$Number,"Address"=>$Address,"Username"=>$Username, "Email"=>$Email, "Password"=>$Password);
 
 echo json_encode($Response);  

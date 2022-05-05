@@ -16,15 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HandMeDown">
         <activity
-            android:name=".ListingExpanded"
+            android:name=".ListingExpandedActivity"
             android:exported="false" />
         <activity
             android:name=".CategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".AddListingActivity"
+            android:name=".ListingAddActivity"
             android:exported="false" />
-        <activity android:name=".EditListingActivity"
+        <activity android:name=".ListingEditActivity"
             android:exported="false"/>
         <uses-library
             android:name="org.apache.http.legacy"

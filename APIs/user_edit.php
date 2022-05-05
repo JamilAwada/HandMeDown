@@ -8,7 +8,7 @@ $Number = $_POST["Number"];
 $Address = $_POST["Address"];
 $Email = $_POST["Email"];
 $Username = $_POST["Username"];
-$Password = $_POST["Password"];
+$Picture = $_POST["Picture"];
 
 // Check if the email is a valid email
 if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
@@ -27,11 +27,9 @@ if($EmailQuery->num_rows > 1){
     exit('Email taken. Try another one.');
 }
 
-// Hash the password 
-$HashedPassword = password_hash($Password, PASSWORD_BCRYPT);
 
 // Query to update user info with the inputted details
-$UpdateUser = $mysqli->query("UPDATE user SET name = '$Name', number = '$Number', address = '$Address', username = '$Username', email = '$Email', password = '$HashedPassword' WHERE id = '$ID'"); 
+$UpdateUser = $mysqli->query("UPDATE user SET name = '$Name', number = '$Number', address = '$Address', username = '$Username', email = '$Email', picture ='$Picture' WHERE id = '$ID'"); 
 
 if($UpdateUser){
     echo "User info updated.";

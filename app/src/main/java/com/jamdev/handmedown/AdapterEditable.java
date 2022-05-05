@@ -2,7 +2,6 @@ package com.jamdev.handmedown;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +16,12 @@ import java.util.List;
 
 public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHolder> {
 
+    // We need to pass in context so that data can be moved to and from the listingsActivity
     private List<Listing> listings = new ArrayList<>();
     private Context listingsActivity;
 
     // Pass in context
-    public AdapterEditable(Context listingsActivity, List<Listing> listings){
+    public AdapterEditable(Context listingsActivity, List<Listing> listings) {
         this.listingsActivity = listingsActivity;
         this.listings = listings;
     }
@@ -41,20 +41,18 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
         String listingDescription = listings.get(position).getDescription();
         String listingPrice = listings.get(position).getPrice();
         String listingDate = listings.get(position).getPosted_on();
-        Log.i("Listing date:", listingDate);
         int listingPicture = listings.get(position).getPicture();
 
-        holder.setData(listingID,listingTitle,listingDescription,listingPrice,listingDate,listingPicture);
+        holder.setData(listingID, listingTitle, listingDescription, listingPrice, listingDate, listingPicture);
 
     }
+
     @Override
     public int getItemCount() {
         return listings.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-
-
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         private String listingID;
         private TextView listingTitleView;
@@ -85,12 +83,12 @@ public class AdapterEditable extends RecyclerView.Adapter<AdapterEditable.ViewHo
                 }
             });
 
-
         }
 
 
-        public void goToEditListing(View view){
-            Intent goToEdit = new Intent(listingsActivity, EditListingActivity.class);
+        // Redirects the user to the ListingEditActivity
+        public void goToEditListing(View view) {
+            Intent goToEdit = new Intent(listingsActivity, ListingEditActivity.class);
             goToEdit.putExtra("Item Title", listingTitleView.getText().toString());
             goToEdit.putExtra("Item Description", listingDescriptionView.getText().toString());
             goToEdit.putExtra("Item Price", listingPriceView.getText().toString());

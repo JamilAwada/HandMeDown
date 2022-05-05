@@ -2,7 +2,6 @@ package com.jamdev.handmedown;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -31,35 +30,31 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class EditListingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class ListingEditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    EditText titleInput;
-    EditText descriptionInput;
-    EditText priceInput;
-    Spinner categoryInput;
-    RelativeLayout saveChanges;
-    RelativeLayout deleteListing;
-    ImageView returnButton;
+    private EditText titleInput;
+    private EditText descriptionInput;
+    private EditText priceInput;
+    private Spinner categoryInput;
+    private ImageView pictureInput;
+    private RelativeLayout saveChanges;
+    private RelativeLayout deleteListing;
+    private ImageView returnButton;
+    private Spinner editDemo;
 
-    int picture;
+    private ArrayAdapter<CharSequence> demoAdapter;
 
-    Spinner editDemo;
+    private String id = "";
+    private String title = "";
+    private String description = "";
+    private String price = "";
+    private String category = "";
+    private int picture;
 
-    ImageView listingPicture;
-
-    ArrayAdapter<CharSequence> adapter2;
-
-    String id = "";
-    String title = "";
-    String description = "";
-    String price = "";
-    String category = "";
-    String fetchedPicture = "";
-
-    String[] categories = { "Toys", "Clothing", "Electronics", "Gear", "Disposables", "Consumables" };
+    private String[] categories = {"Toys", "Clothing", "Electronics", "Gear", "Disposables", "Consumables"};
 
     private String editListingURL = "http://10.0.2.2/HandMeDown/listing_edit.php";
-    EditListingAPI editListingAPI;
+    private EditListingAPI editListingAPI;
 
     private String deleteListingURL = "http://10.0.2.2/HandMeDown/listing_delete.php?ID=";
     private DeleteListingAPI deleteListingAPI;
@@ -73,20 +68,13 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
         getSupportActionBar().hide();
         setContentView(R.layout.activity_edit_listing);
 
-        listingPicture = (ImageView) findViewById(R.id.card_picture_container);
-
         titleInput = (EditText) findViewById(R.id.et_title);
         descriptionInput = (EditText) findViewById(R.id.et_description);
         priceInput = (EditText) findViewById(R.id.et_price);
+        pictureInput = (ImageView) findViewById(R.id.card_picture_container);
         saveChanges = (RelativeLayout) findViewById(R.id.btn_save_changes);
         deleteListing = (RelativeLayout) findViewById(R.id.btn_delete_listing);
         returnButton = (ImageView) findViewById(R.id.btn_return);
-
-        editDemo = (Spinner) findViewById(R.id.edit_DEMO);
-
-        adapter2 = ArrayAdapter.createFromResource(this, R.array.pictures, android.R.layout.simple_spinner_item);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        editDemo.setAdapter(adapter2);
 
         // Category is selected through a spinner
         categoryInput = (Spinner) findViewById(R.id.spinner_categories);
@@ -96,6 +84,11 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
         adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
         // Apply the adapter to the spinner
         categoryInput.setAdapter(adapter);
+
+        editDemo = (Spinner) findViewById(R.id.edit_DEMO);
+        demoAdapter = ArrayAdapter.createFromResource(this, R.array.pictures, android.R.layout.simple_spinner_item);
+        demoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        editDemo.setAdapter(demoAdapter);
 
         // Get listing details from Listings activity
         Bundle fromListings = getIntent().getExtras();
@@ -127,52 +120,42 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-        returnButton.setOnClickListener(new View.OnClickListener(){
+        returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 returnToListings();
             }
         });
 
-        editDemo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        editDemo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = editDemo.getSelectedItem().toString();
-                if (item.equalsIgnoreCase("DEMO: Man 1")){
+                if (item.equalsIgnoreCase("DEMO: Man 1")) {
                     picture = R.drawable.demo_man1;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Man 2")){
+                } else if (item.equalsIgnoreCase("DEMO: Man 2")) {
                     picture = R.drawable.demo_man2;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Woman 1")){
+                } else if (item.equalsIgnoreCase("DEMO: Woman 1")) {
                     picture = R.drawable.demo_woman1;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Woman 2")){
+                } else if (item.equalsIgnoreCase("DEMO: Woman 2")) {
                     picture = R.drawable.demo_woman2;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Bear")){
+                } else if (item.equalsIgnoreCase("DEMO: Bear")) {
                     picture = R.drawable.demo_bear;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Onesie")){
+                } else if (item.equalsIgnoreCase("DEMO: Onesie")) {
                     picture = R.drawable.demo_onesie;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Monitor")){
+                } else if (item.equalsIgnoreCase("DEMO: Monitor")) {
                     picture = R.drawable.demo_monitor;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Stroller")){
+                } else if (item.equalsIgnoreCase("DEMO: Stroller")) {
                     picture = R.drawable.demo_stroller;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Diapers")){
+                } else if (item.equalsIgnoreCase("DEMO: Diapers")) {
                     picture = R.drawable.demo_diapers;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Formula")){
+                } else if (item.equalsIgnoreCase("DEMO: Formula")) {
                     picture = R.drawable.demo_formula;
-                }
-                else {
+                } else {
                     picture = R.drawable.no_picture;
                 }
-                listingPicture.setImageResource(picture);
+                pictureInput.setImageResource(picture);
             }
 
             @Override
@@ -193,17 +176,14 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
         // Check for a complete form
         if (title.equalsIgnoreCase("")) {
             Toast.makeText(this, "Incomplete form. Please fill in the title.", Toast.LENGTH_SHORT).show();
-        }
-        else if (price.equalsIgnoreCase("")){
+        } else if (price.equalsIgnoreCase("")) {
             Toast.makeText(this, "Incomplete form. Please set a price.", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             editListingAPI = new EditListingAPI();
             editListingAPI.execute();
             returnToListings();
 
         }
-
 
 
     }
@@ -257,22 +237,20 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+        protected void onPostExecute(String values) {
+            super.onPostExecute(values);
             try {
-                if (s.equalsIgnoreCase("Listing info updated.")) {
-                    Toast.makeText(getApplicationContext(),s, Toast.LENGTH_SHORT).show();
+                if (values.equalsIgnoreCase("Listing updated.")) {
+                    Toast.makeText(getApplicationContext(), values, Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), values, Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), values, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
-
 
 
     }
@@ -331,12 +309,11 @@ public class EditListingActivity extends AppCompatActivity implements AdapterVie
 
     }
 
-    public void returnToListings(){
-        onBackPressed();
-        onBackPressed();
+    public void returnToListings() {
+        finish();
     }
 
-    public void deleteListing(){
+    public void deleteListing() {
         deleteListingAPI = new DeleteListingAPI();
         deleteListingAPI.execute(deleteListingURL + id);
         returnToListings();

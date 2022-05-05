@@ -15,14 +15,14 @@ import com.jamdev.handmedown.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    User user;
-    String userName;
-    String userNumber;
-    String userAddress;
-    String userEmail;
-    String userUsername;
-    String userPassword;
-    String userID;
+    private User user;
+    private String userName;
+    private String userNumber;
+    private String userAddress;
+    private String userEmail;
+    private String userUsername;
+    private String userPassword;
+    private String userID;
 
     ActivityMainBinding binding;
 
@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
-
-        Log.i("Test", "test");
 
         // Default fragment is home
         replaceFragment(new HomeActivity());
@@ -58,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
 
-
         // Takes item id as param to identify the fragment that has been clicked
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
@@ -75,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     listingsBundle.putString("Address", userAddress);
                     listingsBundle.putString("Username", userUsername);
                     listingsBundle.putString("Email", userEmail);
-                    listingsBundle.putString("Id", userID);
+                    listingsBundle.putString("ID", userID);
                     listingsBundle.putString("Password", userPassword);
 
                     ListingsActivity listingsFragment = new ListingsActivity();

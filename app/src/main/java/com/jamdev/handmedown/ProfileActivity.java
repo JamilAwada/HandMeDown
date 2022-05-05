@@ -142,7 +142,7 @@ public class ProfileActivity extends Fragment {
 
         togglePasswordButton = (TextView) view.findViewById(R.id.tx_password);
 
-        id = getArguments().getString("Id");
+        id = getArguments().getString("ID");
 
         getUserAPI = new GetUserAPI();
         getUserAPI.execute(getUserURL + id);

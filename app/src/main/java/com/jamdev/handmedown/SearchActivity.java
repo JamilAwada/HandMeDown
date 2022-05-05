@@ -30,24 +30,24 @@ import java.util.List;
 
 public class SearchActivity extends Fragment implements Adapter.OnListingListener {
 
-    EditText searchInput;
+    private EditText searchInput;
+    private String searchTerm;
 
-    String searchTerm;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+    private List<Listing> listings = new ArrayList<>();
+    private Adapter adapter;
 
-    RecyclerView recyclerView;
-    LinearLayoutManager layoutManager;
-    List<Listing> listings = new ArrayList<>();
-    Adapter adapter;
-
-    int picture;
+    private int picture;
 
     private String getListingURL = "http://10.0.2.2/HandMeDown/listing_fetch_title.php?title=";
     private GetListingsAPI getListingsAPI;
 
     private String getUserURL = "http://10.0.2.2/HandMeDown/user_fetch_id.php?id=";
     private GetUserAPI getUserAPI;
-    Listing selectedItem;
-    User seller;
+
+    private Listing selectedItem;
+    private User seller;
 
     @Nullable
     @Override
@@ -55,12 +55,11 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
         View view = inflater.inflate(R.layout.activity_search, container, false);
 
 
-
         return view;
 
     }
 
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         initRecyclerView();
 
@@ -75,9 +74,11 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
                 getListingsAPI.execute(getListingURL + searchTerm);
             }
 
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
         });
 
     }
@@ -88,7 +89,6 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
         selectedItem = listings.get(position);
         getUserAPI = new GetUserAPI();
         getUserAPI.execute(getUserURL + selectedItem.getSeller());
-        Log.i("Result:", getUserURL + selectedItem.getSeller());
     }
 
     public class GetListingsAPI extends AsyncTask<String, Void, String> {
@@ -129,7 +129,7 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
             try {
                 JSONArray listJsonArray = new JSONArray(values);
                 listings = new ArrayList<>();
-                for(int i = 0; i < listJsonArray.length(); i++){
+                for (int i = 0; i < listJsonArray.length(); i++) {
                     JSONObject jsonItemObject = listJsonArray.getJSONObject(i);
                     String id = jsonItemObject.getString("id");
                     String title = jsonItemObject.getString("title");
@@ -141,41 +141,31 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
                     String posted_on = jsonItemObject.get("posted_on").toString();
                     String fetchedPicture = jsonItemObject.getString("picture");
                     Log.i("Fetched picture", fetchedPicture);
-                    if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")){
+                    if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")) {
                         picture = R.drawable.demo_man1;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")) {
                         picture = R.drawable.demo_man2;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 1")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 1")) {
                         picture = R.drawable.demo_woman1;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 2")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 2")) {
                         picture = R.drawable.demo_woman2;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Bear")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Bear")) {
                         picture = R.drawable.demo_bear;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Onesie")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Onesie")) {
                         picture = R.drawable.demo_onesie;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Monitor")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Monitor")) {
                         picture = R.drawable.demo_monitor;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Stroller")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Stroller")) {
                         picture = R.drawable.demo_stroller;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Diapers")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Diapers")) {
                         picture = R.drawable.demo_diapers;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Formula")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Formula")) {
                         picture = R.drawable.demo_formula;
-                    }
-                    else {
+                    } else {
                         picture = R.drawable.no_picture;
                     }
 
-                    Listing listing = new Listing(title,description,price,category,posted_on,seller,sellerName,picture);
+                    Listing listing = new Listing(title, description, price, category, posted_on, seller, sellerName, picture);
                     listings.add(listing);
                 }
                 initRecyclerView();
@@ -223,7 +213,7 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
             super.onPostExecute(values);
             try {
                 JSONArray listJsonArray = new JSONArray(values);
-                for(int i = 0; i < listJsonArray.length(); i++){
+                for (int i = 0; i < listJsonArray.length(); i++) {
 
                     JSONObject jsonItemObject = listJsonArray.getJSONObject(i);
                     String id = jsonItemObject.getString("id");
@@ -234,45 +224,35 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
                     String number = jsonItemObject.getString("number");
                     String address = jsonItemObject.get("address").toString();
                     String fetchedPicture = jsonItemObject.getString("picture");
-                    if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")){
+                    if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")) {
                         picture = R.drawable.demo_man1;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")) {
                         picture = R.drawable.demo_man2;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 1")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 1")) {
                         picture = R.drawable.demo_woman1;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 2")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 2")) {
                         picture = R.drawable.demo_woman2;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Bear")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Bear")) {
                         picture = R.drawable.demo_bear;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Onesie")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Onesie")) {
                         picture = R.drawable.demo_onesie;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Monitor")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Monitor")) {
                         picture = R.drawable.demo_monitor;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Stroller")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Stroller")) {
                         picture = R.drawable.demo_stroller;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Diapers")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Diapers")) {
                         picture = R.drawable.demo_diapers;
-                    }
-                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Formula")){
+                    } else if (fetchedPicture.equalsIgnoreCase("DEMO: Formula")) {
                         picture = R.drawable.demo_formula;
-                    }
-                    else {
+                    } else {
                         picture = R.drawable.no_picture;
                     }
 
 
                     // Get the listing and the seller, and send to the expanded listing view class
-                    seller = new User(id,name,number,address,username,email,picture);
+                    seller = new User(id, name, number, address, username, email, picture);
 
-                    Intent goToExpanded = new Intent(getContext(), ListingExpanded.class);
+                    Intent goToExpanded = new Intent(getContext(), ListingExpandedActivity.class);
                     goToExpanded.putExtra("Listing", selectedItem);
                     goToExpanded.putExtra("Seller", seller);
                     startActivity(goToExpanded);
@@ -297,8 +277,6 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
         adapter.notifyDataSetChanged();
 
     }
-
-
 
 
 }

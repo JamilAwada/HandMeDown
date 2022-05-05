@@ -19,13 +19,12 @@ import java.util.TimerTask;
 
 public class HomeActivity extends Fragment {
 
-    RelativeLayout toys;
-    RelativeLayout clothing;
-    RelativeLayout electronics;
-    RelativeLayout gear;
-    RelativeLayout disposables;
-    RelativeLayout consumables;
-
+    private RelativeLayout toys;
+    private RelativeLayout clothing;
+    private RelativeLayout electronics;
+    private RelativeLayout gear;
+    private RelativeLayout disposables;
+    private RelativeLayout consumables;
 
     @Nullable
     @Override
@@ -86,37 +85,37 @@ public class HomeActivity extends Fragment {
     }
 
 
-    public void goToToys(View view){
+    public void goToToys(View view) {
         Intent iToys = new Intent(getContext(), CategoryActivity.class);
         iToys.putExtra("Category", "Toys");
         startActivity(iToys);
     }
 
-    public void goToClothing(View view){
+    public void goToClothing(View view) {
         Intent iClothing = new Intent(getContext(), CategoryActivity.class);
         iClothing.putExtra("Category", "Clothing");
         startActivity(iClothing);
     }
 
-    public void goToElectronics(View view){
+    public void goToElectronics(View view) {
         Intent iElectronics = new Intent(getContext(), CategoryActivity.class);
         iElectronics.putExtra("Category", "Electronics");
         startActivity(iElectronics);
     }
 
-    public void goToGear(View view){
+    public void goToGear(View view) {
         Intent iGear = new Intent(getContext(), CategoryActivity.class);
         iGear.putExtra("Category", "Gear");
         startActivity(iGear);
     }
 
-    public void goToDisposables(View view){
+    public void goToDisposables(View view) {
         Intent iDisposables = new Intent(getContext(), CategoryActivity.class);
         iDisposables.putExtra("Category", "Disposables");
         startActivity(iDisposables);
     }
 
-    public void goToConsumables(View view){
+    public void goToConsumables(View view) {
         Intent iConsumables = new Intent(getContext(), CategoryActivity.class);
         iConsumables.putExtra("Category", "Consumables");
         startActivity(iConsumables);

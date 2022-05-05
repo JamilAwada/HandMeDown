@@ -2,10 +2,8 @@ package com.jamdev.handmedown;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import org.antlr.v4.runtime.atn.BasicBlockStartState;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -31,37 +28,32 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class  AddListingActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class ListingAddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    EditText titleInput;
-    EditText descriptionInput;
-    EditText priceInput;
-    Spinner categoryInput;
+    private EditText titleInput;
+    private EditText descriptionInput;
+    private EditText priceInput;
+    private Spinner categoryInput;
+    private Spinner addDemo;
+    private RelativeLayout addListingButton;
+    private ImageView returnButton;
 
-    String listingTitle = "";
-    String listingDescription = "";
-    String listingPrice = "";
-    String listingCategory = "";
+    private String listingTitle = "";
+    private String listingDescription = "";
+    private String listingPrice = "";
+    private String listingCategory = "";
+    private ImageView pictureInput;
+    private int picture;
 
+    private ArrayAdapter<CharSequence> demoAdapter;
 
-    int picture;
-
-    Spinner addDemo;
-
-    ImageView listingPicture;
-
-    ArrayAdapter<CharSequence> adapter2;
-
-    String userID;
-
-    String[] categories = { "Toys", "Clothing", "Electronics", "Gear", "Disposables", "Consumables" };
-
-    RelativeLayout addListingButton;
-    ImageView returnButton;
+    // This was explicitly called because the item categories are fixed
+    private String[] categories = {"Toys", "Clothing", "Electronics", "Gear", "Disposables", "Consumables"};
 
     private String addListingURL = "http://10.0.2.2/HandMeDown/listing_add.php";
-    String JSONObject;
-    AddListingAPI API;
+    private AddListingAPI addListingAPI;
+    // We need the userID to add the listing with the corresponding seller
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,17 +64,14 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
         getSupportActionBar().hide();
         setContentView(R.layout.activity_add_listing);
 
-        returnButton = (ImageView) findViewById(R.id.btn_return);
-
-        listingPicture = (ImageView) findViewById(R.id.card_picture_container);
 
         // Get listing details from input fields
         titleInput = (EditText) findViewById(R.id.et_title);
         descriptionInput = (EditText) findViewById(R.id.et_description);
         priceInput = (EditText) findViewById(R.id.et_price);
+        pictureInput = (ImageView) findViewById(R.id.card_picture_container);
         addListingButton = (RelativeLayout) findViewById(R.id.btn_add_new);
-
-        addDemo = (Spinner) findViewById(R.id.add_DEMO);
+        returnButton = (ImageView) findViewById(R.id.btn_return);
 
         // Category is selected through a spinner
         categoryInput = (Spinner) findViewById(R.id.spinner_categories);
@@ -93,12 +82,15 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
         // Apply the adapter to the spinner
         categoryInput.setAdapter(adapter);
 
-        adapter2 = ArrayAdapter.createFromResource(this, R.array.pictures, android.R.layout.simple_spinner_item);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        addDemo.setAdapter(adapter2);
+        // Same protocol for demo adapter
+        addDemo = (Spinner) findViewById(R.id.add_DEMO);
+        demoAdapter = ArrayAdapter.createFromResource(this, R.array.pictures, android.R.layout.simple_spinner_item);
+        demoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        addDemo.setAdapter(demoAdapter);
 
+        // Get user ID from main, and because it's static, any new listings will be made only to this user
+        // And so an API call is not required
         Bundle bundle = getIntent().getExtras();
-
         userID = bundle.getString("ID");
 
         // The add listing button executes the addListing() function
@@ -109,52 +101,43 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-        returnButton.setOnClickListener(new View.OnClickListener(){
+        returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 returnToListings();
             }
         });
 
-        addDemo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-
+        // Apologies for this implementation, but I tried using Glide instead and it kept crashing my laptop
+        // In no real world scenario would this be used, but for testing purposes it will have to suffice
+        addDemo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String item = addDemo.getSelectedItem().toString();
-                if (item.equalsIgnoreCase("DEMO: Man 1")){
+                String selectedPicture = addDemo.getSelectedItem().toString();
+                if (selectedPicture.equalsIgnoreCase("DEMO: Man 1")) {
                     picture = R.drawable.demo_man1;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Man 2")){
+                } else if (selectedPicture.equalsIgnoreCase("DEMO: Man 2")) {
                     picture = R.drawable.demo_man2;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Woman 1")){
+                } else if (selectedPicture.equalsIgnoreCase("DEMO: Woman 1")) {
                     picture = R.drawable.demo_woman1;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Woman 2")){
+                } else if (selectedPicture.equalsIgnoreCase("DEMO: Woman 2")) {
                     picture = R.drawable.demo_woman2;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Bear")){
+                } else if (selectedPicture.equalsIgnoreCase("DEMO: Bear")) {
                     picture = R.drawable.demo_bear;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Onesie")){
+                } else if (selectedPicture.equalsIgnoreCase("DEMO: Onesie")) {
                     picture = R.drawable.demo_onesie;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Monitor")){
+                } else if (selectedPicture.equalsIgnoreCase("DEMO: Monitor")) {
                     picture = R.drawable.demo_monitor;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Stroller")){
+                } else if (selectedPicture.equalsIgnoreCase("DEMO: Stroller")) {
                     picture = R.drawable.demo_stroller;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Diapers")){
+                } else if (selectedPicture.equalsIgnoreCase("DEMO: Diapers")) {
                     picture = R.drawable.demo_diapers;
-                }
-                else if (item.equalsIgnoreCase("DEMO: Formula")){
+                } else if (selectedPicture.equalsIgnoreCase("DEMO: Formula")) {
                     picture = R.drawable.demo_formula;
-                }
-                else {
+                } else {
                     picture = R.drawable.no_picture;
                 }
-                listingPicture.setImageResource(picture);
+                pictureInput.setImageResource(picture);
             }
 
             @Override
@@ -175,18 +158,14 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
         // Check for a complete form
         if (listingTitle.equalsIgnoreCase("")) {
             Toast.makeText(this, "Incomplete form. Please fill in the title.", Toast.LENGTH_SHORT).show();
-        }
-        else if (listingPrice.equalsIgnoreCase("")){
+        } else if (listingPrice.equalsIgnoreCase("")) {
             Toast.makeText(this, "Incomplete form. Please set a price.", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             // Execute API
-            API = new AddListingAPI();
-            API.execute();
+            addListingAPI = new AddListingAPI();
+            addListingAPI.execute();
             returnToListings();
         }
-
-
 
     }
 
@@ -242,9 +221,8 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
         protected void onPostExecute(String values) {
             super.onPostExecute(values);
             try {
-                if (values.equalsIgnoreCase("Listing added")) {
-                    Toast.makeText(getApplicationContext(),"Listing added", Toast.LENGTH_SHORT).show();
-
+                if (values.equalsIgnoreCase("Listing published.")) {
+                    Toast.makeText(getApplicationContext(), values, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), values, Toast.LENGTH_SHORT).show();
                 }
@@ -267,9 +245,8 @@ public class  AddListingActivity extends AppCompatActivity implements AdapterVie
     }
 
     // I understand this is bad practice, but moving from an activity back to a fragment is a herculean task
-    public void returnToListings(){
-        onBackPressed();
-        onBackPressed();
+    public void returnToListings() {
+        finish();
     }
 
 }

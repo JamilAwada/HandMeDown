@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddListingActivity">
+    tools:context=".ListingAddActivity">
 
     <TextView
         android:id="@+id/tx_new_listing"
@@ -104,7 +104,7 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:hint="Price"
-            android:inputType="textNoSuggestions"
+            android:inputType="number"
             android:textColor="@color/black"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 

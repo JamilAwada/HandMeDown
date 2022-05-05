@@ -8,10 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,29 +31,27 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListingsActivity extends Fragment  {
+public class ListingsActivity extends Fragment {
 
-    RelativeLayout addListing;
-    RelativeLayout refreshButton;
-    ImageView refreshIcon;
+    private RelativeLayout addListingButton;
+    private RelativeLayout refreshButton;
+    private ImageView refreshIcon;
+    private RelativeLayout sortButton;
+    private TextView sortOrderView;
+    private String sortOrder = "";
 
-    RelativeLayout sortButton;
-    TextView sortOrderView;
-    String sortOrder = "";
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+    private List<Listing> itemList = new ArrayList<>();
+    private AdapterEditable adapter;
 
-    int picture;
-
-    RecyclerView recyclerView;
-    LinearLayoutManager layoutManager;
-    List<Listing> itemList = new ArrayList<>();
-    AdapterEditable adapter;
-
-    RotateAnimation rotateLeft;
+    private RotateAnimation rotateLeft;
 
     private String getListingURL = "http://10.0.2.2/HandMeDown/listing_fetch_seller.php?id=";
     private GetListingsAPI getListingsAPI;
 
-    String userID;
+    private String userID;
+    private int picture;
 
     @Nullable
     @Override
@@ -63,25 +59,23 @@ public class ListingsActivity extends Fragment  {
 
         View view = inflater.inflate(R.layout.activity_listings, container, false);
 
-        addListing = (RelativeLayout) view.findViewById(R.id.btn_new_listing);
+        addListingButton = (RelativeLayout) view.findViewById(R.id.btn_new_listing);
         refreshButton = (RelativeLayout) view.findViewById(R.id.btn_refresh_listings);
-        refreshIcon = (ImageView) view.findViewById(R.id.image_refresh);
-
         sortButton = (RelativeLayout) view.findViewById(R.id.btn_sort);
         sortOrderView = (TextView) view.findViewById(R.id.tx_sort_order);
         sortOrder = sortOrderView.getText().toString();
+        refreshIcon = (ImageView) view.findViewById(R.id.image_refresh);
 
         rotateLeft = new RotateAnimation(0, -360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotateLeft.setDuration(1000);
         rotateLeft.setInterpolator(new LinearInterpolator());
 
-
-        refreshButton.setOnClickListener(new View.OnClickListener(){
-           @Override
-           public void onClick(View view){
-               refreshIcon.startAnimation(rotateLeft);
-               refresh(view);
-           }
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                refreshIcon.startAnimation(rotateLeft);
+                refresh(view);
+            }
         });
 
         sortButton.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +85,7 @@ public class ListingsActivity extends Fragment  {
             }
         });
 
-        addListing.setOnClickListener(new View.OnClickListener() {
+        addListingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goToAddListing(view);
@@ -108,7 +102,7 @@ public class ListingsActivity extends Fragment  {
 
     }
 
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         initRecyclerView();
     }
 
@@ -149,12 +143,12 @@ public class ListingsActivity extends Fragment  {
         protected void onPostExecute(String values) {
             super.onPostExecute(values);
             try {
-                Log.i("values", values);
                 initRecyclerView();
                 if (!values.equalsIgnoreCase("0")) {
                     JSONArray listJsonArray = new JSONArray(values);
                     itemList = new ArrayList<>();
-                    for(int i = 0; i < listJsonArray.length(); i++){
+
+                    for (int i = 0; i < listJsonArray.length(); i++) {
 
                         JSONObject jsonItemObject = listJsonArray.getJSONObject(i);
                         String id = jsonItemObject.getString("id");
@@ -166,45 +160,34 @@ public class ListingsActivity extends Fragment  {
                         String posted_on = jsonItemObject.get("posted_on").toString();
                         String fetchedPicture = jsonItemObject.getString("picture");
                         Log.i("Fetched picture", fetchedPicture);
-                        if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")){
+                        if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")) {
                             picture = R.drawable.demo_man1;
-                        }
-                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")){
+                        } else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")) {
                             picture = R.drawable.demo_man2;
-                        }
-                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 1")){
+                        } else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 1")) {
                             picture = R.drawable.demo_woman1;
-                        }
-                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 2")){
+                        } else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 2")) {
                             picture = R.drawable.demo_woman2;
-                        }
-                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Bear")){
+                        } else if (fetchedPicture.equalsIgnoreCase("DEMO: Bear")) {
                             picture = R.drawable.demo_bear;
-                        }
-                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Onesie")){
+                        } else if (fetchedPicture.equalsIgnoreCase("DEMO: Onesie")) {
                             picture = R.drawable.demo_onesie;
-                        }
-                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Monitor")){
+                        } else if (fetchedPicture.equalsIgnoreCase("DEMO: Monitor")) {
                             picture = R.drawable.demo_monitor;
-                        }
-                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Stroller")){
+                        } else if (fetchedPicture.equalsIgnoreCase("DEMO: Stroller")) {
                             picture = R.drawable.demo_stroller;
-                        }
-                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Diapers")){
+                        } else if (fetchedPicture.equalsIgnoreCase("DEMO: Diapers")) {
                             picture = R.drawable.demo_diapers;
-                        }
-                        else if (fetchedPicture.equalsIgnoreCase("DEMO: Formula")){
+                        } else if (fetchedPicture.equalsIgnoreCase("DEMO: Formula")) {
                             picture = R.drawable.demo_formula;
-                        }
-                        else {
+                        } else {
                             picture = R.drawable.no_picture;
                         }
 
-                        Listing listing = new Listing(picture, id, title,description,price,category,posted_on,seller);
-
+                        Listing listing = new Listing(picture, id, title, description, price, category, posted_on, seller);
 
                         itemList.add(listing);
-                }
+                    }
 
                 }
                 initRecyclerView();
@@ -229,28 +212,27 @@ public class ListingsActivity extends Fragment  {
     }
 
     // Goes to the corresponding activity to enter listing details
-    public void goToAddListing(View view){
-        Intent goToAddListing = new Intent(getContext(), AddListingActivity.class);
+    public void goToAddListing(View view) {
+        Intent goToAddListing = new Intent(getContext(), ListingAddActivity.class);
         goToAddListing.putExtra("ID", userID);
         startActivity(goToAddListing);
     }
 
     // I originally did not want to do this, but i was left no choice. I was not able to call fragmentManager and commit() without losing data
-    public void refresh(View view){
+    public void refresh(View view) {
         itemList.clear();
         GetListingsAPI getListingsAPI = new GetListingsAPI();
         getListingURL = getListingURL + userID + "&order=" + sortOrder;
         getListingsAPI.execute(getListingURL);
     }
 
-    public void changeOrder(View view){
-        if (sortOrder.equalsIgnoreCase("New")){
-            sortOrderView.setText("Old");
-            sortOrder = "Old";
-        }
-        else if (sortOrder.equalsIgnoreCase("Old")){
-            sortOrderView.setText("New");
-            sortOrder = "New";
+    public void changeOrder(View view) {
+        if (sortOrder.equalsIgnoreCase("Newest")) {
+            sortOrderView.setText("Oldest");
+            sortOrder = "Oldest";
+        } else if (sortOrder.equalsIgnoreCase("Oldest")) {
+            sortOrderView.setText("Newest");
+            sortOrder = "Newest";
         }
     }
 }

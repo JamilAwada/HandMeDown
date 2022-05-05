@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,23 +26,22 @@ import java.util.ArrayList;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    EditText nameView;
-    EditText numberView;
-    EditText addressView;
-    EditText usernameView;
-    EditText emailView;
-    EditText passwordView;
+    private EditText nameView;
+    private EditText numberView;
+    private EditText addressView;
+    private EditText usernameView;
+    private EditText emailView;
+    private EditText passwordView;
 
-    String name = "";
-    String number = "";
-    String address = "";
-    String username = "";
-    String email = "";
-    String password = "";
-
+    private String name = "";
+    private String number = "";
+    private String address = "";
+    private String username = "";
+    private String email = "";
+    private String password = "";
 
     private String userSignUpURL = "http://10.0.2.2/HandMeDown/user_signup.php";
-    userRegistrationAPI API;
+    UserRegistrationAPI userRegistrationAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -76,14 +74,14 @@ public class SignUpActivity extends AppCompatActivity {
                 || name.equalsIgnoreCase("") || email.equalsIgnoreCase("") || name.equalsIgnoreCase("") || address.equalsIgnoreCase("")) {
             Toast.makeText(this, "Incomplete form. Please fill in the blank fields.", Toast.LENGTH_SHORT).show();
         } else {
-            API = new userRegistrationAPI();
-            API.execute();
+            userRegistrationAPI = new UserRegistrationAPI();
+            userRegistrationAPI.execute();
         }
 
 
     }
 
-    class userRegistrationAPI extends AsyncTask<String, Void, String> {
+    class UserRegistrationAPI extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
