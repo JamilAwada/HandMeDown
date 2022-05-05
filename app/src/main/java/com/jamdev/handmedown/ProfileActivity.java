@@ -331,6 +331,7 @@ public class ProfileActivity extends Fragment {
 
         protected void onPostExecute(String values) {
             super.onPostExecute(values);
+            Log.i("Values", values);
             try {
 
                 JSONArray listJsonArray = new JSONArray(values);
@@ -393,6 +394,7 @@ public class ProfileActivity extends Fragment {
                     userPassword = password;
                     userPicture = fetchedPicture;
 
+                    nameView.setText(userName);
                     numberView.setText(userNumber);
                     addressView.setText(userAddress);
                     usernameView.setText(userUsername);
@@ -449,6 +451,30 @@ public class ProfileActivity extends Fragment {
             }
             return null;
         }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                if (s.equalsIgnoreCase("Password changed.")) {
+                    Toast.makeText(getContext(),  s, Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    oldPasswordInput.setText("");
+                    newPasswordInput.setText("");
+                    getUserAPI = new GetUserAPI();
+                    getUserAPI.execute(getUserURL + id);
+                } else {
+                    Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+                    oldPasswordInput.setText("");
+                    newPasswordInput.setText("");
+                }
+                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
 
     }
 

@@ -16,14 +16,19 @@ if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
   }
 
 // Check for duplicate username or email
-$UsernameQuery = $mysqli->query("SELECT username from user where username='$Username'");
-$EmailQuery = $mysqli->query("SELECT username from user where email='$Email'");
+$UsernameQuery = $mysqli->prepare("SELECT username from user where username='$Username'");
+$UsernameQuery->execute();
+
 
 // If returned rows is greater than 0 then duplicate exists
-if($UsernameQuery->num_rows > 1){
+if($UsernameQuery->get_result()->num_rows > 1){
     exit('Username taken. Try another one.');
 }
-if($EmailQuery->num_rows > 1){
+
+$EmailQuery = $mysqli->prepare("SELECT username from user where email='$Email'");
+$EmailQuery->execute();
+
+if($EmailQuery->get_result()->num_rows > 1){
     exit('Email taken. Try another one.');
 }
 

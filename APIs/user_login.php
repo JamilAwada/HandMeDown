@@ -13,16 +13,18 @@ $Picture = "";
 
 
 // Query to find pre-existing user with entered username
-$UsernameQuery = $mysqli->query("SELECT username from user where username='$Username'");
+$UsernameQuery = $mysqli->prepare("SELECT username from user where username='$Username'");
+$UsernameQuery->execute();
 
 // Check if there is an account with the entered username
-if($UsernameQuery->num_rows == 0){
+if($UsernameQuery->get_result()->num_rows == 0){
     $Result = "User with entered username does not exist. Try again."; 
 }
 else{
 // Get the hashed password of the account from the database
-$PasswordQuery = $mysqli->query("SELECT password from user where username='$Username'");
-$FetchHashedPassword = mysqli_fetch_assoc($PasswordQuery);
+$PasswordQuery = $mysqli->prepare("SELECT password from user where username='$Username'");
+$PasswordQuery->execute();
+$FetchHashedPassword = mysqli_fetch_array($PasswordQuery->get_result());
 $HashedPassword = $FetchHashedPassword["password"];
 
 // Check if the password matches

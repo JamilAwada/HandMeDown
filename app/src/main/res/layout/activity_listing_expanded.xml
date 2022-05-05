@@ -95,7 +95,7 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:hint="Description"
-            android:textColor="@color/gray"
+            android:textColor="@color/black"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </RelativeLayout>
@@ -160,7 +160,7 @@
         android:layout_height="50dp"
         android:layout_below="@id/tx_seller_address"
         android:layout_marginStart="115dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="45dp"
         android:src="@drawable/call_phone" />
 
     <TextView
@@ -169,7 +169,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tx_seller_address"
         android:layout_marginStart="175dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:fontFamily="@font/poppins_medium"
         android:text="Phone number"
         android:textSize="22sp" />

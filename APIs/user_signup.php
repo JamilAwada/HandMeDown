@@ -17,18 +17,25 @@ if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
   }
 
 // Check for duplicate username or email
-$UsernameQuery = $mysqli->query("SELECT username from user where username='$Username'");
-$EmailQuery = $mysqli->query("SELECT username from user where email='$Email'");
-$NumberQuery = $mysqli->query("SELECT username from user where number='$Number'");
+$UsernameQuery = $mysqli->prepare("SELECT username from user where username='$Username'");
+$UsernameQuery->execute();
 
 // If returned rows is greater than 0 then duplicate exists
-if($UsernameQuery->num_rows > 0){
+if($UsernameQuery->get_result()->num_rows > 0){
     exit('Username taken. Try another one.');
 }
-if($EmailQuery->num_rows > 0){
+
+$EmailQuery = $mysqli->prepare("SELECT username from user where email='$Email'");
+$EmailQuery->execute();
+
+if($EmailQuery->get_result()->num_rows > 0){
     exit('Email taken. Try logging in with it if it belongs to you.');
 }
-if($NumberQuery->num_rows > 0){
+
+$NumberQuery = $mysqli->prepare("SELECT username from user where number='$Number'");
+$NumberQuery->execute();
+
+if($NumberQuery->get_result()->num_rows > 0){
     exit('Phone number already in use.');
 }
 
@@ -39,7 +46,8 @@ $HashedPassword = password_hash($Password, PASSWORD_BCRYPT);
 $Name = ucwords($Name);
 
 // Query to register the new user with the inputted details
-$RegisterUser = $mysqli->query("INSERT INTO user (id, name, number, address, email, username, password) VALUES ('$ID','$Name','$Number','$Address','$Email','$Username','$HashedPassword')"); 
+$RegisterUser = $mysqli->prepare("INSERT INTO user (id, name, number, address, email, username, password) VALUES ('$ID','$Name','$Number','$Address','$Email','$Username','$HashedPassword')"); 
+$RegisterUser->execute();
 
 if($RegisterUser){
     echo "User registered";

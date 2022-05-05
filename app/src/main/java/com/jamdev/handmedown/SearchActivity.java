@@ -126,6 +126,7 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
 
         protected void onPostExecute(String values) {
             super.onPostExecute(values);
+            Log.i("Values", values);
             try {
                 JSONArray listJsonArray = new JSONArray(values);
                 listings = new ArrayList<>();

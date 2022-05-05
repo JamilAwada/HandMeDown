@@ -4,6 +4,7 @@ include("db_info.php");
 
 $UserID = $_GET["id"];
 $UserListingsQuery = $mysqli->query("SELECT * FROM user WHERE id ='$UserID'");
+$arr = [];
 
 while($row = mysqli_fetch_assoc($UserListingsQuery)){
     $arr[] = $row;

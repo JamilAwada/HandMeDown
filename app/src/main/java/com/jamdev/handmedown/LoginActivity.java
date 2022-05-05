@@ -119,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
             super.onPostExecute(values);
             try {
                 JSONObject json = new JSONObject(values);
+
                 // Returned status from the post API
                 String status = json.getString("status");
 

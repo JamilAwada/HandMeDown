@@ -122,11 +122,11 @@
 
     <RelativeLayout
         android:id="@+id/btn_add_new"
-        android:layout_width="120dp"
+        android:layout_width="170dp"
         android:layout_height="50dp"
         android:layout_below="@id/bar_price"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="70dp"
         android:background="@drawable/category_card_blue">
 
 
