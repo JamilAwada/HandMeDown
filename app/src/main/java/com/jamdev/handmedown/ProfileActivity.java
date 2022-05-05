@@ -13,9 +13,11 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -37,6 +41,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -48,6 +53,7 @@ public class ProfileActivity extends Fragment {
     EditText addressView;
     EditText usernameView;
     EditText emailView;
+    CircularImageView pictureView;
 
     RelativeLayout saveChangesButton;
     RelativeLayout logoutButton;
@@ -64,6 +70,8 @@ public class ProfileActivity extends Fragment {
 
     User user;
 
+    int picture;
+
     String id;
     String userName = "";
     String userNumber = "";
@@ -71,6 +79,10 @@ public class ProfileActivity extends Fragment {
     String userEmail = "";
     String userUsername = "";
     String userPassword = "";
+    String userPicture = "";
+
+    Spinner profileDemo;
+    ArrayAdapter<CharSequence> adapter;
 
     EditText oldPasswordInput;
     EditText newPasswordInput;
@@ -105,6 +117,12 @@ public class ProfileActivity extends Fragment {
         usernameView.setEnabled(false);
         emailView = (EditText) view.findViewById(R.id.tx_email_input);
         emailView.setEnabled(false);
+        pictureView = (CircularImageView) view.findViewById(R.id.container_profile_picture);
+        profileDemo = (Spinner) view.findViewById(R.id.profile_DEMO);
+        profileDemo.setEnabled(false);
+        adapter = ArrayAdapter.createFromResource(getContext(), R.array.pictures, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        profileDemo.setAdapter(adapter);
         saveChangesButton = (RelativeLayout) view.findViewById(R.id.btn_user_save_changes);
         logoutButton = (RelativeLayout) view.findViewById(R.id.btn_logout);
         settingsButton = (ImageView) view.findViewById(R.id.image_settings);
@@ -163,31 +181,31 @@ public class ProfileActivity extends Fragment {
         togglePasswordButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                    dialog.show();
+                dialog.show();
             }
         });
 
         cancelPassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    dialog.dismiss();
+                dialog.dismiss();
             }
         });
 
         savePassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    newPass = newPasswordInput.getText().toString();
-                    if (newPass.equalsIgnoreCase("") || oldPasswordInput.getText().toString().equalsIgnoreCase("")){
-                        Toast.makeText(getContext(),    "Missing fields.", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        changePassAPI = new ChangePassAPI();
-                        changePassAPI.execute();
-                    }
+                newPass = newPasswordInput.getText().toString();
+                if (newPass.equalsIgnoreCase("") || oldPasswordInput.getText().toString().equalsIgnoreCase("")){
+                    Toast.makeText(getContext(),    "Missing fields.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    changePassAPI = new ChangePassAPI();
+                    changePassAPI.execute();
+                }
 
 
-                    }
+            }
 
         });
 
@@ -220,6 +238,7 @@ public class ProfileActivity extends Fragment {
             BasicNameValuePair emailParam = new BasicNameValuePair("Email", userEmail);
             BasicNameValuePair addressParam = new BasicNameValuePair("Address", userAddress);
             BasicNameValuePair phoneNumberParam = new BasicNameValuePair("Number", userNumber);
+            BasicNameValuePair pictureParam = new BasicNameValuePair("Picture", userPicture);
             ArrayList<NameValuePair> name_value_pair_list = new ArrayList<>();
             name_value_pair_list.add(idParam);
             name_value_pair_list.add(fullNameParam);
@@ -227,6 +246,7 @@ public class ProfileActivity extends Fragment {
             name_value_pair_list.add(addressParam);
             name_value_pair_list.add(emailParam);
             name_value_pair_list.add(usernameParam);
+            name_value_pair_list.add(pictureParam);
 
 
 
@@ -323,7 +343,42 @@ public class ProfileActivity extends Fragment {
                     String email = jsonItemObject.getString("email");
                     String number = jsonItemObject.getString("number");
                     String address = jsonItemObject.get("address").toString();
-                    int picture = R.drawable.no_picture;
+                    String fetchedPicture = jsonItemObject.getString("picture");
+                    Log.i("Fetched picture", fetchedPicture);
+                    if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")){
+                        picture = R.drawable.demo_man1;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")){
+                        picture = R.drawable.demo_man2;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 1")){
+                        picture = R.drawable.demo_woman1;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 2")){
+                        picture = R.drawable.demo_woman2;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Bear")){
+                        picture = R.drawable.demo_bear;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Onesie")){
+                        picture = R.drawable.demo_onesie;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Monitor")){
+                        picture = R.drawable.demo_monitor;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Stroller")){
+                        picture = R.drawable.demo_stroller;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Diapers")){
+                        picture = R.drawable.demo_diapers;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Formula")){
+                        picture = R.drawable.demo_formula;
+                    }
+                    else {
+                        picture = R.drawable.no_picture;
+                    }
+                    Log.i("Picture", String.valueOf(picture));
 
                     // Get the listing and the seller, and send to the expanded listing view class
                     user = new User(id,name,number,address,username,email, password, picture);
@@ -334,12 +389,15 @@ public class ProfileActivity extends Fragment {
                     userUsername = username;
                     userEmail = email;
                     userPassword = password;
+                    userPicture = fetchedPicture;
 
                     nameView.setText(userName);
                     numberView.setText(userNumber);
                     addressView.setText(userAddress);
                     usernameView.setText(userUsername);
                     emailView.setText(userEmail);
+                    profileDemo.setSelection(adapter.getPosition(fetchedPicture));
+                    pictureView.setImageResource(picture);
 
 
                 }
@@ -423,6 +481,7 @@ public class ProfileActivity extends Fragment {
         if (!isInModificationMode) {
             saveChangesButton.setVisibility(View.VISIBLE);
             saveChangesButton.setClickable(true);
+            settingsButton.startAnimation(rotateLeft);
             logoutButton.setVisibility(View.INVISIBLE);
             logoutButton.setClickable(false);
             nameView.setEnabled(true);
@@ -430,11 +489,13 @@ public class ProfileActivity extends Fragment {
             addressView.setEnabled(true);
             usernameView.setEnabled(true);
             emailView.setEnabled(true);
+            profileDemo.setEnabled(true);
             isInModificationMode = true;
 
         } else {
             saveChangesButton.setVisibility(View.INVISIBLE);
             saveChangesButton.setClickable(false);
+            settingsButton.startAnimation(rotateRight);
             logoutButton.setVisibility(View.VISIBLE);
             logoutButton.setClickable(true);
             nameView.setEnabled(false);
@@ -442,6 +503,7 @@ public class ProfileActivity extends Fragment {
             addressView.setEnabled(false);
             usernameView.setEnabled(false);
             emailView.setEnabled(false);
+            profileDemo.setEnabled(false);
             isInModificationMode = false;
 
         }
@@ -456,6 +518,7 @@ public class ProfileActivity extends Fragment {
             userAddress = addressView.getText().toString();
             userEmail = emailView.getText().toString();
             userUsername = usernameView.getText().toString();
+            userPicture = profileDemo.getSelectedItem().toString();
 
             userInfoUpdateAPI = new UserInfoUpdateAPI();
             userInfoUpdateAPI.execute();

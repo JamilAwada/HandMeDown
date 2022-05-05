@@ -20,4 +20,16 @@
         <item>Disposables</item>
         <item>Consumables</item>
     </string-array>
+    <string-array name="pictures">
+        <item>DEMO: Man 1</item>
+        <item>DEMO: Man 2</item>
+        <item>DEMO: Woman 1</item>
+        <item>DEMO: Woman 2</item>
+        <item>DEMO: Bear</item>
+        <item>DEMO: Onesie</item>
+        <item>DEMO: Monitor</item>
+        <item>DEMO: Stroller</item>
+        <item>DEMO: Diapers</item>
+        <item>DEMO: Formula</item>
+    </string-array>
 </resources>

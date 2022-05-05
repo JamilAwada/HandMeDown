@@ -39,6 +39,8 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
     List<Listing> listings = new ArrayList<>();
     Adapter adapter;
 
+    int picture;
+
     private String getListingURL = "http://10.0.2.2/HandMeDown/listing_fetch_title.php?title=";
     private GetListingsAPI getListingsAPI;
 
@@ -197,7 +199,41 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
                     String email = jsonItemObject.getString("email");
                     String number = jsonItemObject.getString("number");
                     String address = jsonItemObject.get("address").toString();
-                    int picture = R.drawable.no_picture;
+                    String fetchedPicture = jsonItemObject.getString("picture");
+                    if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")){
+                        picture = R.drawable.demo_man1;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")){
+                        picture = R.drawable.demo_man2;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 1")){
+                        picture = R.drawable.demo_woman1;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Woman 2")){
+                        picture = R.drawable.demo_woman2;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Bear")){
+                        picture = R.drawable.demo_bear;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Onesie")){
+                        picture = R.drawable.demo_onesie;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Monitor")){
+                        picture = R.drawable.demo_monitor;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Stroller")){
+                        picture = R.drawable.demo_stroller;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Diapers")){
+                        picture = R.drawable.demo_diapers;
+                    }
+                    else if (fetchedPicture.equalsIgnoreCase("DEMO: Formula")){
+                        picture = R.drawable.demo_formula;
+                    }
+                    else {
+                        picture = R.drawable.no_picture;
+                    }
+
 
                     // Get the listing and the seller, and send to the expanded listing view class
                     seller = new User(id,name,number,address,username,email,picture);

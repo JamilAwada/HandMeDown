@@ -11,6 +11,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mikhaellopez.circularimageview.CircularImageView;
+
 public class ListingExpanded extends AppCompatActivity {
 
     TextView listingTitle;
@@ -20,6 +22,9 @@ public class ListingExpanded extends AppCompatActivity {
     TextView sellerAddress;
     TextView sellerNumber;
     TextView listingDate;
+    CircularImageView sellerPicture;
+
+    int fetchedPicture;
 
     ImageView callButton;
     ImageView returnButton;
@@ -40,6 +45,7 @@ public class ListingExpanded extends AppCompatActivity {
         sellerAddress = (TextView) findViewById(R.id.tx_seller_address);
         sellerNumber = (TextView) findViewById(R.id.tx_seller_number);
         listingDate = (TextView) findViewById(R.id.posted_on);
+        sellerPicture = (CircularImageView) findViewById(R.id.card_seller_picture_container);
 
         callButton = (ImageView) findViewById(R.id.btn_call);
         returnButton = (ImageView) findViewById(R.id.btn_return);
@@ -55,6 +61,7 @@ public class ListingExpanded extends AppCompatActivity {
         sellerAddress.setText(seller.getAddress());
         sellerNumber.setText(seller.getNumber());
         listingDate.setText(item.getPosted_on());
+        sellerPicture.setImageResource(seller.getPicture());
 
         // The call button redirects the user to their device's native phone application
         callButton.setOnClickListener(new View.OnClickListener() {
