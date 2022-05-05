@@ -64,6 +64,7 @@ public class ProfileActivity extends Fragment {
 
     RelativeLayout cancelPassButton;
     RelativeLayout savePassButton;
+
     String newPass;
 
     boolean isInModificationMode = false;
@@ -134,8 +135,8 @@ public class ProfileActivity extends Fragment {
         }
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        RelativeLayout cancelPassButton = dialog.findViewById(R.id.btn_cancel);
-        RelativeLayout savePassButton = dialog.findViewById(R.id.btn_save_new_password);
+        cancelPassButton = dialog.findViewById(R.id.btn_cancel);
+        savePassButton = dialog.findViewById(R.id.btn_save_new_password);
 
         oldPasswordInput = (EditText) dialog.findViewById(R.id.et_old_input);
         newPasswordInput = (EditText) dialog.findViewById(R.id.et_new_input);
@@ -344,7 +345,6 @@ public class ProfileActivity extends Fragment {
                     String number = jsonItemObject.getString("number");
                     String address = jsonItemObject.get("address").toString();
                     String fetchedPicture = jsonItemObject.getString("picture");
-                    Log.i("Fetched picture", fetchedPicture);
                     if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")){
                         picture = R.drawable.demo_man1;
                     }
@@ -378,7 +378,7 @@ public class ProfileActivity extends Fragment {
                     else {
                         picture = R.drawable.no_picture;
                     }
-                    Log.i("Picture", String.valueOf(picture));
+
 
                     // Get the listing and the seller, and send to the expanded listing view class
                     user = new User(id,name,number,address,username,email, password, picture);

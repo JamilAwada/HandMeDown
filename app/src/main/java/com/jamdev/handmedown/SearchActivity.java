@@ -140,7 +140,7 @@ public class SearchActivity extends Fragment implements Adapter.OnListingListene
                     String sellerName = jsonItemObject.getString("seller_name");
                     String posted_on = jsonItemObject.get("posted_on").toString();
                     String fetchedPicture = jsonItemObject.getString("picture");
-                    Log.i("Fetched picture", fetchedPicture);
+
                     if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")) {
                         picture = R.drawable.demo_man1;
                     } else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")) {

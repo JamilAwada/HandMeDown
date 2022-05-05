@@ -33,8 +33,8 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:hint="@string/search"
-            android:textColor="@color/black"
             android:inputType="textNoSuggestions"
+            android:textColor="@color/black"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </RelativeLayout>

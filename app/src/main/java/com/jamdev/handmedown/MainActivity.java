@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     profileBundle.putString("Address", userAddress);
                     profileBundle.putString("Username", userUsername);
                     profileBundle.putString("Email", userEmail);
-                    profileBundle.putString("Id", userID);
+                    profileBundle.putString("ID", userID);
                     profileBundle.putString("Password", userPassword);
 
                     ProfileActivity profileFragment = new ProfileActivity();

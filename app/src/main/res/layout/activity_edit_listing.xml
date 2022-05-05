@@ -104,8 +104,8 @@
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:hint="Price"
+            android:inputType="number"
             android:textColor="@color/black"
-            android:inputType="textNoSuggestions"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     </RelativeLayout>

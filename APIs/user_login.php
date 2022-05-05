@@ -8,6 +8,7 @@ $Name = "";
 $Number = "";
 $Address = "";
 $Email = "";
+$Picture = "";
 
 
 
@@ -30,7 +31,7 @@ $CheckPassword = password_verify($Password,$HashedPassword);
 if($CheckPassword){
 
     // Get user details to display on the "Profile" fragment
-    $DetailsQuery = $mysqli->query("SELECT id, name, number, address, username, email from user where username = '$Username'");
+    $DetailsQuery = $mysqli->query("SELECT id, name, number, address, username, email, picture from user where username = '$Username'");
     
     $FetchDetails = mysqli_fetch_assoc($DetailsQuery);
     $ID = $FetchDetails['id'];
@@ -38,6 +39,7 @@ if($CheckPassword){
     $Number = $FetchDetails['number'];
     $Address = $FetchDetails['address'];
     $Email = $FetchDetails['email'];
+    $Picture = $FetchDetails['picture'];
 
     $Result = "Welcome";
 }
@@ -47,6 +49,6 @@ else{
 
 }
 
-$Response = array("status" =>$Result, "ID" => $ID, "Name"=> $Name,"Number"=>$Number,"Address"=>$Address,"Username"=>$Username, "Email"=>$Email, "Password"=>$Password);
+$Response = array("status" =>$Result, "id" => $ID, "name"=> $Name,"number"=>$Number,"address"=>$Address,"username"=>$Username, "email"=>$Email, "password"=>$Password, "picture"=>$Picture);
 
 echo json_encode($Response);  

@@ -93,7 +93,7 @@ public class ListingsActivity extends Fragment {
         });
 
         // Get all user listings on creation (I.E, search for all listings with foreign key matching the user's ID)
-        userID = getArguments().getString("Id");
+        userID = getArguments().getString("ID");
         getListingURL = getListingURL + userID + "&order=" + sortOrder;
         getListingsAPI = new GetListingsAPI();
         getListingsAPI.execute(getListingURL);
@@ -159,7 +159,6 @@ public class ListingsActivity extends Fragment {
                         String seller = jsonItemObject.getString("seller");
                         String posted_on = jsonItemObject.get("posted_on").toString();
                         String fetchedPicture = jsonItemObject.getString("picture");
-                        Log.i("Fetched picture", fetchedPicture);
                         if (fetchedPicture.equalsIgnoreCase("DEMO: Man 1")) {
                             picture = R.drawable.demo_man1;
                         } else if (fetchedPicture.equalsIgnoreCase("DEMO: Man 2")) {

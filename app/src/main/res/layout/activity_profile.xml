@@ -73,6 +73,7 @@
         android:background="@null"
         android:fontFamily="@font/poppins_medium"
         android:text="Name"
+        android:inputType="textNoSuggestions"
         android:textSize="18sp" />
 
     <ImageView
@@ -94,6 +95,7 @@
         android:layout_toEndOf="@id/image_number"
         android:background="@null"
         android:fontFamily="@font/poppins_medium"
+        android:inputType="number"
         android:text="Phone Number"
         android:textSize="18sp" />
 
@@ -129,7 +131,7 @@
         android:background="@null"
         android:fontFamily="@font/poppins_medium"
         android:gravity="top"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textNoSuggestions"
         android:text="Address"
         android:textSize="18sp" />
 
@@ -177,6 +179,7 @@
         android:background="@null"
         android:fontFamily="@font/poppins_medium"
         android:text="Username"
+        android:inputType="textNoSuggestions"
         android:textSize="18sp" />
 
     <ImageView
@@ -212,6 +215,7 @@
         android:background="@null"
         android:fontFamily="@font/poppins_medium"
         android:text="Email"
+        android:inputType="textNoSuggestions"
         android:textSize="18sp" />
 
     <ImageView
@@ -237,20 +241,7 @@
         android:textSize="20sp"
         android:clickable="true"/>
 
-    <EditText
-        android:id="@+id/tx_password_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tx_password"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@id/image_password"
-        android:alpha="0"
-        android:background="@null"
-        android:fontFamily="@font/poppins_medium"
-        android:text="Password"
-        android:textSize="18sp"
-        android:visibility="invisible" />
+
 
     <RelativeLayout
         android:id="@+id/btn_user_save_changes"

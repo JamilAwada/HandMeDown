@@ -10,10 +10,10 @@ $Category = $_POST["Category"];
 $Picture = $_POST["Picture"];
 
 // Query to update user info with the inputted details
-$UpdateListing = $mysqli->query("UPDATE listing SET title = '$Title', description = '$Description', price = '$Price', category = '$Category', picture = '$Picture' WHERE id = '$ID'"); 
+$UpdateListingQuery = $mysqli->query("UPDATE listing SET title = '$Title', description = '$Description', price = '$Price', category = '$Category', picture = '$Picture' WHERE id = '$ID'"); 
 
-if($UpdateListing){
-    echo "Listing info updated.";
+if($UpdateListingQuery){
+    echo "Listing updated.";
 }
 
 ?>
