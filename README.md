@@ -11,4 +11,4 @@ collect dust in their closet.
 
 ## Development Details
 
-The app was developped using the Java language on the Android Studio IDE. I used MYSQL as my database and communicated with the server using PHP-written APIs.
+The app was developed using the Java language on the Android Studio IDE. I used MYSQL as my database and communicated with the server using PHP-written APIs.
